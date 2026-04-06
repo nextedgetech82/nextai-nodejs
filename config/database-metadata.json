@@ -1,0 +1,775 @@
+{
+  "tables": [
+    {
+      "table_name": "billmast",
+      "display_name": "Sales Bill",
+      "description": "Main bill table containing all bill types. Bill types are distinguished by the 'code' field:\n- 'S' = Sales Bill (Regular sales transactions)\n- 'SR' = Sales Return (Customer returns, credit notes)\n- 'P' = Purchase Bill\n- 'PR' = Purchase Return\n- 'G' = Grey Purchase Bill\n- 'GR' = Grey Return To Weaver \n- 'FJ' = Finish Jobwork Bill\n- 'OP' = General Purchase Bill\n- 'OR' = Purchase Return\n- 'MR' = Mill GP\n**IMPORTANT**: When user asks about 'sales', use code = 'S'. When user asks about 'sales return', or 'sale credit notes', use code = 'SR'.\n\nWhen user asks about 'purchase', or 'ready purchase', use code = 'P'.\nWhen user asks about 'purchase return', or 'purchase debit notes', use code = 'PR'.\nWhen user asks about 'grey purchase bill', or 'Grey bill', use code = 'G'.\nWhen user asks about 'mill receipt', or 'mill gp', use code = 'MR'.\nWhen user asks about 'job bill', or 'jobwork bill', use code = 'FJ'.\nWhen user asks about 'general purchase bill', or 'expense bill', use code = 'OP'.\nWhen user asks about 'general purchase return', or 'general purchase debit notes', use code = 'OR'.\nWhen user asks about 'grey sale bill', or 'grey sale', use code = 'GS'.\n\nWhen user mentions a COMPANY name (e.g., 'Laxmikrupa', 'Acme'), this refers to WHICH DATABASE to query, NOT a filter on party field. Do NOT add party filter for company names., for code = 'SR' use display name return no in place of billno and return chr inplace of bill chr for code = 'P' use serial no for serial field and for srchr field use srchr, for code ='PR' use return no for serial field and return chr for srchr field. for other code user field name as caption for serial and srchr 0",
+      "date_field": "date",
+      "primary_key": "id",
+      "default_filter": "opening <> 'Y'",
+      "fields": [
+        {
+          "field_name": "serial",
+          "display_name": "Bill Number",
+          "data_type": "numeric(10)",
+          "description": "Unique Bill identifier",
+          "synonyms": ["bill number", "invoice", "invoice no"]
+        },
+        {
+          "field_name": "srchr",
+          "display_name": "Bill Number Series",
+          "data_type": "VARCHAR(10)",
+          "description": "Bill Character",
+          "synonyms": ["bill number series character", "invoice character"]
+        },
+        {
+          "field_name": "date",
+          "display_name": "Bill Date",
+          "data_type": "DATE",
+          "description": "Date of Bill",
+          "synonyms": ["date", "bill date"],
+          "is_date": true
+        },
+        {
+          "field_name": "party",
+          "display_name": "Party",
+          "data_type": "VARCHAR(100)",
+          "description": "Party name or code (customer, vendor, etc.)",
+          "synonyms": [
+            "bill party",
+            "invoice party",
+            "customer",
+            "client",
+            "buyer"
+          ],
+          "references": { "table": "partymst", "field": "account" }
+        },
+        {
+          "field_name": "agent",
+          "display_name": "Agent",
+          "data_type": "VARCHAR(100)",
+          "description": "Sales agent associated with the bill",
+          "synonyms": [
+            "bill agent",
+            "invoice agent",
+            "representative",
+            "dealer",
+            "channel partner"
+          ],
+          "references": { "table": "partymst", "field": "account" }
+        },
+        {
+          "field_name": "haste",
+          "display_name": "Haste",
+          "data_type": "VARCHAR(100)",
+          "description": "Bill Haste ",
+          "synonyms": ["bill haste", "invoice haste", "invoice through"],
+          "references": { "table": "hastemst", "field": "haste" }
+        },
+        {
+          "field_name": "salesman",
+          "display_name": "Salesman",
+          "data_type": "VARCHAR(100)",
+          "description": "Salesperson responsible for the bill",
+          "synonyms": [
+            "bill salesman",
+            "invoice salesman",
+            "invoice salesman",
+            "sales rep",
+            "salesperson",
+            "executive"
+          ],
+          "references": { "table": "salesmanmst", "field": "salesman" }
+        },
+        {
+          "field_name": "netamt",
+          "display_name": "Bill Amount",
+          "data_type": "DECIMAL(12,2)",
+          "description": "Total Bill value",
+          "synonyms": [
+            "sales",
+            "revenue",
+            "amount",
+            "total",
+            "invoice total",
+            "sales value"
+          ],
+          "aggregations": ["SUM", "AVG", "MAX", "MIN"]
+        },
+        {
+          "field_name": "code",
+          "display_name": "Bill Type Code",
+          "data_type": "VARCHAR(10)",
+          "description": "Code identifying bill type: S = Sales, P = Purchase, etc.",
+          "synonyms": ["type", "bill code", "code"],
+          "in_queries": ["filter"]
+        }
+      ],
+      "joins": [
+        {
+          "join_table": "partymst",
+          "join_type": "INNER",
+          "condition": "billmast.party = partymst.account",
+          "description": "Get party details (account, addr1, addr2, addr3,city, etc.) for the bill"
+        }
+      ]
+    },
+    {
+      "table_name": "billdata",
+      "display_name": "Bill Details",
+      "description": "Line items for each bill. Use this table for product-level analysis. Works for both sales (code='S') and returns (code='SR'). When analyzing returns, the quantities represent returned items.",
+      "primary_key": "id",
+      "date_field": null,
+      "fields": [
+        {
+          "field_name": "id",
+          "display_name": "Detail ID",
+          "data_type": "INT",
+          "description": "Unique line item identifier",
+          "synonyms": ["detail id", "line id"],
+          "is_primary_key": true
+        },
+        {
+          "field_name": "ControlId",
+          "display_name": "Bill ID",
+          "data_type": "INT",
+          "description": "Foreign key linking to billmast.id",
+          "synonyms": ["bill id", "bill control id", "parent bill"],
+          "references": { "table": "billmast", "field": "id" }
+        },
+        {
+          "field_name": "itemname",
+          "display_name": "Item Name",
+          "data_type": "VARCHAR(50)",
+          "description": "Product or item name",
+          "synonyms": ["product name", "item name", "stock name"],
+          "references": { "table": "itemmast", "field": "itemname" }
+        },
+        {
+          "field_name": "design",
+          "display_name": "Design",
+          "data_type": "VARCHAR(200)",
+          "description": "Design ",
+          "synonyms": ["design", "design no", "designno"]
+        },
+        {
+          "field_name": "pcs",
+          "display_name": "Pcs",
+          "data_type": "DECIMAL(12,2)",
+          "description": "Pcs sold",
+          "synonyms": ["quantity", "qty", "units", "pieces", "pcs"],
+          "aggregations": ["SUM", "AVG"]
+        },
+        {
+          "field_name": "meters",
+          "display_name": "Meters",
+          "data_type": "DECIMAL(12,2)",
+          "description": "Meters sold",
+          "synonyms": ["Mtr", "Mtrs", "meters", "meter"],
+          "aggregations": ["SUM", "AVG"]
+        },
+        {
+          "field_name": "weight",
+          "display_name": "weight",
+          "data_type": "DECIMAL(12,3)",
+          "description": "weight sold",
+          "synonyms": ["weight", "weight", "wt"],
+          "aggregations": ["SUM", "AVG"]
+        },
+        {
+          "field_name": "rate",
+          "display_name": "Rate",
+          "data_type": "DECIMAL(12,2)",
+          "description": "Selling price per unit",
+          "synonyms": ["price", "unit price", "rate"],
+          "aggregations": ["AVG"]
+        },
+        {
+          "field_name": "amount",
+          "display_name": "Amount",
+          "data_type": "DECIMAL(12,2)",
+          "description": "when unit = 'P' then pcs * Rate for 'M' meters * rate for 'W' weight * rate",
+          "synonyms": ["line total", "item amount", "subtotal"],
+          "aggregations": ["SUM", "AVG"]
+        },
+        {
+          "field_name": "per",
+          "display_name": "Unit",
+          "data_type": "VARCHAR(10)",
+          "description": "Unit of measurement: 'P' for Pieces, 'M' for Meters, 'W' for Weight",
+          "synonyms": ["unit", "uom", "per", "measurement"],
+          "in_queries": ["filter", "group"]
+        }
+      ],
+      "joins": [
+        {
+          "join_table": "billmast",
+          "join_type": "Left",
+          "condition": "billdata.ControlId = billmast.id",
+          "description": "Get the parent bill header"
+        }
+      ]
+    },
+    {
+      "table_name": "partymst",
+      "display_name": "Party Master",
+      "description": "Master table for all parties (customers, vendors, agents, etc.)",
+      "primary_key": "account",
+      "fields": [
+        {
+          "field_name": "account",
+          "display_name": "Party",
+          "data_type": "VARCHAR(200)",
+          "description": "Party identifier and name (both primary key and display name)",
+          "synonyms": [
+            "party code",
+            "party name",
+            "customer",
+            "client",
+            "buyer",
+            "name",
+            "account name"
+          ],
+          "is_primary_key": true
+        },
+        {
+          "field_name": "city",
+          "display_name": "City",
+          "data_type": "VARCHAR(100)",
+          "description": "City where the party is located",
+          "synonyms": ["city", "town"]
+        },
+        {
+          "field_name": "state",
+          "display_name": "State",
+          "data_type": "VARCHAR(50)",
+          "description": "State where the party is located",
+          "synonyms": ["state", "region", "province"]
+        },
+        {
+          "field_name": "acctype",
+          "display_name": "Party Type",
+          "data_type": "VARCHAR(50)",
+          "description": "Type of party: Customer, Vendor, Agent, etc., when user ask for sale party or customer then use acctype = 'sale party', when user ask for purchase party or vendor then use acctype = 'purchase party' when user ask for agent or broker then use acctype = 'agent' when user ask for mill then use acctype = 'mill' when user ask for grey party or grey purchase party then use acctype = 'grey party' when user ask for job party or jobwork party then use acctype = 'jobwork party'",
+          "synonyms": ["party type", "acctype"]
+        },
+        {
+          "field_name": "gstregno",
+          "display_name": "GSTIN",
+          "data_type": "VARCHAR(100)",
+          "description": "GSTIN of the party",
+          "synonyms": ["gstin", "gst number", "gstno"]
+        }
+      ]
+    },
+    {
+      "table_name": "itemmst",
+      "display_name": "Item Master",
+      "description": "Master catalog of all products/items",
+      "primary_key": "itemname",
+      "fields": [
+        {
+          "field_name": "itemname",
+          "display_name": "Item Name",
+          "data_type": "VARCHAR(200)",
+          "description": "Full product name",
+          "synonyms": ["product name", "item name"],
+          "is_primary_key": true
+        },
+        {
+          "field_name": "itemtype",
+          "display_name": "Item Type",
+          "data_type": "VARCHAR(100)",
+          "description": "Product Type",
+          "synonyms": ["Item Type", "itemtype"]
+        },
+        {
+          "field_name": "category",
+          "display_name": "Category",
+          "data_type": "VARCHAR(100)",
+          "description": "Product category",
+          "synonyms": ["category", "type"]
+        },
+        {
+          "field_name": "subcategory",
+          "display_name": "Sub Category",
+          "data_type": "VARCHAR(100)",
+          "description": "Product sub category",
+          "synonyms": ["sub category", "subtype"]
+        },
+        {
+          "field_name": "per",
+          "display_name": "Unit",
+          "data_type": "VARCHAR(20)",
+          "description": "Sales unit (e.g., Pcs, Kg)",
+          "synonyms": ["unit", "uom"]
+        },
+        {
+          "field_name": "salerate",
+          "display_name": "Standard Sale Rate",
+          "data_type": "DECIMAL(12,2)",
+          "description": "Default selling price",
+          "synonyms": ["price", "rate", "salerate"],
+          "aggregations": ["AVG", "MAX", "MIN"]
+        },
+        {
+          "field_name": "hsncode",
+          "display_name": "hsn code",
+          "data_type": "VARCHAR(100)",
+          "description": "hsn code for item name",
+          "synonyms": ["hsncode", "hsn", "hsn code"],
+          "in_queries": ["filter"]
+        }
+      ]
+    },
+    {
+      "table_name": "accvchrmst",
+      "display_name": "Accounting Voucher",
+      "description": "Main voucher table containing all voucher types like bank receipt, cash receipt, bank payment, cash payment, debit note, credit note, cheque return, JV, Journal Entry. Voucher types are distinguished by the 'code' field:\n- 'DR' = Debit Note (Regular accounting debit note)\n- 'BR' = Bank Receipt (Customer payment received through cheque or rtgs or neft or upi or imps except cash)\n- 'CR' = Cash Receipt ( Cash Received From Customer , Sale Party, Debtors ) \n- 'QR' = Cheque Return Of Customer of Supplier\n- 'BP' = Bank Payment Entry (Payment made through chque or neft or imps or rtgs or upi to purchase bill, general purchase bill, mill gp, grey purcashe bill, jobwork bill etc or against sales return)\n- 'CP' = Cash Payment Entry (Payment made in cash to purchase bill, general purchase bill, mill gp, grey purcashe bill, jobwork bill) \n- 'CRN' = Credit note\n- 'JV' = Journal Voucher Entr. or jv entry\n- VChrType field is = 'advance' then advance receipt or payment and 'against bill' stands for bill to bill payment\n- VON field stores SALES and PURCHASE to separate sales and purchase credit not and debit note \n**IMPORTANT**: When user asks about 'receipt', use code in ('BR', 'CR') . When user asks about 'bank receipt' use code = 'BR'.\n\nWhen user asks about 'cash receipt', or 'cash collection', use code = 'CR'.\nWhen user asks about 'payemnt', or 'withdrawl', use code in ( 'BP', 'CP').\nWhen user asks about 'bank payment', or 'cheque payment', use code = 'BP'.\nWhen user asks about 'cash payment', or 'cash paid', use code = 'CP'.\nWhen user asks about 'cheque return', or 'return cheque', use code = 'QR'.\nWhen user asks about 'debit note', or 'account debit note', use code = 'DR'.\nWhen user asks about 'credit note', or 'account credit note', use code = 'CRN'.\nWhen user asks about 'jounral entry', or 'journal voucher' or 'JV Entry', use code = 'JV'.\n\nWhen user mentions a COMPANY name (e.g., 'Laxmikrupa', 'Acme'), this refers to WHICH DATABASE to query, NOT a filter on party field. Do NOT add party filter for company names.",
+      "date_field": "date",
+      "primary_key": "id",
+      "default_filter": "opening <> 'Y'",
+      "fields": [
+        {
+          "field_name": "serial",
+          "display_name": "Voucher Number",
+          "data_type": "numeric(10)",
+          "description": "Unique Voucher identifier",
+          "synonyms": ["voucher number", "voucher", "voucher no"]
+        },
+        {
+          "field_name": "srchr",
+          "display_name": "Voucher Number Series",
+          "data_type": "VARCHAR(10)",
+          "description": "Voucher Character",
+          "synonyms": ["voucher number series character", "voucher character"]
+        },
+        {
+          "field_name": "date",
+          "display_name": "Voucher Date",
+          "data_type": "DATE",
+          "description": "Date of Voucher",
+          "synonyms": ["date", "voucher date"],
+          "is_date": true
+        },
+        {
+          "field_name": "party",
+          "display_name": "Party",
+          "data_type": "VARCHAR(100)",
+          "description": "Party name or code (customer, vendor, etc.)",
+          "synonyms": [
+            "bill party",
+            "invoice party",
+            "customer",
+            "client",
+            "buyer"
+          ],
+          "references": { "table": "partymst", "field": "account" }
+        },
+        {
+          "field_name": "book",
+          "display_name": "Book",
+          "data_type": "VARCHAR(100)",
+          "description": "Book Name",
+          "synonyms": ["Book", "Cash A/c", "Bankr"],
+          "references": { "table": "partymst", "field": "account" }
+        },
+        {
+          "field_name": "mode",
+          "display_name": "Payment Mode",
+          "data_type": "VARCHAR(100)",
+          "description": "Payment/Receipt mode: 'CHQ' for Cheque, 'CASH' for Cash, 'RTGS', 'NEFT', 'UPI', 'IMPS'",
+          "synonyms": [
+            "mode",
+            "payment mode",
+            "receipt mode",
+            "cheque",
+            "cash",
+            "rtgs",
+            "neft",
+            "upi",
+            "imps"
+          ]
+        },
+        {
+          "field_name": "code",
+          "display_name": "Code",
+          "data_type": "VARCHAR(100)",
+          "description": "if code = 'DR' then its debit note entry, if code = 'CRN' then its credit note entry, if code = 'JV' then its journal entry, if code = 'BP' then its bank payment entry, if code = 'CP' then its cash payment entry, if code = 'BR' then its bank receipt entry, if code = 'CR' then its cash receipt entry, if code = 'QR' then its cheque return entry",
+          "synonyms": ["voucher code", "code"]
+        },
+        {
+          "field_name": "remarks",
+          "display_name": "narration",
+          "data_type": "VARCHAR(100)",
+          "description": "stoers extra details of voucher",
+          "synonyms": ["voucher remarks", "remarks", "narration"]
+        },
+        {
+          "field_name": "netamt",
+          "display_name": "Voucher Amount",
+          "data_type": "DECIMAL(12,2)",
+          "description": "Total voucher value",
+          "synonyms": [
+            "cheque amount",
+            "cash amount",
+            "debit note amount",
+            "credit note amount",
+            "jv total",
+            "voucher value"
+          ],
+          "aggregations": ["SUM", "AVG", "MAX", "MIN"]
+        },
+        {
+          "field_name": "tdsamt",
+          "display_name": "Voucher tds amount",
+          "data_type": "DECIMAL(12,2)",
+          "description": "Total voucher tds amount",
+          "synonyms": ["tds amount", "tds"],
+          "aggregations": ["SUM", "AVG", "MAX", "MIN"]
+        },
+        {
+          "field_name": "vchrtype",
+          "display_name": "Voucher Type",
+          "data_type": "VARCHAR(10)",
+          "description": "Type: 'advance' = Advance Receipt/Payment, 'against bill' = Bill-to-Bill Payment",
+          "synonyms": [
+            "voucher type",
+            "vchr type",
+            "advance",
+            "against bill",
+            "bill to bill"
+          ]
+        },
+        {
+          "field_name": "von",
+          "display_name": "Voucher On",
+          "data_type": "VARCHAR(10)",
+          "description": "For debit/credit notes: 'SALE' = Sales side, 'PURCHASE' = Purchase side",
+          "synonyms": [
+            "voucher on",
+            "von",
+            "sale side",
+            "purchase side",
+            "debit note type",
+            "credit note type"
+          ]
+        },
+        {
+          "field_name": "hsncode",
+          "display_name": "hsn code",
+          "data_type": "VARCHAR(100)",
+          "description": "hsn code for debit note and credit note entry",
+          "synonyms": ["hsncode", "hsn", "hsn code"],
+          "in_queries": ["filter"]
+        }
+      ],
+      "joins": [
+        {
+          "join_table": "partymst",
+          "join_type": "INNER",
+          "condition": "accvchrmst.party = partymst.account",
+          "description": "Get party details (account, addr1, addr2, addr3,city, etc.) for the party"
+        },
+        {
+          "table_name": "ordermst",
+          "display_name": "Order Form",
+          "description": "Main order table containing all types of order like sales order, purchase order, grey purchase order, general purchase order etc... Order types are distinguished by the 'mode' field:\n- 'S' = Sales Order (Regular sales order, finish sales order)\n- 'P' = purchase order (supplier purchase order, finish purchase order)\n- 'G' = Grey Purchase Order\n- 'OP' = General Purchase Order\n\n**IMPORTANT**: When user asks about 'sales order', use mode = 'S'.\nWhen user asks about 'purchase order', or 'finish purchase order', use mode = 'P'.\nWhen user asks about 'grey purchase order', or 'grey order', use mode = 'G'.\nWhen user asks about 'general purchase order', or 'general order', use mode = 'OP'.\n\nWhen user asks for 'pending order', calculate balance using orderdet fields based on per unit.",
+          "date_field": "date",
+          "primary_key": "id",
+          "fields": [
+            {
+              "field_name": "orderno",
+              "display_name": "Order Number",
+              "data_type": "numeric(10)",
+              "description": "Unique Order identifier",
+              "synonyms": ["order number", "order", "order no"]
+            },
+            {
+              "field_name": "orderchr",
+              "display_name": "Order Number Series",
+              "data_type": "VARCHAR(10)",
+              "description": "Order Character",
+              "synonyms": ["order number series character", "order character"]
+            },
+            {
+              "field_name": "date",
+              "display_name": "Order Date",
+              "data_type": "DATE",
+              "description": "Date of Order",
+              "synonyms": ["date", "order date"],
+              "is_date": true
+            },
+            {
+              "field_name": "party",
+              "display_name": "Party",
+              "data_type": "VARCHAR(100)",
+              "description": "Party name or code (customer, vendor, etc.)",
+              "synonyms": [
+                "bill party",
+                "invoice party",
+                "customer",
+                "client",
+                "buyer"
+              ],
+              "references": { "table": "partymst", "field": "account" }
+            },
+            {
+              "field_name": "agent",
+              "display_name": "Agent",
+              "data_type": "VARCHAR(100)",
+              "description": "Sales agent associated with the bill",
+              "synonyms": [
+                "order agent",
+                "representative",
+                "dealer",
+                "channel partner"
+              ],
+              "references": { "table": "partymst", "field": "account" }
+            },
+            {
+              "field_name": "haste",
+              "display_name": "Haste",
+              "data_type": "VARCHAR(100)",
+              "description": "Order Haste ",
+              "synonyms": ["order haste", "order through"],
+              "references": { "table": "hastemst", "field": "haste" }
+            },
+            {
+              "field_name": "transport",
+              "display_name": "Transport",
+              "data_type": "VARCHAR(100)",
+              "description": "Order Transport ",
+              "synonyms": ["order transport"],
+              "references": { "table": "transportmst", "field": "transport" }
+            },
+            {
+              "field_name": "station",
+              "display_name": "Station",
+              "data_type": "VARCHAR(100)",
+              "description": "Order Station ",
+              "synonyms": ["order station"],
+              "references": { "table": "citymst", "field": "city" }
+            },
+            {
+              "field_name": "salesman",
+              "display_name": "Salesman",
+              "data_type": "VARCHAR(100)",
+              "description": "Salesperson responsible for the bill",
+              "synonyms": [
+                "order salesman",
+                "sales rep",
+                "salesperson",
+                "executive"
+              ],
+              "references": { "table": "salesmanmst", "field": "salesman" }
+            },
+            {
+              "field_name": "netamt",
+              "display_name": "Order Amount",
+              "data_type": "DECIMAL(12,2)",
+              "description": "Total Order value",
+              "synonyms": [
+                "sales",
+                "revenue",
+                "amount",
+                "total",
+                "invoice total",
+                "sales value"
+              ],
+              "aggregations": ["SUM", "AVG", "MAX", "MIN"]
+            },
+            {
+              "field_name": "mode",
+              "display_name": "Order Type Code",
+              "data_type": "VARCHAR(10)",
+              "description": "Code identifying bill type: S = Sales, P = Purchase, G = Grey Purchase Order, OP = General Purchase Order etc...",
+              "synonyms": ["type", "order mode", "mode"],
+              "in_queries": ["filter"]
+            },
+            {
+              "field_name": "ptyorderno",
+              "display_name": "Party Order Number",
+              "data_type": "VARCHAR(10)",
+              "description": "Party Order Number",
+              "synonyms": ["party order number", "party order no", "order no"],
+              "in_queries": ["filter"]
+            }
+          ],
+          "joins": [
+            {
+              "join_table": "partymst",
+              "join_type": "INNER",
+              "condition": "ordermst.party = partymst.account",
+              "description": "Get party details (account, addr1, addr2, addr3,city, etc.) for the bill"
+            }
+          ]
+        },
+        {
+          "table_name": "orderdet",
+          "display_name": "Order Details",
+          "description": "Line items for each order. Use this table for product-level order analysis. For pending order calculation:\n- For per = 'P' (Pieces): pending = pcs - spcs - billpcs\n- For per = 'M' (Meters): pending = meters - smtrs - billmtrs\n- For per = 'W' (Weight): pending = weight - swt - billwt",
+          "primary_key": "id",
+          "date_field": null,
+          "fields": [
+            {
+              "field_name": "id",
+              "display_name": "Detail ID",
+              "data_type": "INT",
+              "description": "Unique line item identifier",
+              "synonyms": ["detail id", "line id"],
+              "is_primary_key": true
+            },
+            {
+              "field_name": "ControlId",
+              "display_name": "Order ID",
+              "data_type": "INT",
+              "description": "Foreign key linking to ordermst.id",
+              "synonyms": ["order id", "order control id", "parent order"],
+              "references": { "table": "ordermst", "field": "id" }
+            },
+            {
+              "field_name": "itemname",
+              "display_name": "Item Name",
+              "data_type": "VARCHAR(50)",
+              "description": "Product or item name",
+              "synonyms": ["product name", "item name", "stock name"],
+              "references": { "table": "itemmast", "field": "itemname" }
+            },
+            {
+              "field_name": "design",
+              "display_name": "Design",
+              "data_type": "VARCHAR(200)",
+              "description": "Design ",
+              "synonyms": ["design", "design no", "designno"]
+            },
+            {
+              "field_name": "pcs",
+              "display_name": "Pcs",
+              "data_type": "DECIMAL(12,2)",
+              "description": "Pcs sold",
+              "synonyms": ["quantity", "qty", "units", "pieces", "pcs"],
+              "aggregations": ["SUM", "AVG"]
+            },
+            {
+              "field_name": "cut",
+              "display_name": "Cut",
+              "data_type": "DECIMAL(12,2)",
+              "description": "Sarees Cut",
+              "synonyms": ["cut"]
+            },
+            {
+              "field_name": "meters",
+              "display_name": "Meters",
+              "data_type": "DECIMAL(12,2)",
+              "description": "Meters sold",
+              "synonyms": ["Mtr", "Mtrs", "meters", "meter"],
+              "aggregations": ["SUM", "AVG"]
+            },
+            {
+              "field_name": "weight",
+              "display_name": "weight",
+              "data_type": "DECIMAL(12,3)",
+              "description": "weight sold",
+              "synonyms": ["weight", "weight", "wt"],
+              "aggregations": ["SUM", "AVG"]
+            },
+            {
+              "field_name": "rate",
+              "display_name": "Rate",
+              "data_type": "DECIMAL(12,2)",
+              "description": "Selling price per unit",
+              "synonyms": ["price", "unit price", "rate"],
+              "aggregations": ["AVG"]
+            },
+            {
+              "field_name": "amount",
+              "display_name": "Amount",
+              "data_type": "DECIMAL(12,2)",
+              "description": "when unit = 'P' then pcs * Rate for 'M' meters * rate for 'W' weight * rate",
+              "synonyms": ["line total", "item amount", "subtotal"],
+              "aggregations": ["SUM", "AVG"]
+            },
+            {
+              "field_name": "per",
+              "display_name": "Unit",
+              "data_type": "VARCHAR(10)",
+              "description": "Unit of measurement: 'P' for Pieces, 'M' for Meters, 'W' for Weight",
+              "synonyms": ["unit", "uom", "per", "measurement"],
+              "in_queries": ["filter", "group"]
+            },
+            {
+              "field_name": "packing",
+              "display_name": "Packing Type",
+              "data_type": "varchar(100)",
+              "description": "Type Of Packing like thaily, box, bigbox",
+              "synonyms": ["packing type", "packing"]
+            },
+            {
+              "field_name": "spcs",
+              "display_name": "SPcs",
+              "data_type": "DECIMAL(12,2)",
+              "description": "Pcs sold through challan or bills  updated here used in Pending calculation",
+              "synonyms": ["quantity", "qty", "units", "pieces", "pcs"],
+              "aggregations": ["SUM", "AVG"]
+            },
+            {
+              "field_name": "smtrs",
+              "display_name": "SMtrs",
+              "data_type": "DECIMAL(12,2)",
+              "description": "Meters sold through challan and bill updated here used in Pending calculation",
+              "synonyms": ["Mtr", "Mtrs", "meters", "meter"],
+              "aggregations": ["SUM", "AVG"]
+            },
+            {
+              "field_name": "swt",
+              "display_name": "SWt",
+              "data_type": "DECIMAL(12,3)",
+              "description": "weight sold through challan and bill updated here used in Pending calculation",
+              "synonyms": ["weight", "weight", "wt"],
+              "aggregations": ["SUM", "AVG"]
+            },
+            {
+              "field_name": "billpcs",
+              "display_name": "BillPcs",
+              "data_type": "DECIMAL(12,2)",
+              "description": "BillPcs sold through challan or bills  updated here used in Pending calculation",
+              "synonyms": ["quantity", "qty", "units", "pieces", "pcs"],
+              "aggregations": ["SUM", "AVG"]
+            },
+            {
+              "field_name": "billmtrs",
+              "display_name": "BilMtrs",
+              "data_type": "DECIMAL(12,2)",
+              "description": "Meters sold through challan and bill updated here used in Pending calculation",
+              "synonyms": ["Mtr", "Mtrs", "meters", "meter"],
+              "aggregations": ["SUM", "AVG"]
+            },
+            {
+              "field_name": "billwt",
+              "display_name": "BillWt",
+              "data_type": "DECIMAL(12,3)",
+              "description": "Bill weight sold through challan and bill updated here used in Pending calculation",
+              "synonyms": ["weight", "weight", "wt"],
+              "aggregations": ["SUM", "AVG"]
+            }
+          ],
+          "joins": [
+            {
+              "join_table": "ordermst",
+              "join_type": "INNER",
+              "condition": "orderdet.ControlId = ordermst.id",
+              "description": "Get the parent order header"
+            },
+            {
+              "join_table": "itemmst",
+              "join_type": "LEFT",
+              "condition": "orderdet.itemname = itemmst.itemname",
+              "description": "Get item details"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

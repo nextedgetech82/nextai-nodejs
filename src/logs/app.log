@@ -1,0 +1,9 @@
+[2026-03-28T10:13:30.815Z] [ERROR] Failed to load metadata: Unexpected end of JSON input
+[2026-03-28T10:14:16.335Z] [ERROR] Failed to load metadata: Unexpected end of JSON input
+[2026-03-28T10:14:35.819Z] [ERROR] Failed to load metadata: Unexpected end of JSON input
+[2026-03-28T10:15:07.081Z] [ERROR] Failed to load metadata: Unexpected end of JSON input
+[2026-03-28T10:15:32.555Z] [ERROR] Failed to load metadata: Unexpected end of JSON input
+[2026-03-28T10:15:48.487Z] [ERROR] Failed to load metadata: Unexpected end of JSON input
+[2026-03-28T10:15:48.490Z] [INFO] Server is running on port 3000
+[2026-03-28T10:15:48.490Z] [INFO] Environment: development
+[2026-03-28T10:15:48.490Z] [INFO] API URL: http://localhost:3000/api
