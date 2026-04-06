@@ -121,7 +121,8 @@ class MultiCustomerController {
         query,
         metadata,
       );
-      const sqlQuery = sqlResult.sqlQuery;
+      //const sqlQuery = sqlResult.sqlQuery;
+      const sqlQuery = sqlResult;
 
       // Capture SQL generation tokens
       if (sqlResult.usage) {
@@ -683,6 +684,59 @@ Now respond with JSON only:
       });
     } catch (error) {
       logger.error(`Error in resetMonthlyUsage: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Purchase tokens endpoint
+   */
+  purchaseTokens = async (req, res, next) => {
+    try {
+      const apiKey = req.headers["authorization"]?.replace("Bearer ", "");
+      const keyInfo = await dbRouter.validateApiKey(apiKey);
+      const customerId = keyInfo.customer_id;
+
+      const { payment_amount, payment_currency = "USD" } = req.body;
+
+      const result = await dbRouter.purchaseTokens(
+        customerId,
+        payment_amount,
+        payment_currency,
+      );
+
+      // Get updated balance
+      const balance = await dbRouter.getTokenBalance(customerId);
+
+      res.json({
+        success: true,
+        purchase: result,
+        current_balance: balance.summary,
+      });
+    } catch (error) {
+      logger.error(`Purchase error: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Get token balance endpoint
+   */
+  getTokenBalance = async (req, res, next) => {
+    try {
+      const apiKey = req.headers["authorization"]?.replace("Bearer ", "");
+      const keyInfo = await dbRouter.validateApiKey(apiKey);
+      const customerId = keyInfo.customer_id;
+
+      const balance = await dbRouter.getTokenBalance(customerId);
+
+      res.json({
+        success: true,
+        customer_id: customerId,
+        ...balance,
+      });
+    } catch (error) {
+      logger.error(`Balance error: ${error.message}`);
       next(error);
     }
   };

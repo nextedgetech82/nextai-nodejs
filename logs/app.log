@@ -2715,3 +2715,202 @@ ORDER BY bm.date DESC, bm.serial DESC;
 [2026-04-06T06:55:50.104Z] [INFO] GET /api/multi-customer/usage/stats
 [2026-04-06T06:56:47.731Z] [INFO] GET /api/multi-customer/usage/stats
 [2026-04-06T06:56:53.145Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-06T12:33:44.634Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:33:44.636Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:33:44.638Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:33:44.638Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:33:44.646Z] [INFO] Server is running on port 3000
+[2026-04-06T12:33:44.646Z] [INFO] Environment: development
+[2026-04-06T12:33:44.646Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T12:35:01.822Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:35:01.823Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:35:01.828Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:35:01.829Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:35:01.836Z] [INFO] Server is running on port 3000
+[2026-04-06T12:35:01.836Z] [INFO] Environment: development
+[2026-04-06T12:35:01.836Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T12:35:05.756Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:35:05.756Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:35:05.761Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:35:05.761Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:35:05.769Z] [INFO] Server is running on port 3000
+[2026-04-06T12:35:05.770Z] [INFO] Environment: development
+[2026-04-06T12:35:05.770Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T12:36:03.185Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:36:03.186Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:36:03.190Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:36:03.191Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:36:03.198Z] [INFO] Server is running on port 3000
+[2026-04-06T12:36:03.198Z] [INFO] Environment: development
+[2026-04-06T12:36:03.198Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T12:36:49.429Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-06T12:36:49.498Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T12:36:50.344Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-06T12:36:54.572Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-06T12:36:54.573Z] [INFO] [Customer: 9327927990] Processing query: show last 2 Sales Bill of Laxmikrupa Company
+[2026-04-06T12:36:54.954Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-06T12:37:00.585Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 2 
+    CASE 
+        WHEN b.code = 'SR' THEN b.returnno 
+        WHEN b.code = 'P' THEN b.serial 
+        WHEN b.code = 'PR' THEN b.returnno 
+        ELSE b.serial 
+    END AS [Bill Number],
+    CASE 
+        WHEN b.code = 'SR' THEN b.srchr 
+        WHEN b.code = 'P' THEN b.srchr 
+        WHEN b.code = 'PR' THEN b.srchr 
+        ELSE b.srchr 
+    END AS [Bill Series],
+    b.date AS [Bill Date],
+    b.party AS [Party],
+    p.city AS [City],
+    p.state AS [State],
+    b.netamt AS [Bill Amount],
+    b.code AS [Bill Type]
+FROM billmast b
+JOIN partymst p ON b.party = p.account
+WHERE b.code = 'S'
+    AND b.opening <> 'Y'
+ORDER BY b.date DESC, b.id DESC;
+[2026-04-06T12:37:01.558Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-06T12:37:02.755Z] [ERROR] Error for 9327927990/company EQSHREE20252026: Invalid column name 'returnchr'.
+[2026-04-06T12:37:03.708Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-06T12:37:04.999Z] [ERROR] Error for 9327927990/company EQ1234SHREE20262027: Invalid column name 'returnchr'.
+[2026-04-06T12:37:05.000Z] [INFO] [Customer: 9327927990] Total rows: 0 from 0 companies in 15570ms
+[2026-04-06T12:37:25.899Z] [INFO] Tracked usage for 9327927990: 7551 tokens (null% accurate), ₹0.18
+[2026-04-06T12:37:25.900Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 7551, 
+            Estimated: 180, 
+            Accuracy: 2.4%,
+            Cost: ₹0.18
+[2026-04-06T12:39:06.997Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:39:06.997Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:39:07.002Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:39:07.002Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:39:07.010Z] [INFO] Server is running on port 3000
+[2026-04-06T12:39:07.010Z] [INFO] Environment: development
+[2026-04-06T12:39:07.010Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T12:39:15.241Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-06T12:39:15.315Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T12:39:16.138Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-06T12:39:18.802Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-06T12:39:18.802Z] [INFO] [Customer: 9327927990] Processing query: show last 2 Sales Bill of Laxmikrupa Company
+[2026-04-06T12:39:19.184Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-06T12:39:24.936Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 2 
+    CASE 
+        WHEN b.code = 'SR' THEN b.returnno 
+        WHEN b.code = 'P' THEN b.serial 
+        WHEN b.code = 'PR' THEN b.returnno 
+        ELSE b.serial 
+    END AS [Bill Number],
+    CASE 
+        WHEN b.code = 'SR' THEN b.returnchr 
+        WHEN b.code = 'P' THEN b.srchr 
+        WHEN b.code = 'PR' THEN b.returnchr 
+        ELSE b.srchr 
+    END AS [Bill Series],
+    b.date AS [Bill Date],
+    p.account AS [Party Name],
+    p.city AS [City],
+    p.state AS [State],
+    b.netamt AS [Bill Amount],
+    b.code AS [Bill Type]
+FROM billmast b
+JOIN partymst p ON b.party = p.account
+WHERE b.code = 'S'
+    AND b.opening <> 'Y'
+ORDER BY b.date DESC, b.id DESC;
+[2026-04-06T12:39:25.939Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-06T12:39:27.165Z] [ERROR] Error for 9327927990/company EQSHREE20252026: Invalid column name 'returnchr'.
+[2026-04-06T12:39:28.086Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-06T12:39:29.413Z] [ERROR] Error for 9327927990/company EQ1234SHREE20262027: Invalid column name 'returnchr'.
+[2026-04-06T12:39:29.414Z] [INFO] [Customer: 9327927990] Total rows: 0 from 0 companies in 14172ms
+[2026-04-06T12:39:45.547Z] [INFO] Tracked usage for 9327927990: 7342 tokens (null% accurate), ₹0.17
+[2026-04-06T12:39:45.548Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 7342, 
+            Estimated: 182, 
+            Accuracy: 2.5%,
+            Cost: ₹0.17
+[2026-04-06T12:41:30.047Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:41:30.047Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:41:30.052Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:41:30.052Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:41:30.060Z] [INFO] Server is running on port 3000
+[2026-04-06T12:41:30.060Z] [INFO] Environment: development
+[2026-04-06T12:41:30.060Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T12:41:35.718Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-06T12:41:35.788Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T12:41:36.635Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-06T12:41:39.443Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-06T12:41:39.444Z] [INFO] [Customer: 9327927990] Processing query: show last 2 Sales Bill of Laxmikrupa Company
+[2026-04-06T12:41:39.823Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-06T12:41:45.054Z] [INFO] [Customer: 9327927990] Generated SQL: undefined
+[2026-04-06T12:41:45.966Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-06T12:41:47.142Z] [ERROR] Error for 9327927990/company EQSHREE20252026: Cannot read properties of undefined (reading 'map')
+[2026-04-06T12:41:48.064Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-06T12:41:49.278Z] [ERROR] Error for 9327927990/company EQ1234SHREE20262027: Cannot read properties of undefined (reading 'map')
+[2026-04-06T12:41:49.280Z] [INFO] [Customer: 9327927990] Total rows: 0 from 0 companies in 13561ms
+[2026-04-06T12:42:05.772Z] [ERROR] Error in processQuery: Cannot read properties of undefined (reading 'length')
+[2026-04-06T12:42:05.774Z] [ERROR] POST /api/multi-customer/analytics - Cannot read properties of undefined (reading 'length')
+[2026-04-06T12:42:05.775Z] [ERROR] TypeError: Cannot read properties of undefined (reading 'length')
+    at processQuery (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:219:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[2026-04-06T12:42:12.442Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-06T12:42:14.430Z] [INFO] [Customer: 9327927990] AI detected companies: all
+[2026-04-06T12:42:14.431Z] [INFO] [Customer: 9327927990] Processing query: show last 2 Sales Bill
+[2026-04-06T12:42:14.804Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQLAKSHYA20252026, EQ1234SHREE20262027, EQLAKSHYA20262027
+[2026-04-06T12:42:18.952Z] [INFO] [Customer: 9327927990] Generated SQL: undefined
+[2026-04-06T12:42:20.240Z] [ERROR] Error for 9327927990/company EQSHREE20252026: Cannot read properties of undefined (reading 'map')
+[2026-04-06T12:42:21.255Z] [INFO] Connected to company DB: EQLAKSHYA20252026 (9327927990/EQLAKSHYA20252026)
+[2026-04-06T12:42:22.557Z] [ERROR] Error for 9327927990/company EQLAKSHYA20252026: Cannot read properties of undefined (reading 'map')
+[2026-04-06T12:42:23.776Z] [ERROR] Error for 9327927990/company EQ1234SHREE20262027: Cannot read properties of undefined (reading 'map')
+[2026-04-06T12:42:24.793Z] [INFO] Connected to company DB: EQLAKSHYA20262027 (9327927990/EQLAKSHYA20262027)
+[2026-04-06T12:42:26.065Z] [ERROR] Error for 9327927990/company EQLAKSHYA20262027: Cannot read properties of undefined (reading 'map')
+[2026-04-06T12:42:26.066Z] [INFO] [Customer: 9327927990] Total rows: 0 from 0 companies in 13623ms
+[2026-04-06T12:42:43.955Z] [ERROR] Error in processQuery: Cannot read properties of undefined (reading 'length')
+[2026-04-06T12:42:43.957Z] [ERROR] POST /api/multi-customer/analytics - Cannot read properties of undefined (reading 'length')
+[2026-04-06T12:42:43.958Z] [ERROR] TypeError: Cannot read properties of undefined (reading 'length')
+    at processQuery (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:219:34)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[2026-04-06T12:43:22.722Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-06T12:43:48.944Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-06T12:43:54.193Z] [INFO] [Customer: 9327927990] Processing query: show last 2 Sales Bill of Laxmikrupa Company
+[2026-04-06T12:44:10.378Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-06T12:45:47.908Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:45:47.909Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:45:47.914Z] [INFO] Metadata loaded successfully
+[2026-04-06T12:45:47.914Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T12:45:47.922Z] [INFO] Server is running on port 3000
+[2026-04-06T12:45:47.922Z] [INFO] Environment: development
+[2026-04-06T12:45:47.922Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T12:45:53.469Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-06T12:45:56.649Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T12:45:59.800Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-06T12:46:04.439Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-06T12:46:05.580Z] [INFO] [Customer: 9327927990] Processing query: show last 2 Sales Bill of Laxmikrupa Company
+[2026-04-06T12:46:08.750Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-06T12:46:29.059Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 2 
+    bm.serial AS [Bill Number],
+    bm.srchr AS [Bill Series],
+    bm.date AS [Bill Date],
+    pm.account AS [Party Name],
+    pm.city AS [City],
+    pm.state AS [State],
+    bm.netamt AS [Bill Amount]
+FROM billmast bm
+JOIN partymst pm ON bm.party = pm.account
+WHERE bm.code = 'S'
+    AND bm.opening <> 'Y'
+ORDER BY bm.date DESC, bm.serial DESC;
+[2026-04-06T12:46:30.757Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-06T12:46:32.152Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 2 rows
+[2026-04-06T12:46:33.057Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-06T12:46:34.321Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 2 rows
+[2026-04-06T12:46:45.230Z] [INFO] [Customer: 9327927990] Total rows: 4 from 2 companies in 50134ms
+[2026-04-06T12:47:25.425Z] [INFO] Tracked usage for 9327927990: 2792 tokens (null% accurate), ₹0.07
+[2026-04-06T12:47:26.461Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 2792, 
+            Estimated: 379, 
+            Accuracy: 13.6%,
+            Cost: ₹0.07

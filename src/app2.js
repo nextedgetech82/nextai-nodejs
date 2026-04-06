@@ -4,18 +4,50 @@ const helmet = require("helmet");
 const rateLimit = require("express-rate-limit");
 const dotenv = require("dotenv");
 const path = require("path");
+const session = require("express-session");
+const flash = require("connect-flash");
+const methodOverride = require("method-override");
+
 const redisClient = require("../config/redis");
 
 dotenv.config();
 
 const analyticsController = require("./controllers/analyticsController");
 const MultiCustomerController = require("./controllers/multi-customer-controller");
+const AdminController = require("./controllers/admin-controller");
 
 const errorHandler = require("./middleware/errorHandler");
 const logger = require("./utils/logger");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// ============ VIEW ENGINE SETUP ============
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
+// ============ STATIC FILES ============
+app.use(express.static(path.join(__dirname, "public")));
+
+// ============ SESSION & FLASH MIDDLEWARE ============
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "your-secret-key",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 3600000 }, // 1 hour
+  }),
+);
+app.use(flash());
+app.use(methodOverride("_method"));
+
+// Make flash messages available to all views
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  next();
+});
 
 // Initialize Redis connection (non-blocking)
 if (process.env.REDIS_ENABLED !== "false") {
@@ -27,41 +59,36 @@ if (process.env.REDIS_ENABLED !== "false") {
   });
 }
 
+// ============ SECURITY MIDDLEWARE ============
 app.use(helmet());
 
 app.use(
   cors({
     origin: "*",
     credentials: true,
-    //methods:["GET","POST","PUT","DELETE"],
-    //allowedHeaders:["Content-Type","Authorization"],
-    //maxAge:86400,
-    //preflightContinue:false,
-    //optionsSuccessStatus:200,
   }),
 );
 
+// Rate limiting for API
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, //15 Minutes
   max: 100,
   message: "Too many requests from this IP, please try again after 15 minutes",
-  //standardHeaders:true,
-  //legacyHeaders:false,
 });
 
 app.use("/api/", limiter);
 
-//Body Parsing Middleware
+// Body Parsing Middleware
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-//Request Loggin Middleware
+// Request Logging Middleware
 app.use((req, res, next) => {
   logger.info(`${req.method} ${req.url}`);
   next();
 });
 
-//Health Check EndPoint
+// ============ HEALTH CHECK ============
 app.get("/health", (req, res) => {
   res.status(200).json({
     message: "OK",
@@ -71,7 +98,22 @@ app.get("/health", (req, res) => {
   });
 });
 
-//Multi Company
+// ============ ADMIN DASHBOARD ROUTES (WEB UI) ============
+app.get("/", (req, res) => res.redirect("/admin/customers"));
+app.get("/admin", (req, res) => res.redirect("/admin/customers"));
+
+// Customer Management Routes
+app.get("/admin/customers", AdminController.getCustomers);
+app.get("/admin/customers/add", AdminController.getAddCustomer);
+app.post("/admin/customers/add", AdminController.postAddCustomer);
+app.get("/admin/customers/edit/:id", AdminController.getEditCustomer);
+app.post("/admin/customers/edit/:id", AdminController.postEditCustomer);
+app.delete("/admin/customers/delete/:id", AdminController.deleteCustomer);
+app.get("/admin/customers/purchase/:id", AdminController.getPurchaseTokens);
+app.post("/admin/customers/purchase/:id", AdminController.postPurchaseTokens);
+app.get("/admin/customers/usage/:id", AdminController.getCustomerUsage);
+
+// ============ API ROUTES (Multi-Customer) ============
 app.post("/api/multi-customer/analytics", MultiCustomerController.processQuery);
 app.post(
   "/api/multi-customer/customer-api-key",
@@ -85,7 +127,7 @@ app.post(
   "/api/multi-customer/usage/reset",
   MultiCustomerController.resetMonthlyUsage,
 );
-//Purchase
+
 // Token Management Routes
 app.get("/api/multi-customer/balance", MultiCustomerController.getTokenBalance);
 app.post(
@@ -94,7 +136,7 @@ app.post(
 );
 app.get("/api/multi-customer/companies", MultiCustomerController.getCompanies);
 
-//API Routes
+// ============ API ROUTES (Analytics) ============
 app.post("/api/analytics", analyticsController.processQuery);
 app.get("/api/analytics/suggestions", analyticsController.getSuggestions);
 app.get(
@@ -104,27 +146,35 @@ app.get(
 app.get("/api/metadata/tables", analyticsController.getTables);
 app.get("/api/metadata/tables/:tableName", analyticsController.getTableInfo);
 
-//cache
-// Cache management endpoints (add authentication in production)
+// ============ CACHE MANAGEMENT ROUTES ============
 app.post("/api/admin/cache/clear", analyticsController.clearCache);
 app.get("/api/admin/cache/stats", analyticsController.getCacheStats);
 
-//404 handler
+// ============ 404 HANDLER ============
 app.use((req, res) => {
-  res.status(404).json({ message: "Not Found", success: false, status: 404 });
+  // Check if it's an API request or web request
+  if (req.path.startsWith("/api/")) {
+    res.status(404).json({ message: "Not Found", success: false, status: 404 });
+  } else {
+    res.status(404).render("error", {
+      title: "404 - Page Not Found",
+      message: "The page you're looking for doesn't exist",
+    });
+  }
 });
 
-//Error handler
+// ============ ERROR HANDLER ============
 app.use(errorHandler);
 
-//Start Server
-app.listen(PORT, () => {
+// ============ START SERVER ============
+const server = app.listen(PORT, () => {
   logger.info(`Server is running on port ${PORT}`);
   logger.info(`Environment: ${process.env.NODE_ENV}`);
   logger.info(`API URL: http://localhost:${PORT}/api`);
+  logger.info(`Admin Dashboard: http://localhost:${PORT}/admin/customers`);
 });
 
-//Gracefull Shutdown
+// ============ GRACEFUL SHUTDOWN ============
 process.on("SIGTERM", () => {
   logger.info("SIGTERM received");
   server.close(() => {

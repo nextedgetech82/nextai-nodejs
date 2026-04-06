@@ -86,6 +86,7 @@ INSTRUCTIONS:
 8. Ensure the query is safe and optimized
 9. Always include a TOP 100 clause unless the user explicitly asks for a different number.
 10. IMPORTANT: Only include the billdata table (line items) in JOINs if the query explicitly asks for item-level details such as product names, quantities, rates, or line totals. For summary queries (e.g., total sales by customer, monthly sales, state-wise summary), use only the billmast table. Do not add unnecessary joins.
+11. IMPORTANT: In billmast, the real physical columns are serial and srchr. Names like billno, returnno, returnchr, serialno, or bill chr are display captions or aliases only. Never reference those as database columns. Use serial and srchr in SQL, and only alias them in SELECT if needed.
 
 
 SQL QUERY:

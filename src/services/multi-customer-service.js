@@ -178,6 +178,11 @@ Example queries:
 - "Show top 10 items sold" → code = 'S'
 - "Show top 10 items returned" → code = 'SR'
 - "Show net sales by month" → SUM(code='S') - SUM(code='SR')
+15. **Column reality check for billmast**:
+    The real physical columns are always serial and srchr.
+    Terms like billno, returnno, returnchr, serialno, and bill chr are only captions or aliases.
+    NEVER generate SQL using fake columns such as returnchr or returnno.
+    For sales return or purchase return queries, still use serial and srchr in SQL and alias them only in SELECT if needed.
 `;
 
     const prompt = `
@@ -205,6 +210,7 @@ INSTRUCTIONS:
 8. Ensure the query is safe and optimized
 9. Always include a TOP 100 clause unless the user explicitly asks for a different number.
 10. IMPORTANT: Only include the billdata table (line items) in JOINs if the query explicitly asks for item-level details such as product names, quantities, rates, or line totals. For summary queries (e.g., total sales by customer, monthly sales, state-wise summary), use only the billmast table. Do not add unnecessary joins.
+11. IMPORTANT: In billmast, serial and srchr are the actual database columns. Names like returnno, returnchr, billno, serialno, and bill chr are aliases only and must never be used as physical column names in SQL.
 
 SQL QUERY:
 `;
@@ -217,12 +223,7 @@ SQL QUERY:
         .replace(/```\n?/g, "")
         .trim();
 
-      // Return both SQL and usage data
-      return {
-        sqlQuery: sqlQuery,
-        usage: result.usage,
-        cost: result.cost,
-      };
+      return sqlQuery;
 
       //return sqlQuery;
     } catch (error) {

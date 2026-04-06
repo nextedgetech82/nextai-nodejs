@@ -380,6 +380,322 @@ class DatabaseRouter {
     this.companyConnections.clear();
     logger.info("All database connections closed");
   }
+
+  /**
+   * Customer purchases additional tokens (MSSQL version)
+   */
+  async purchaseTokens(customerId, paymentAmount, paymentCurrency = "USD") {
+    const pool = await this.getCustomerMainDB(customerId);
+
+    // Convert to USD
+    let amountUSD = paymentAmount;
+    if (paymentCurrency === "INR") {
+      amountUSD = paymentAmount / 85;
+    }
+
+    // Calculate tokens ($0.35 per 1M tokens)
+    const tokensPerDollar = 1000000 / 0.35;
+    const newTokens = Math.floor(amountUSD * tokensPerDollar);
+
+    // Set expiry date (6 months from now)
+    const expiryDate = new Date();
+    expiryDate.setMonth(expiryDate.getMonth() + 6);
+    const expiryDateStr = expiryDate.toISOString().split("T")[0];
+
+    // Generate unique batch ID
+    const batchId = `BATCH_${customerId}_${Date.now()}`;
+
+    // Check for expired tokens first
+    await this.handleExpiredTokens(customerId);
+
+    // Create new token batch
+    await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId)
+      .input("batchId", sql.VarChar, batchId)
+      .input("tokensAllocated", sql.Int, newTokens)
+      .input("tokensRemaining", sql.Int, newTokens)
+      .input("purchaseAmount", sql.Decimal(10, 2), amountUSD)
+      .input("expiryDate", sql.Date, expiryDateStr).query(`
+            INSERT INTO token_batches 
+            (customer_id, batch_id, tokens_allocated, tokens_remaining, 
+             purchase_amount, expiry_date, status)
+            VALUES (@customerId, @batchId, @tokensAllocated, @tokensRemaining, 
+                    @purchaseAmount, @expiryDate, 'active')
+        `);
+
+    // Update customer's total allocation
+    await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId)
+      .input("newTokens", sql.Int, newTokens)
+      .input("amountUSD", sql.Decimal(10, 2), amountUSD).query(`
+            UPDATE customer_api_keys 
+            SET allocated_tokens = ISNULL(allocated_tokens, 0) + @newTokens,
+                tokens_remaining = ISNULL(tokens_remaining, 0) + @newTokens,
+                total_tokens_purchased = ISNULL(total_tokens_purchased, 0) + @newTokens,
+                payment_amount = ISNULL(payment_amount, 0) + @amountUSD
+            WHERE customer_id = @customerId
+        `);
+
+    // Log transaction
+    await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId)
+      .input("batchId", sql.VarChar, batchId)
+      .input("newTokens", sql.Int, newTokens)
+      .input(
+        "description",
+        sql.NVarChar,
+        `Purchased ${newTokens.toLocaleString()} tokens for $${amountUSD}`,
+      ).query(`
+            INSERT INTO token_transactions 
+            (customer_id, batch_id, transaction_type, tokens_amount, tokens_remaining_after, description)
+            VALUES (@customerId, @batchId, 'purchase', @newTokens, @newTokens, @description)
+        `);
+
+    return {
+      batch_id: batchId,
+      tokens_purchased: newTokens,
+      expiry_date: expiryDateStr,
+    };
+  }
+
+  /**
+   * Handle expired tokens (MSSQL version)
+   */
+  async handleExpiredTokens(customerId) {
+    const pool = await this.getCustomerMainDB(customerId);
+    const today = new Date().toISOString().split("T")[0];
+
+    // Find expired batches
+    const expiredResult = await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId)
+      .input("today", sql.Date, today).query(`
+            SELECT batch_id, tokens_remaining 
+            FROM token_batches 
+            WHERE customer_id = @customerId 
+              AND expiry_date < @today 
+              AND status = 'active'
+        `);
+
+    const expiredBatches = expiredResult.recordset;
+    let expiredTokens = 0;
+
+    for (const batch of expiredBatches) {
+      expiredTokens += batch.tokens_remaining;
+
+      // Mark batch as expired
+      await pool.request().input("batchId", sql.VarChar, batch.batch_id).query(`
+                UPDATE token_batches 
+                SET status = 'expired' 
+                WHERE batch_id = @batchId
+            `);
+
+      // Log expiry
+      await pool
+        .request()
+        .input("customerId", sql.VarChar, customerId)
+        .input("batchId", sql.VarChar, batch.batch_id)
+        .input("tokensRemaining", sql.Int, batch.tokens_remaining).query(`
+                INSERT INTO token_transactions 
+                (customer_id, batch_id, transaction_type, tokens_amount, description)
+                VALUES (@customerId, @batchId, 'expiry', @tokensRemaining, 
+                        'Expired ' + CAST(@tokensRemaining AS VARCHAR) + ' tokens')
+            `);
+    }
+
+    if (expiredTokens > 0) {
+      // Deduct expired tokens from remaining balance
+      await pool
+        .request()
+        .input("customerId", sql.VarChar, customerId)
+        .input("expiredTokens", sql.Int, expiredTokens).query(`
+                UPDATE customer_api_keys 
+                SET tokens_remaining = ISNULL(tokens_remaining, 0) - @expiredTokens,
+                    expired_tokens = ISNULL(expired_tokens, 0) + @expiredTokens
+                WHERE customer_id = @customerId
+            `);
+
+      logger.info(`Expired ${expiredTokens} tokens for customer ${customerId}`);
+    }
+
+    return expiredTokens;
+  }
+
+  /**
+   * Use tokens (FIFO - oldest batch first) MSSQL version
+   */
+  async useTokens(customerId, tokensToUse) {
+    const pool = await this.getCustomerMainDB(customerId);
+
+    // Get active batches ordered by purchase date (oldest first)
+    const batchesResult = await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId).query(`
+            SELECT batch_id, tokens_remaining, expiry_date
+            FROM token_batches 
+            WHERE customer_id = @customerId 
+              AND status = 'active'
+              AND tokens_remaining > 0
+            ORDER BY purchase_date ASC
+        `);
+
+    const batches = batchesResult.recordset;
+    let remainingToUse = tokensToUse;
+    let totalUsed = 0;
+
+    for (const batch of batches) {
+      if (remainingToUse <= 0) break;
+
+      const deductAmount = Math.min(batch.tokens_remaining, remainingToUse);
+
+      // Update batch
+      await pool
+        .request()
+        .input("batchId", sql.VarChar, batch.batch_id)
+        .input("deductAmount", sql.Int, deductAmount).query(`
+                UPDATE token_batches 
+                SET tokens_remaining = tokens_remaining - @deductAmount
+                WHERE batch_id = @batchId
+            `);
+
+      // Update batch status if depleted
+      const newRemaining = batch.tokens_remaining - deductAmount;
+      if (newRemaining === 0) {
+        await pool.request().input("batchId", sql.VarChar, batch.batch_id)
+          .query(`
+                    UPDATE token_batches 
+                    SET status = 'depleted' 
+                    WHERE batch_id = @batchId
+                `);
+      }
+
+      totalUsed += deductAmount;
+      remainingToUse -= deductAmount;
+    }
+
+    // Update customer's total remaining
+    await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId)
+      .input("totalUsed", sql.Int, totalUsed).query(`
+            UPDATE customer_api_keys 
+            SET tokens_remaining = ISNULL(tokens_remaining, 0) - @totalUsed,
+                total_tokens_used = ISNULL(total_tokens_used, 0) + @totalUsed
+            WHERE customer_id = @customerId
+        `);
+
+    // Log usage
+    await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId)
+      .input("totalUsed", sql.Int, totalUsed).query(`
+            INSERT INTO token_transactions 
+            (customer_id, transaction_type, tokens_amount, description)
+            VALUES (@customerId, 'usage', @totalUsed, 
+                    'Used ' + CAST(@totalUsed AS VARCHAR) + ' tokens for API calls')
+        `);
+
+    return { success: true, used: totalUsed };
+  }
+
+  /**
+   * Get customer token balance with batch details (MSSQL)
+   */
+  async getTokenBalance(customerId) {
+    const pool = await this.getCustomerMainDB(customerId);
+
+    // First, handle any expired tokens
+    await this.handleExpiredTokens(customerId);
+
+    // Get summary
+    const summaryResult = await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId).query(`
+            SELECT 
+                ISNULL(allocated_tokens, 0) as total_purchased,
+                ISNULL(tokens_remaining, 0) as remaining,
+                ISNULL(total_tokens_used, 0) as used,
+                ISNULL(payment_amount, 0) as total_spent,
+                ISNULL(expired_tokens, 0) as expired
+            FROM customer_api_keys 
+            WHERE customer_id = @customerId
+        `);
+
+    // Get batch details
+    const batchesResult = await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId).query(`
+            SELECT 
+                batch_id,
+                purchase_date,
+                tokens_allocated,
+                tokens_remaining,
+                expiry_date,
+                status,
+                DATEDIFF(day, GETDATE(), expiry_date) as days_until_expiry
+            FROM token_batches 
+            WHERE customer_id = @customerId 
+              AND status IN ('active', 'depleted')
+            ORDER BY purchase_date DESC
+        `);
+
+    // Get recent transactions
+    const transactionsResult = await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId).query(`
+            SELECT TOP 20
+                transaction_type,
+                tokens_amount,
+                description,
+                created_at
+            FROM token_transactions 
+            WHERE customer_id = @customerId
+            ORDER BY created_at DESC
+        `);
+
+    const summary = summaryResult.recordset[0] || {};
+    const batches = batchesResult.recordset;
+    const transactions = transactionsResult.recordset;
+
+    // Calculate daily average usage (last 30 days)
+    const usageResult = await pool
+      .request()
+      .input("customerId", sql.VarChar, customerId).query(`
+            SELECT 
+                ISNULL(AVG(daily_usage), 0) as avg_daily_usage
+            FROM (
+                SELECT 
+                    CAST(created_at AS DATE) as usage_date,
+                    SUM(tokens_amount) as daily_usage
+                FROM token_transactions 
+                WHERE customer_id = @customerId 
+                  AND transaction_type = 'usage'
+                  AND created_at >= DATEADD(day, -30, GETDATE())
+                GROUP BY CAST(created_at AS DATE)
+            ) as daily
+        `);
+
+    const avgDailyUsage = usageResult.recordset[0]?.avg_daily_usage || 0;
+    const estimatedDaysRemaining =
+      avgDailyUsage > 0 ? Math.floor(summary.remaining / avgDailyUsage) : 0;
+
+    return {
+      summary: {
+        total_purchased: summary.total_purchased || 0,
+        used: summary.used || 0,
+        remaining: summary.remaining || 0,
+        expired: summary.expired || 0,
+        total_spent: summary.total_spent || 0,
+        estimated_days_remaining: estimatedDaysRemaining,
+        daily_average_usage: Math.round(avgDailyUsage),
+      },
+      batches: batches,
+      recent_transactions: transactions,
+    };
+  }
 }
 
 module.exports = new DatabaseRouter();
