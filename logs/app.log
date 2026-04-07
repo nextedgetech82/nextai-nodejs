@@ -2914,3 +2914,479 @@ ORDER BY bm.date DESC, bm.serial DESC;
             Estimated: 379, 
             Accuracy: 13.6%,
             Cost: ₹0.07
+[2026-04-06T15:58:05.770Z] [INFO] Metadata loaded successfully
+[2026-04-06T15:58:05.771Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T15:58:05.777Z] [INFO] Metadata loaded successfully
+[2026-04-06T15:58:05.777Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T15:58:05.785Z] [INFO] Server is running on port 3000
+[2026-04-06T15:58:05.785Z] [INFO] Environment: development
+[2026-04-06T15:58:05.785Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T15:58:05.786Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T15:58:12.391Z] [INFO] GET /
+[2026-04-06T15:58:12.460Z] [INFO] GET /favicon.ico
+[2026-04-06T15:58:21.040Z] [INFO] GET /admin/customers
+[2026-04-06T15:58:21.304Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T15:58:26.455Z] [INFO] GET /
+[2026-04-06T15:58:28.420Z] [INFO] GET /admin/customers
+[2026-04-06T15:58:30.741Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T15:58:33.331Z] [INFO] POST /admin/customers/9327927990
+[2026-04-06T15:58:33.450Z] [INFO] GET /admin/customers
+[2026-04-06T15:58:36.106Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T15:58:38.649Z] [INFO] POST /admin/customers/9327927990
+[2026-04-06T15:58:38.778Z] [INFO] GET /admin/customers
+[2026-04-06T15:58:48.072Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T15:59:10.172Z] [INFO] GET /admin/customers
+[2026-04-06T15:59:11.655Z] [INFO] GET /admin/customers/new
+[2026-04-06T15:59:17.122Z] [INFO] GET /admin/customers
+[2026-04-06T15:59:18.972Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T15:59:23.540Z] [INFO] GET /admin/customers
+[2026-04-06T16:12:35.615Z] [INFO] GET /
+[2026-04-06T16:13:00.212Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:13:00.212Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:13:00.218Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:13:00.218Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:13:00.226Z] [INFO] Server is running on port 3000
+[2026-04-06T16:13:00.226Z] [INFO] Environment: development
+[2026-04-06T16:13:00.227Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:13:00.227Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:13:03.410Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:13:03.411Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:13:03.415Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:13:03.416Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:13:03.423Z] [INFO] Server is running on port 3000
+[2026-04-06T16:13:03.423Z] [INFO] Environment: development
+[2026-04-06T16:13:03.424Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:13:03.424Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:13:05.432Z] [INFO] GET /
+[2026-04-06T16:13:07.196Z] [INFO] GET /admin/customers
+[2026-04-06T16:13:07.442Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:13:11.862Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-06T16:14:44.637Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-06T16:14:52.262Z] [INFO] GET /admin/customers
+[2026-04-06T16:14:57.044Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-06T16:16:56.250Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:16:56.250Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:16:56.255Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:16:56.256Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:16:56.264Z] [INFO] Server is running on port 3000
+[2026-04-06T16:16:56.264Z] [INFO] Environment: development
+[2026-04-06T16:16:56.264Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:16:56.264Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:16:58.825Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-06T16:16:59.092Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:17:00.430Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-06T16:20:06.930Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:20:06.931Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:20:06.936Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:20:06.936Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:20:06.944Z] [INFO] Server is running on port 3000
+[2026-04-06T16:20:06.944Z] [INFO] Environment: development
+[2026-04-06T16:20:06.944Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:20:06.944Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:20:09.029Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-06T16:20:09.293Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:20:16.304Z] [INFO] GET /
+[2026-04-06T16:20:18.438Z] [INFO] GET /admin/customers
+[2026-04-06T16:20:31.347Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:20:31.348Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:20:31.354Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:20:31.354Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:20:31.366Z] [INFO] Server is running on port 3000
+[2026-04-06T16:20:31.366Z] [INFO] Environment: development
+[2026-04-06T16:20:31.366Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:20:31.367Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:20:35.851Z] [INFO] GET /
+[2026-04-06T16:20:38.072Z] [INFO] GET /admin/customers
+[2026-04-06T16:20:38.334Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:24:03.306Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:24:03.306Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:24:03.311Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:24:03.312Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:24:03.320Z] [INFO] Server is running on port 3000
+[2026-04-06T16:24:03.320Z] [INFO] Environment: development
+[2026-04-06T16:24:03.320Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:24:03.320Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:24:06.015Z] [INFO] GET /admin/customers
+[2026-04-06T16:24:06.271Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:24:10.080Z] [INFO] GET /
+[2026-04-06T16:24:17.368Z] [INFO] GET /
+[2026-04-06T16:24:19.586Z] [INFO] GET /admin/customers
+[2026-04-06T16:24:24.321Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:24:35.021Z] [INFO] GET /admin/customers
+[2026-04-06T16:24:37.088Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-06T16:25:57.911Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-06T16:26:05.819Z] [INFO] GET /admin/customers
+[2026-04-06T16:26:25.419Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:28:02.172Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:28:02.173Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:28:02.178Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:28:02.178Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:28:02.186Z] [INFO] Server is running on port 3000
+[2026-04-06T16:28:02.186Z] [INFO] Environment: development
+[2026-04-06T16:28:02.186Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:28:02.186Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:28:04.971Z] [INFO] GET /admin/customers
+[2026-04-06T16:28:05.243Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:28:07.054Z] [INFO] GET /admin/customers
+[2026-04-06T16:28:08.055Z] [INFO] GET /admin/customers
+[2026-04-06T16:28:18.496Z] [INFO] GET /
+[2026-04-06T16:28:20.082Z] [INFO] GET /
+[2026-04-06T16:28:23.451Z] [INFO] GET /admin/customers
+[2026-04-06T16:28:26.251Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:29:12.756Z] [INFO] GET /admin/customers
+[2026-04-06T16:29:21.114Z] [INFO] GET /admin/customers
+[2026-04-06T16:29:22.073Z] [INFO] GET /admin/customers
+[2026-04-06T16:30:17.809Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:30:17.809Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:30:17.814Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:30:17.815Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:30:17.822Z] [INFO] Server is running on port 3000
+[2026-04-06T16:30:17.822Z] [INFO] Environment: development
+[2026-04-06T16:30:17.822Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:30:17.822Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:30:19.594Z] [INFO] GET /admin/customers
+[2026-04-06T16:30:19.883Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:30:22.450Z] [INFO] GET /admin/customers
+[2026-04-06T16:30:23.484Z] [INFO] GET /
+[2026-04-06T16:30:25.451Z] [INFO] GET /admin/customers
+[2026-04-06T16:30:30.669Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:31:31.690Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:31:31.691Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:31:31.695Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:31:31.695Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:31:31.710Z] [INFO] Server is running on port 3000
+[2026-04-06T16:31:31.710Z] [INFO] Environment: development
+[2026-04-06T16:31:31.710Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:31:31.711Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:31:32.797Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:31:33.046Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:31:49.902Z] [INFO] GET /admin/customers
+[2026-04-06T16:31:51.517Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:32:42.307Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:32:44.787Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:33:00.041Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:33:00.041Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:33:00.045Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:33:00.046Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:33:00.053Z] [INFO] Server is running on port 3000
+[2026-04-06T16:33:00.053Z] [INFO] Environment: development
+[2026-04-06T16:33:00.053Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:33:00.053Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:33:14.636Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:33:14.636Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:33:14.641Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:33:14.641Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:33:14.649Z] [INFO] Server is running on port 3000
+[2026-04-06T16:33:14.649Z] [INFO] Environment: development
+[2026-04-06T16:33:14.649Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:33:14.650Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:33:24.461Z] [INFO] GET /
+[2026-04-06T16:33:26.885Z] [INFO] GET /admin/customers
+[2026-04-06T16:33:27.160Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:33:29.650Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:33:46.771Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:33:47.157Z] [INFO] GET /favicon.ico
+[2026-04-06T16:33:47.883Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:33:48.199Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:33:48.262Z] [INFO] GET /favicon.ico
+[2026-04-06T16:33:48.448Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:33:48.681Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:33:48.724Z] [INFO] GET /favicon.ico
+[2026-04-06T16:33:48.875Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:33:48.938Z] [INFO] GET /favicon.ico
+[2026-04-06T16:34:00.916Z] [INFO] GET /admin/customers
+[2026-04-06T16:34:03.116Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-06T16:34:25.100Z] [INFO] GET /admin/customers
+[2026-04-06T16:34:28.450Z] [INFO] GET /admin/customers/new
+[2026-04-06T16:36:08.337Z] [INFO] POST /admin/customers
+[2026-04-06T16:36:08.665Z] [INFO] GET /admin/customers
+[2026-04-06T16:36:15.216Z] [INFO] GET /admin/customers/8866738766/edit
+[2026-04-06T16:36:23.586Z] [INFO] POST /admin/customers/8866738766
+[2026-04-06T16:36:23.711Z] [INFO] GET /admin/customers
+[2026-04-06T16:36:27.766Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-06T16:36:41.902Z] [INFO] POST /admin/customers/8866738766/api-key
+[2026-04-06T16:36:42.225Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-06T16:37:18.733Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-06T16:37:20.988Z] [INFO] GET /
+[2026-04-06T16:37:22.567Z] [INFO] GET /admin/customers
+[2026-04-06T16:37:24.282Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-06T16:38:33.634Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:38:33.634Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:38:33.639Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:38:33.639Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:38:33.648Z] [INFO] Server is running on port 3000
+[2026-04-06T16:38:33.649Z] [INFO] Environment: development
+[2026-04-06T16:38:33.649Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:38:33.649Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:38:35.893Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-06T16:38:36.187Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:38:40.749Z] [INFO] GET /admin/customers
+[2026-04-06T16:38:42.401Z] [INFO] GET /admin/customers/8866738766/edit
+[2026-04-06T16:38:44.649Z] [INFO] GET /admin/customers
+[2026-04-06T16:38:46.183Z] [INFO] GET /admin/customers/8866738766/edit
+[2026-04-06T16:38:47.216Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-06T16:38:50.406Z] [INFO] POST /admin/customers/8866738766/api-key
+[2026-04-06T16:38:50.807Z] [INFO] GET /admin/customers/8866738766/tokens?toast=API%20key%20configuration%20saved%20successfully.&toastType=success
+[2026-04-06T16:40:17.742Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:40:17.743Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:40:17.748Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:40:17.748Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:40:17.755Z] [INFO] Server is running on port 3000
+[2026-04-06T16:40:17.756Z] [INFO] Environment: development
+[2026-04-06T16:40:17.756Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:40:17.756Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:40:20.306Z] [INFO] GET /
+[2026-04-06T16:40:21.617Z] [INFO] GET /admin/customers
+[2026-04-06T16:40:21.891Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:40:25.099Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-06T16:40:42.846Z] [INFO] POST /admin/customers/8866738766/tokens
+[2026-04-06T16:40:43.259Z] [INFO] GET /admin/customers/8866738766/tokens?toast=Token%20batch%20added%20successfully.&toastType=success
+[2026-04-06T16:41:18.448Z] [INFO] POST /admin/customers/8866738766/tokens
+[2026-04-06T16:41:19.057Z] [INFO] GET /admin/customers/8866738766/tokens?toast=Token%20batch%20added%20successfully.&toastType=success
+[2026-04-06T16:41:36.984Z] [INFO] GET /admin/customers/8866738766/tokens?toast=Token%20batch%20added%20successfully.&toastType=success
+[2026-04-06T16:41:40.628Z] [INFO] GET /admin/customers/8866738766/tokens?toast=Token%20batch%20added%20successfully.&toastType=success
+[2026-04-06T16:41:42.081Z] [INFO] GET /
+[2026-04-06T16:41:43.548Z] [INFO] GET /admin/customers
+[2026-04-06T16:41:45.931Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-06T16:41:53.363Z] [INFO] GET /admin/customers/8866738766/tokens?editBatchId=1
+[2026-04-06T16:42:52.222Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:42:52.222Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:42:52.227Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:42:52.228Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:42:52.235Z] [INFO] Server is running on port 3000
+[2026-04-06T16:42:52.236Z] [INFO] Environment: development
+[2026-04-06T16:42:52.236Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:42:52.236Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:42:53.527Z] [INFO] GET /admin/customers/8866738766/tokens?editBatchId=1
+[2026-04-06T16:42:53.769Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:43:03.465Z] [INFO] GET /
+[2026-04-06T16:43:04.713Z] [INFO] GET /admin/customers
+[2026-04-06T16:43:06.081Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-06T16:43:14.865Z] [INFO] GET /admin/customers/8866738766/tokens?editBatchId=1
+[2026-04-06T16:43:20.370Z] [INFO] GET /.well-known/appspecific/com.chrome.devtools.json
+[2026-04-06T16:44:22.938Z] [INFO] GET /admin/customers/8866738766/tokens?editBatchId=1
+[2026-04-06T16:44:23.366Z] [INFO] GET /.well-known/appspecific/com.chrome.devtools.json
+[2026-04-06T16:44:31.806Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:44:31.806Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:44:31.806Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:44:31.806Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:44:31.819Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:44:31.820Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:44:31.822Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:44:31.823Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:44:31.838Z] [INFO] Server is running on port 3000
+[2026-04-06T16:44:31.838Z] [INFO] Server is running on port 3000
+[2026-04-06T16:44:31.839Z] [INFO] Environment: development
+[2026-04-06T16:44:31.839Z] [INFO] Environment: development
+[2026-04-06T16:44:31.839Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:44:31.839Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:44:31.839Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:44:31.839Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:44:32.896Z] [INFO] GET /admin/customers/8866738766/tokens?editBatchId=1
+[2026-04-06T16:44:33.126Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:44:33.558Z] [INFO] GET /.well-known/appspecific/com.chrome.devtools.json
+[2026-04-06T16:44:34.550Z] [INFO] GET /admin/customers/8866738766/tokens?editBatchId=1
+[2026-04-06T16:44:34.717Z] [INFO] GET /.well-known/appspecific/com.chrome.devtools.json
+[2026-04-06T16:44:35.299Z] [INFO] GET /admin/customers/8866738766/tokens?editBatchId=1
+[2026-04-06T16:44:35.459Z] [INFO] GET /.well-known/appspecific/com.chrome.devtools.json
+[2026-04-06T16:45:37.793Z] [INFO] GET /admin/customers/8866738766/tokens?editBatchId=1
+[2026-04-06T16:45:38.245Z] [INFO] GET /.well-known/appspecific/com.chrome.devtools.json
+[2026-04-06T16:45:51.935Z] [INFO] SIGINT received
+[2026-04-06T16:45:51.936Z] [INFO] Server closed
+[2026-04-06T16:45:53.039Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:45:53.040Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:45:53.047Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:45:53.047Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:45:53.057Z] [INFO] Server is running on port 3000
+[2026-04-06T16:45:53.057Z] [INFO] Environment: development
+[2026-04-06T16:45:53.058Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:45:53.058Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:45:55.341Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:45:55.342Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:45:55.342Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:45:55.343Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:45:55.349Z] [INFO] Server is running on port 3000
+[2026-04-06T16:45:55.349Z] [INFO] Environment: development
+[2026-04-06T16:45:55.349Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:45:55.349Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:45:56.632Z] [INFO] GET /admin/customers/8866738766/tokens?editBatchId=1
+[2026-04-06T16:45:56.895Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:45:57.357Z] [INFO] GET /.well-known/appspecific/com.chrome.devtools.json
+[2026-04-06T16:46:02.661Z] [INFO] POST /admin/customers/8866738766/tokens/1/delete
+[2026-04-06T16:46:03.059Z] [INFO] GET /admin/customers/8866738766/tokens?toast=Token%20batch%20deleted%20successfully.&toastType=success
+[2026-04-06T16:46:03.210Z] [INFO] GET /.well-known/appspecific/com.chrome.devtools.json
+[2026-04-06T16:46:13.905Z] [INFO] POST /admin/customers/8866738766/api-key
+[2026-04-06T16:46:14.636Z] [INFO] GET /admin/customers/8866738766/tokens?toast=API%20key%20configuration%20saved%20successfully.&toastType=success
+[2026-04-06T16:46:14.814Z] [INFO] GET /.well-known/appspecific/com.chrome.devtools.json
+[2026-04-06T16:46:26.763Z] [INFO] GET /admin/customers/8866738766/tokens?editBatchId=2
+[2026-04-06T16:46:30.788Z] [INFO] POST /admin/customers/8866738766/tokens
+[2026-04-06T16:46:31.223Z] [INFO] GET /admin/customers/8866738766/tokens?toast=Token%20batch%20updated%20successfully.&toastType=success
+[2026-04-06T16:47:55.441Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:47:55.441Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:47:55.446Z] [INFO] Metadata loaded successfully
+[2026-04-06T16:47:55.446Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-06T16:47:55.453Z] [INFO] Server is running on port 3000
+[2026-04-06T16:47:55.454Z] [INFO] Environment: development
+[2026-04-06T16:47:55.454Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-06T16:47:55.454Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-06T16:47:57.457Z] [INFO] GET /admin/customers/8866738766/tokens?toast=Token%20batch%20updated%20successfully.&toastType=success
+[2026-04-06T16:47:57.704Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-06T16:49:00.309Z] [INFO] GET /.well-known/appspecific/com.chrome.devtools.json
+[2026-04-06T16:49:52.704Z] [INFO] POST /admin/customers/8866738766/tokens
+[2026-04-06T16:49:53.293Z] [INFO] GET /admin/customers/8866738766/tokens?toast=Token%20batch%20added%20successfully.&toastType=success
+[2026-04-07T03:33:32.939Z] [INFO] Metadata loaded successfully
+[2026-04-07T03:33:32.940Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T03:33:32.944Z] [INFO] Metadata loaded successfully
+[2026-04-07T03:33:32.944Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T03:33:32.954Z] [INFO] Server is running on port 3000
+[2026-04-07T03:33:32.954Z] [INFO] Environment: development
+[2026-04-07T03:33:32.954Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-07T03:33:32.954Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-07T03:34:28.569Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T03:34:33.582Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-07T03:34:36.716Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-07T03:34:40.993Z] [INFO] [Customer: 9327927990] AI detected companies: EQ1234SHREE20262027
+[2026-04-07T03:34:42.753Z] [INFO] [Customer: 9327927990] Processing query: top 2 sales return data of laxmikrupa 26-27
+[2026-04-07T03:34:46.929Z] [INFO] [Customer: 9327927990] Target companies: EQ1234SHREE20262027
+[2026-04-07T03:35:16.882Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 2
+    bm.serial AS [Return No],
+    bm.srchr AS [Return Chr],
+    bm.date AS [Return Date],
+    pm.account AS [Customer],
+    pm.city AS [City],
+    pm.state AS [State],
+    bm.netamt AS [Return Amount],
+    bm.agent AS [Agent],
+    bm.haste AS [Haste],
+    bm.salesman AS [Salesman]
+FROM billmast bm
+JOIN partymst pm ON bm.party = pm.account
+WHERE bm.code = 'SR'
+    AND bm.opening <> 'Y'
+    AND pm.acctype = 'sale party'
+ORDER BY bm.netamt DESC;
+[2026-04-07T03:35:23.425Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-07T03:35:24.803Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 2 rows
+[2026-04-07T03:35:24.804Z] [INFO] [Customer: 9327927990] Total rows: 2 from 1 companies in 53417ms
+[2026-04-07T03:35:45.637Z] [INFO] Tracked usage for 9327927990: 8109 tokens (null% accurate), ₹0.19
+[2026-04-07T03:35:45.638Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 8109, 
+            Estimated: 287, 
+            Accuracy: 3.5%,
+            Cost: ₹0.19
+[2026-04-07T03:37:54.540Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-07T04:02:23.169Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-07T04:09:38.367Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-07T04:44:37.389Z] [INFO] Metadata loaded successfully
+[2026-04-07T04:44:37.390Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T04:44:37.392Z] [INFO] Metadata loaded successfully
+[2026-04-07T04:44:37.392Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T04:44:37.401Z] [INFO] Server is running on port 3000
+[2026-04-07T04:44:37.401Z] [INFO] Environment: development
+[2026-04-07T04:44:37.401Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-07T04:44:37.401Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-07T04:44:58.384Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T04:44:58.456Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-07T04:44:58.631Z] [INFO] [Customer: 9327927990] Processing query: top 2 purchase return data of laxmikrupa 26-27
+[2026-04-07T04:44:59.366Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-07T04:45:02.244Z] [INFO] [Customer: 9327927990] AI detected companies: EQ1234SHREE20262027
+[2026-04-07T04:45:02.618Z] [INFO] [Customer: 9327927990] Target companies: EQ1234SHREE20262027
+[2026-04-07T04:45:07.630Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 2
+    bm.serial AS [Return No],
+    bm.srchr AS [Return Chr],
+    bm.date AS [Return Date],
+    pm.account AS [Vendor],
+    pm.city AS [City],
+    pm.state AS [State],
+    bm.netamt AS [Return Amount],
+    bm.remarks AS [Remarks]
+FROM billmast bm
+JOIN partymst pm ON bm.party = pm.account
+WHERE bm.code = 'PR'
+    AND bm.opening <> 'Y'
+    AND pm.acctype = 'purchase party'
+    AND bm.date >= '2026-04-01'
+    AND bm.date <= '2027-03-31'
+ORDER BY bm.netamt DESC;
+[2026-04-07T04:45:08.618Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-07T04:45:10.044Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 2 rows
+[2026-04-07T04:45:10.045Z] [INFO] [Customer: 9327927990] Total rows: 2 from 1 companies in 11660ms
+[2026-04-07T04:45:30.801Z] [ERROR] Error in processQuery: registry.execute is not a function
+[2026-04-07T04:45:30.803Z] [ERROR] POST /api/multi-customer/analytics - registry.execute is not a function
+[2026-04-07T04:45:30.804Z] [ERROR] TypeError: registry.execute is not a function
+    at DatabaseRouter.trackUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/config/database-router.js:284:20)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async processQuery (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:255:7)
+[2026-04-07T04:49:33.796Z] [INFO] Metadata loaded successfully
+[2026-04-07T04:49:33.796Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T04:49:33.799Z] [INFO] Metadata loaded successfully
+[2026-04-07T04:49:33.799Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T04:49:33.808Z] [INFO] Server is running on port 3000
+[2026-04-07T04:49:33.808Z] [INFO] Environment: development
+[2026-04-07T04:49:33.808Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-07T04:49:33.809Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-07T05:16:54.572Z] [INFO] Metadata loaded successfully
+[2026-04-07T05:16:54.572Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T05:16:54.575Z] [INFO] Metadata loaded successfully
+[2026-04-07T05:16:54.576Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T05:16:54.584Z] [INFO] Server is running on port 3000
+[2026-04-07T05:16:54.584Z] [INFO] Environment: development
+[2026-04-07T05:16:54.584Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-07T05:16:54.584Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-07T05:17:07.835Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T05:17:07.937Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-07T05:17:08.120Z] [INFO] [Customer: 9327927990] Processing query: top 2 purchase return data of laxmikrupa 26-27
+10:
+[2026-04-07T05:17:08.829Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-07T05:17:11.488Z] [INFO] [Customer: 9327927990] AI detected companies: EQ1234SHREE20262027
+[2026-04-07T05:17:11.887Z] [INFO] [Customer: 9327927990] Target companies: EQ1234SHREE20262027
+[2026-04-07T05:17:17.102Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 2
+    bm.serial AS [Return No],
+    bm.srchr AS [Return Chr],
+    bm.date AS [Return Date],
+    pm.account AS [Vendor],
+    pm.city AS [City],
+    pm.state AS [State],
+    bm.netamt AS [Return Amount],
+    FORMAT(bm.date, 'MMM-yy') AS [Month-Year]
+FROM billmast bm
+JOIN partymst pm ON bm.party = pm.account
+WHERE bm.code = 'PR'
+    AND bm.opening <> 'Y'
+    AND pm.acctype = 'purchase party'
+    AND bm.date BETWEEN '2026-04-01' AND '2027-03-31'
+ORDER BY bm.netamt DESC;
+[2026-04-07T05:17:18.101Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-07T05:17:19.477Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 2 rows
+[2026-04-07T05:17:19.478Z] [INFO] [Customer: 9327927990] Total rows: 2 from 1 companies in 11642ms
+[2026-04-07T05:17:41.263Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 8167, 
+            Estimated: 277, 
+            Accuracy: 3.4%,
+            Cost: $0.001061 (₹0.09)
+[2026-04-07T05:24:07.252Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T05:24:07.406Z] [INFO] [Customer: 9327927990] Processing query: top 2 purchase data of laxmikrupa 26-27
+[2026-04-07T05:24:10.199Z] [INFO] [Customer: 9327927990] AI detected companies: EQ1234SHREE20262027
+[2026-04-07T05:24:10.564Z] [INFO] [Customer: 9327927990] Target companies: EQ1234SHREE20262027
+[2026-04-07T05:24:15.381Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 2
+    bm.serial AS [Bill Number],
+    bm.srchr AS [Bill Number Series],
+    bm.date AS [Bill Date],
+    pm.account AS [Party],
+    pm.city AS [City],
+    pm.state AS [State],
+    bm.netamt AS [Bill Amount]
+FROM billmast bm
+JOIN partymst pm ON bm.party = pm.account
+WHERE bm.code = 'P'
+    AND bm.opening <> 'Y'
+    AND bm.date >= '2026-04-01'
+    AND bm.date <= '2027-03-31'
+ORDER BY bm.netamt DESC;
+[2026-04-07T05:24:16.720Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 2 rows
+[2026-04-07T05:24:16.721Z] [INFO] [Customer: 9327927990] Total rows: 2 from 1 companies in 9469ms
+[2026-04-07T05:24:38.396Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 8048, 
+            Estimated: 250, 
+            Accuracy: 3.1%,
+            Cost: $0.001025 (₹0.09)

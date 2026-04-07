@@ -36,15 +36,41 @@ class MultiCustomerDeepSeekService {
       },
     );
 
+    const usage = response.data.usage;
+
+    // Calculate cost based on DeepSeek's actual pricing
+    // Cache Hit: 90% discount → $0.028 per 1M tokens
+    // Cache Miss: $0.28 per 1M tokens
+    // Output: $0.42 per 1M tokens
+    const inputCacheHitCost =
+      ((usage.prompt_cache_hit_tokens || 0) / 1000000) * 0.028;
+    const inputCacheMissCost =
+      ((usage.prompt_cache_miss_tokens || 0) / 1000000) * 0.28;
+    const outputCost = ((usage.completion_tokens || 0) / 1000000) * 0.42;
+
+    const totalCost = inputCacheHitCost + inputCacheMissCost + outputCost;
+
     //return response.data.choices[0].message.content;
     // Return both content AND usage data
     return {
       content: response.data.choices[0].message.content,
-      usage: response.data.usage, // ← This contains actual token counts
+      //usage: response.data.usage, // ← This contains actual token counts
+      usage: {
+        prompt_tokens: usage.prompt_tokens,
+        prompt_cache_hit_tokens: usage.prompt_cache_hit_tokens || 0,
+        prompt_cache_miss_tokens: usage.prompt_cache_miss_tokens || 0,
+        completion_tokens: usage.completion_tokens,
+        total_tokens: usage.total_tokens,
+      },
       cost: {
-        input: (response.data.usage.prompt_tokens / 1000000) * 0.28,
-        output: (response.data.usage.completion_tokens / 1000000) * 0.42,
-        total: (response.data.usage.total_tokens / 1000000) * 0.28,
+        //input: (response.data.usage.prompt_tokens / 1000000) * 0.28,
+        input_cache_hit: inputCacheHitCost,
+        input_cache_miss: inputCacheMissCost,
+        input_total: inputCacheHitCost + inputCacheMissCost,
+        output: outputCost,
+        total: totalCost,
+        //output: (response.data.usage.completion_tokens / 1000000) * 0.42,
+        //total: (response.data.usage.total_tokens / 1000000) * 0.28,
       },
     };
   }
@@ -223,7 +249,18 @@ SQL QUERY:
         .replace(/```\n?/g, "")
         .trim();
 
-      return sqlQuery;
+      //return sqlQuery;
+      // Return both SQL query AND usage data (like generateInsights)
+      return {
+        sqlQuery: sqlQuery,
+        usage: result.usage,
+        cost: result.cost,
+        // cost: {
+        //   input: (result.usage.prompt_tokens / 1000000) * 0.28,
+        //   output: (result.usage.completion_tokens / 1000000) * 0.42,
+        //   total: (result.usage.total_tokens / 1000000) * 0.28,
+        // },
+      };
 
       //return sqlQuery;
     } catch (error) {
@@ -295,16 +332,37 @@ Format with clear sections and bullet points for easy reading.
       let insights = response.data.choices[0].message.content;
       insights = insights.replace(/\$/g, "₹").replace(/USD/gi, "INR");
 
+      const usage = response.data.usage;
+      const inputCacheHitCost =
+        ((usage.prompt_cache_hit_tokens || 0) / 1000000) * 0.028;
+      const inputCacheMissCost =
+        ((usage.prompt_cache_miss_tokens || 0) / 1000000) * 0.28;
+      const outputCost = ((usage.completion_tokens || 0) / 1000000) * 0.42;
+
       //return insights;
       // Return both insights AND usage data
       return {
         insights: insights,
-        usage: response.data.usage,
-        cost: {
-          input: (response.data.usage.prompt_tokens / 1000000) * 0.28,
-          output: (response.data.usage.completion_tokens / 1000000) * 0.42,
-          total: (response.data.usage.total_tokens / 1000000) * 0.28,
+        usage: {
+          prompt_tokens: usage.prompt_tokens,
+          prompt_cache_hit_tokens: usage.prompt_cache_hit_tokens || 0,
+          prompt_cache_miss_tokens: usage.prompt_cache_miss_tokens || 0,
+          completion_tokens: usage.completion_tokens,
+          total_tokens: usage.total_tokens,
         },
+        cost: {
+          input_cache_hit: inputCacheHitCost,
+          input_cache_miss: inputCacheMissCost,
+          input_total: inputCacheHitCost + inputCacheMissCost,
+          output: outputCost,
+          total: inputCacheHitCost + inputCacheMissCost + outputCost,
+        },
+        //usage: response.data.usage,
+        // cost: {
+        //   input: (response.data.usage.prompt_tokens / 1000000) * 0.28,
+        //   output: (response.data.usage.completion_tokens / 1000000) * 0.42,
+        //   total: (response.data.usage.total_tokens / 1000000) * 0.28,
+        // },
       };
     } catch (error) {
       logger.error(
@@ -480,3 +538,7 @@ Return a JSON object with:
 }
 
 module.exports = MultiCustomerDeepSeekService;
+
+//prompt_tokens = Total = cache_hit + cache_miss
+//prompt_cache_hit_tokens = Cached (90% cheaper)
+//prompt_cache_miss_tokens = Non-cached (full price)

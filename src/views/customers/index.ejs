@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body class="admin-shell">
+    <%- include("../partials/admin-shell-top", { activePage: "customers", pageTitle: title }) %>
+      <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-end gap-3 mb-4">
+        <div>
+          <p class="eyebrow mb-2">Registry Admin</p>
+          <h1 class="mb-0">Customers</h1>
+        </div>
+        <div class="d-flex gap-2 flex-wrap">
+          <a class="btn btn-outline-secondary rounded-pill px-4" href="/">Home</a>
+          <a class="btn btn-primary rounded-pill px-4" href="/admin/customers/new">Add Customer</a>
+        </div>
+      </div>
+
+      <section class="card border-0 shadow-sm panel">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Customer ID</th>
+                <th>Name</th>
+                <th>Code</th>
+                <th>Plan</th>
+                <th>Status</th>
+                <th>Main DB</th>
+                <th>Host</th>
+                <th>Port</th>
+                <th>Encrypt</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (!customers.length) { %>
+                <tr>
+                  <td colspan="10" class="text-center text-muted py-5">No customers found.</td>
+                </tr>
+              <% } %>
+              <% customers.forEach((customer) => { %>
+                <tr>
+                  <td><%= customer.customer_id %></td>
+                  <td><%= customer.customer_name %></td>
+                  <td><%= customer.customer_code || "-" %></td>
+                  <td><%= customer.subscription_plan || "-" %></td>
+                  <td>
+                    <span class="status-badge <%= (customer.status || '').toLowerCase() %>">
+                      <%= customer.status || "-" %>
+                    </span>
+                  </td>
+                  <td><%= customer.main_db_name %></td>
+                  <td><%= customer.main_db_host %></td>
+                  <td><%= customer.main_db_port || "-" %></td>
+                  <td><%= customer.main_db_encrypt ? "Yes" : "No" %></td>
+                  <td>
+                    <div class="d-flex gap-2 flex-wrap">
+                      <a class="btn btn-sm btn-outline-secondary rounded-pill" href="/admin/customers/<%= customer.customer_id %>/tokens">Tokens</a>
+                      <a class="btn btn-sm btn-outline-dark rounded-pill" href="/admin/customers/<%= customer.customer_id %>/edit">Edit</a>
+                      <button
+                        type="button"
+                        class="btn btn-sm btn-outline-danger rounded-pill"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteConfirmModal"
+                        data-delete-action="/admin/customers/<%= customer.customer_id %>/delete"
+                        data-delete-label="customer <%= customer.customer_name %>"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+      <%- include("../partials/delete-modal") %>
+    <%- include("../partials/admin-shell-bottom") %>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <%- include("../partials/toast", { toast }) %>
+  </body>
+</html>

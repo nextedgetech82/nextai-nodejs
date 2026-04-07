@@ -10,12 +10,17 @@ dotenv.config();
 
 const analyticsController = require("./controllers/analyticsController");
 const MultiCustomerController = require("./controllers/multi-customer-controller");
+const AdminController = require("./controllers/admin-controller");
 
 const errorHandler = require("./middleware/errorHandler");
 const logger = require("./utils/logger");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Initialize Redis connection (non-blocking)
 if (process.env.REDIS_ENABLED !== "false") {
@@ -27,7 +32,20 @@ if (process.env.REDIS_ENABLED !== "false") {
   });
 }
 
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://cdn.jsdelivr.net"],
+        fontSrc: ["'self'", "data:", "https://cdn.jsdelivr.net"],
+        imgSrc: ["'self'", "data:", "blob:"],
+        connectSrc: ["'self'", "https://cdn.jsdelivr.net"],
+      },
+    },
+  }),
+);
 
 app.use(
   cors({
@@ -71,6 +89,30 @@ app.get("/health", (req, res) => {
   });
 });
 
+app.get("/", AdminController.getHome);
+app.get("/admin/customers", AdminController.getCustomers);
+app.get("/admin/customers/new", AdminController.getNewCustomer);
+app.post("/admin/customers", AdminController.createCustomer);
+app.get("/admin/customers/:customerId/edit", AdminController.getEditCustomer);
+app.post("/admin/customers/:customerId", AdminController.updateCustomer);
+app.get("/admin/customers/:customerId/tokens", AdminController.getCustomerTokens);
+app.post(
+  "/admin/customers/:customerId/api-key",
+  AdminController.saveCustomerApiKey,
+);
+app.post(
+  "/admin/customers/:customerId/tokens",
+  AdminController.saveTokenBatch,
+);
+app.post(
+  "/admin/customers/:customerId/tokens/:batchId/delete",
+  AdminController.deleteTokenBatch,
+);
+app.post(
+  "/admin/customers/:customerId/delete",
+  AdminController.deleteCustomer,
+);
+
 //Multi Company
 app.post("/api/multi-customer/analytics", MultiCustomerController.processQuery);
 app.post(
@@ -111,17 +153,27 @@ app.get("/api/admin/cache/stats", analyticsController.getCacheStats);
 
 //404 handler
 app.use((req, res) => {
-  res.status(404).json({ message: "Not Found", success: false, status: 404 });
+  if (req.path.startsWith("/api/")) {
+    return res
+      .status(404)
+      .json({ message: "Not Found", success: false, status: 404 });
+  }
+
+  res.status(404).render("error", {
+    title: "404 - Page Not Found",
+    message: "The page you're looking for doesn't exist.",
+  });
 });
 
 //Error handler
 app.use(errorHandler);
 
 //Start Server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   logger.info(`Server is running on port ${PORT}`);
   logger.info(`Environment: ${process.env.NODE_ENV}`);
   logger.info(`API URL: http://localhost:${PORT}/api`);
+  logger.info(`Admin UI: http://localhost:${PORT}/`);
 });
 
 //Gracefull Shutdown

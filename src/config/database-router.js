@@ -274,6 +274,84 @@ class DatabaseRouter {
     sqlQuery,
     actualTokens,
     actualCost,
+    processingTimeMs,
+    estimatedTokens = null,
+    accuracy = null,
+    tokenDetails = null,
+  ) {
+    const registry = await this.connectRegistry();
+    const safeEstimatedTokens = Number.isFinite(estimatedTokens)
+      ? estimatedTokens
+      : null;
+    const estimatedCost =
+      safeEstimatedTokens === null ? 0 : (safeEstimatedTokens / 1000000) * 0.28;
+
+    await registry
+      .request()
+      .input("customerId", sql.VarChar(100), customerId)
+      .input("companyIds", sql.NVarChar(sql.MAX), JSON.stringify(companyIds))
+      .input("queryText", sql.NVarChar(500), queryText.substring(0, 500))
+      .input("sqlQuery", sql.NVarChar(sql.MAX), sqlQuery)
+      .input("tokensUsedActual", sql.Int, actualTokens)
+      .input("tokensUsedEstimated", sql.Int, safeEstimatedTokens)
+      .input("costActual", sql.Decimal(18, 6), actualCost)
+      .input("costEstimated", sql.Decimal(18, 6), estimatedCost)
+      .input(
+        "promptCacheHit",
+        sql.Int,
+        tokenDetails?.prompt_cache_hit_tokens || 0,
+      )
+      .input(
+        "promptCacheMiss",
+        sql.Int,
+        tokenDetails?.prompt_cache_miss_tokens || 0,
+      )
+      .input(
+        "inputCostCacheHit",
+        sql.Decimal(18, 6),
+        tokenDetails?.input_cost_cache_hit || 0,
+      )
+      .input(
+        "inputCostCacheMiss",
+        sql.Decimal(18, 6),
+        tokenDetails?.input_cost_cache_miss || 0,
+      )
+      .input(
+        "outputCost",
+        sql.Decimal(18, 6),
+        tokenDetails?.output_cost || 0,
+      )
+      .input("tokenAccuracy", sql.Decimal(5, 2), accuracy)
+      .input("processingTimeMs", sql.Int, processingTimeMs)
+      .query(`INSERT INTO customer_usage 
+         (customer_id, company_ids, query_text, sql_query, 
+          tokens_used_actual, tokens_used_estimated, cost_actual, cost_estimated,
+          prompt_cache_hit_tokens, prompt_cache_miss_tokens,
+          input_cost_cache_hit, input_cost_cache_miss, output_cost,
+          token_accuracy_percent, processing_time_ms) 
+         VALUES (@customerId, @companyIds, @queryText, @sqlQuery,
+                 @tokensUsedActual, @tokensUsedEstimated, @costActual, @costEstimated,
+                 @promptCacheHit, @promptCacheMiss,
+                 @inputCostCacheHit, @inputCostCacheMiss, @outputCost,
+                 @tokenAccuracy, @processingTimeMs)`);
+
+    // Update monthly usage with ACTUAL tokens
+    await registry
+      .request()
+      .input("actualTokens", sql.Int, actualTokens)
+      .input("customerId", sql.VarChar(100), customerId)
+      .query(`UPDATE customer_api_keys 
+         SET used_this_month = used_this_month + @actualTokens,
+             used_this_month_actual = used_this_month_actual + @actualTokens
+         WHERE customer_id = @customerId`);
+  }
+  async trackUsage_old(
+    customerId,
+    companyIds,
+    queryText,
+    sqlQuery,
+    actualTokens,
+    actualCost,
     tokensUsed,
     cost,
     processingTimeMs,

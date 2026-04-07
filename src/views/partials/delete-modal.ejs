@@ -1,0 +1,67 @@
+<div
+  class="modal fade"
+  id="deleteConfirmModal"
+  tabindex="-1"
+  aria-labelledby="deleteConfirmLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow-lg">
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title" id="deleteConfirmLabel">Confirm Delete</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body pt-2">
+        <p class="mb-0" id="deleteConfirmText">Are you sure you want to delete this item?</p>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Cancel</button>
+        <form id="deleteConfirmForm" method="post">
+          <button type="submit" class="btn btn-danger rounded-pill px-4">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const modal = document.getElementById("deleteConfirmModal");
+    const form = document.getElementById("deleteConfirmForm");
+    const text = document.getElementById("deleteConfirmText");
+    if (!modal || !form || !text) {
+      return;
+    }
+
+    const applyDeleteContext = (trigger) => {
+      if (!trigger) {
+        return;
+      }
+
+      const action = trigger.getAttribute("data-delete-action");
+      const label = trigger.getAttribute("data-delete-label") || "this item";
+      form.setAttribute("action", action || "");
+      text.textContent = `Are you sure you want to delete ${label}?`;
+    };
+
+    document.addEventListener("click", (event) => {
+      const trigger = event.target.closest("[data-delete-action]");
+      if (!trigger) {
+        return;
+      }
+
+      event.preventDefault();
+      applyDeleteContext(trigger);
+
+      if (window.bootstrap && typeof window.bootstrap.Modal === "function") {
+        window.bootstrap.Modal.getOrCreateInstance(modal).show();
+        return;
+      }
+
+      const label = trigger.getAttribute("data-delete-label") || "this item";
+      if (window.confirm(`Are you sure you want to delete ${label}?`)) {
+        form.submit();
+      }
+    });
+  })();
+</script>

@@ -44,6 +44,305 @@ class MultiCustomerController {
         });
       }
 
+      const { query, company_ids = null } = req.body;
+
+      if (!query) {
+        return res.status(400).json({
+          success: false,
+          error: "Query is required",
+        });
+      }
+
+      logger.info(`[Customer: ${customerId}] Processing query: ${query}`);
+
+      // Company detection (if needed)
+      let targetCompanyIds = company_ids;
+      if (!targetCompanyIds) {
+        targetCompanyIds = await this.extractCompanyReferencesWithAI(
+          customerId,
+          query,
+          apiKey,
+        );
+        logger.info(
+          `[Customer: ${customerId}] AI detected companies: ${targetCompanyIds ? targetCompanyIds.join(", ") : "all"}`,
+        );
+      }
+
+      // Get customer info
+      const customerInfo = await dbRouter.getCustomerInfo(customerId);
+
+      // Get customer's companies
+      let targetCompanies = [];
+      if (targetCompanyIds && targetCompanyIds.length > 0) {
+        targetCompanies = await dbRouter.getCustomerCompanies(
+          customerId,
+          targetCompanyIds,
+        );
+      } else {
+        targetCompanies = await dbRouter.getCustomerCompanies(customerId);
+      }
+
+      const companyIdList = targetCompanies.map((c) => c.company_id);
+      logger.info(
+        `[Customer: ${customerId}] Target companies: ${companyIdList.join(", ")}`,
+      );
+
+      if (targetCompanies.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: "No active companies found for this customer",
+        });
+      }
+
+      // Get metadata
+      const metadata = this.metadataService.getFullSchemaForAI();
+
+      // ============ 1. Generate SQL ============
+      const sqlResult = await this.deepseekService.generateSQL(
+        customerId,
+        query,
+        metadata,
+      );
+      const sqlQuery = sqlResult.sqlQuery;
+      logger.info(`[Customer: ${customerId}] Generated SQL: ${sqlQuery}`);
+
+      // ============ 2. Execute Query ============
+      const multiCompanyResult = await dbRouter.executeAcrossCompanies(
+        customerId,
+        companyIdList,
+        (companyInfo) => sqlQuery,
+      );
+
+      // Combine all data
+      const allData = [];
+      for (const result of multiCompanyResult.results) {
+        if (result.success) {
+          allData.push(...result.data);
+        }
+      }
+
+      const processingTime = Date.now() - startTime;
+      logger.info(
+        `[Customer: ${customerId}] Total rows: ${allData.length} from ${multiCompanyResult.results.length} companies in ${processingTime}ms`,
+      );
+
+      // ============ 3. Generate Insights ============
+      const insightResult = await this.deepseekService.generateInsights(
+        customerId,
+        query,
+        sqlQuery,
+        allData,
+      );
+      const insights = insightResult.insights;
+
+      // ============ 4. Generate Chart Recommendation ============
+      const chartResult = await this.deepseekService.recommendChartType(
+        customerId,
+        query,
+        sqlQuery,
+        allData,
+      );
+      const chartConfig = chartResult.chartConfig;
+
+      // ============ 5. Calculate Token Usage (Actual from API) ============
+      // Reset counters
+      totalActualTokens = 0;
+      totalActualCost = 0;
+      tokenDetails = {
+        sql_generation: null,
+        insights_generation: null,
+        chart_recommendation: null,
+        totals: {
+          prompt_cache_hit_tokens: 0,
+          prompt_cache_miss_tokens: 0,
+          input_cost_cache_hit: 0,
+          input_cost_cache_miss: 0,
+          output_cost: 0,
+        },
+      };
+
+      // Aggregate from SQL generation
+      if (sqlResult.usage) {
+        totalActualTokens += sqlResult.usage.total_tokens;
+        totalActualCost += sqlResult.cost.total;
+        tokenDetails.sql_generation = {
+          prompt_tokens: sqlResult.usage.prompt_tokens,
+          prompt_cache_hit_tokens: sqlResult.usage.prompt_cache_hit_tokens || 0,
+          prompt_cache_miss_tokens:
+            sqlResult.usage.prompt_cache_miss_tokens || 0,
+          completion_tokens: sqlResult.usage.completion_tokens,
+          total_tokens: sqlResult.usage.total_tokens,
+          cost: sqlResult.cost,
+        };
+        tokenDetails.totals.prompt_cache_hit_tokens +=
+          sqlResult.usage.prompt_cache_hit_tokens || 0;
+        tokenDetails.totals.prompt_cache_miss_tokens +=
+          sqlResult.usage.prompt_cache_miss_tokens || 0;
+        tokenDetails.totals.input_cost_cache_hit +=
+          sqlResult.cost.input_cache_hit || 0;
+        tokenDetails.totals.input_cost_cache_miss +=
+          sqlResult.cost.input_cache_miss || 0;
+        tokenDetails.totals.output_cost += sqlResult.cost.output || 0;
+      }
+
+      // Aggregate from Insights generation
+      if (insightResult.usage) {
+        totalActualTokens += insightResult.usage.total_tokens;
+        totalActualCost += insightResult.cost.total;
+        tokenDetails.insights_generation = {
+          prompt_tokens: insightResult.usage.prompt_tokens,
+          prompt_cache_hit_tokens:
+            insightResult.usage.prompt_cache_hit_tokens || 0,
+          prompt_cache_miss_tokens:
+            insightResult.usage.prompt_cache_miss_tokens || 0,
+          completion_tokens: insightResult.usage.completion_tokens,
+          total_tokens: insightResult.usage.total_tokens,
+          cost: insightResult.cost,
+        };
+        tokenDetails.totals.prompt_cache_hit_tokens +=
+          insightResult.usage.prompt_cache_hit_tokens || 0;
+        tokenDetails.totals.prompt_cache_miss_tokens +=
+          insightResult.usage.prompt_cache_miss_tokens || 0;
+        tokenDetails.totals.input_cost_cache_hit +=
+          insightResult.cost.input_cache_hit || 0;
+        tokenDetails.totals.input_cost_cache_miss +=
+          insightResult.cost.input_cache_miss || 0;
+        tokenDetails.totals.output_cost += insightResult.cost.output || 0;
+      }
+
+      // Aggregate from Chart recommendation
+      if (chartResult.usage) {
+        totalActualTokens += chartResult.usage.total_tokens;
+        totalActualCost += chartResult.cost.total;
+        tokenDetails.chart_recommendation = {
+          prompt_tokens: chartResult.usage.prompt_tokens,
+          prompt_cache_hit_tokens:
+            chartResult.usage.prompt_cache_hit_tokens || 0,
+          prompt_cache_miss_tokens:
+            chartResult.usage.prompt_cache_miss_tokens || 0,
+          completion_tokens: chartResult.usage.completion_tokens,
+          total_tokens: chartResult.usage.total_tokens,
+          cost: chartResult.cost,
+        };
+        tokenDetails.totals.prompt_cache_hit_tokens +=
+          chartResult.usage.prompt_cache_hit_tokens || 0;
+        tokenDetails.totals.prompt_cache_miss_tokens +=
+          chartResult.usage.prompt_cache_miss_tokens || 0;
+        tokenDetails.totals.input_cost_cache_hit +=
+          chartResult.cost.input_cache_hit || 0;
+        tokenDetails.totals.input_cost_cache_miss +=
+          chartResult.cost.input_cache_miss || 0;
+        tokenDetails.totals.output_cost += chartResult.cost.output || 0;
+      }
+
+      // Calculate estimated tokens (for comparison, optional)
+      const estimatedTokens = Math.round(
+        (query.length + sqlQuery.length + JSON.stringify(allData).length) / 4,
+      );
+
+      // Calculate accuracy percentage
+      const tokenAccuracy =
+        totalActualTokens > 0
+          ? (
+              (1 -
+                Math.abs(totalActualTokens - estimatedTokens) /
+                  totalActualTokens) *
+              100
+            ).toFixed(1)
+          : 0;
+
+      // ============ 6. Track Usage in Database ============
+      await dbRouter.trackUsage(
+        customerId,
+        companyIdList,
+        query,
+        sqlQuery,
+        totalActualTokens, // Actual tokens from API
+        totalActualCost, // Actual cost from API
+        processingTime,
+        estimatedTokens, // Estimated tokens (for comparison)
+        tokenAccuracy, // Accuracy percentage
+        tokenDetails.totals, // Detailed cache breakdown
+      );
+
+      // Log token usage for debugging
+      logger.info(`[Customer: ${customerId}] Token Usage - 
+            Actual: ${totalActualTokens}, 
+            Estimated: ${estimatedTokens}, 
+            Accuracy: ${tokenAccuracy}%,
+            Cost: $${totalActualCost.toFixed(6)} (₹${(totalActualCost * 85).toFixed(2)})`);
+
+      // ============ 7. Return Response ============
+      res.json({
+        success: true,
+        customer_id: customerId,
+        customer_name: customerInfo.customer_name,
+        query: query,
+        sqlQuery: sqlQuery,
+        data: allData,
+        insights: insights,
+        chartConfig: chartConfig,
+        token_usage: {
+          actual: totalActualTokens,
+          estimated: estimatedTokens,
+          accuracy: `${tokenAccuracy}%`,
+          breakdown: tokenDetails,
+        },
+        cost: {
+          actual_usd: totalActualCost,
+          estimated_usd: (estimatedTokens / 1000000) * 0.28,
+          inr: `₹${(totalActualCost * 85).toFixed(2)}`,
+        },
+        companies: {
+          total: companyIdList.length,
+          successful: multiCompanyResult.results.filter((r) => r.success)
+            .length,
+          failed: multiCompanyResult.errors.length,
+          details: multiCompanyResult.results.map((r) => ({
+            company_id: r.company_id,
+            company_name: r.company_name,
+            row_count: r.rowCount,
+            success: r.success,
+          })),
+        },
+        rowCount: allData.length,
+        processing_time_ms: processingTime,
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      logger.error(`Error in processQuery: ${error.message}`);
+      next(error);
+    }
+  };
+  processQuery2 = async (req, res, next) => {
+    const startTime = Date.now();
+    let totalActualTokens = 0;
+    let totalActualCost = 0;
+    let tokenDetails = {};
+
+    try {
+      // Authenticate via API key
+      const apiKey = req.headers["authorization"]?.replace("Bearer ", "");
+      if (!apiKey) {
+        return res.status(401).json({
+          success: false,
+          error: "API key required. Use Authorization: Bearer <your_api_key>",
+        });
+      }
+
+      // Validate API key and get customer
+      const keyInfo = await dbRouter.validateApiKey(apiKey);
+      const customerId = keyInfo.customer_id;
+
+      // Check monthly limit
+      const withinLimit = await dbRouter.checkCustomerLimit(customerId);
+      if (!withinLimit) {
+        return res.status(429).json({
+          success: false,
+          error: "Monthly API limit exceeded. Please upgrade your plan.",
+        });
+      }
+
       const {
         query,
         company_ids = null, // Optional: specific company IDs
@@ -121,20 +420,20 @@ class MultiCustomerController {
         query,
         metadata,
       );
-      //const sqlQuery = sqlResult.sqlQuery;
-      const sqlQuery = sqlResult;
+      const sqlQuery = sqlResult.sqlQuery;
+      //const sqlQuery = sqlResult;
 
       // Capture SQL generation tokens
-      if (sqlResult.usage) {
-        totalActualTokens += sqlResult.usage.total_tokens;
-        totalActualCost += sqlResult.cost.total;
-        tokenDetails.sqlGeneration = {
-          prompt_tokens: sqlResult.usage.prompt_tokens,
-          completion_tokens: sqlResult.usage.completion_tokens,
-          total_tokens: sqlResult.usage.total_tokens,
-          cost: sqlResult.cost.total,
-        };
-      }
+      // if (sqlResult.usage) {
+      //   totalActualTokens += sqlResult.usage.total_tokens;
+      //   totalActualCost += sqlResult.cost.total;
+      //   tokenDetails.sqlGeneration = {
+      //     prompt_tokens: sqlResult.usage.prompt_tokens,
+      //     completion_tokens: sqlResult.usage.completion_tokens,
+      //     total_tokens: sqlResult.usage.total_tokens,
+      //     cost: sqlResult.cost.total,
+      //   };
+      // }
 
       logger.info(`[Customer: ${customerId}] Generated SQL: ${sqlQuery}`);
 
@@ -168,16 +467,16 @@ class MultiCustomerController {
       const insights = insightResult.insights;
 
       // Capture insights generation tokens
-      if (insightResult.usage) {
-        totalActualTokens += insightResult.usage.total_tokens;
-        totalActualCost += insightResult.cost.total;
-        tokenDetails.insightsGeneration = {
-          prompt_tokens: insightResult.usage.prompt_tokens,
-          completion_tokens: insightResult.usage.completion_tokens,
-          total_tokens: insightResult.usage.total_tokens,
-          cost: insightResult.cost.total,
-        };
-      }
+      // if (insightResult.usage) {
+      //   totalActualTokens += insightResult.usage.total_tokens;
+      //   totalActualCost += insightResult.cost.total;
+      //   tokenDetails.insightsGeneration = {
+      //     prompt_tokens: insightResult.usage.prompt_tokens,
+      //     completion_tokens: insightResult.usage.completion_tokens,
+      //     total_tokens: insightResult.usage.total_tokens,
+      //     cost: insightResult.cost.total,
+      //   };
+      // }
 
       // const insights = await this.deepseekService.generateInsights(
       //   customerId,
@@ -204,33 +503,61 @@ class MultiCustomerController {
       const chartConfig = chartResult.chartConfig;
 
       // Capture chart recommendation tokens
-      if (chartResult.usage) {
-        totalActualTokens += chartResult.usage.total_tokens;
-        totalActualCost += chartResult.cost.total;
-        tokenDetails.chartRecommendation = {
-          prompt_tokens: chartResult.usage.prompt_tokens,
-          completion_tokens: chartResult.usage.completion_tokens,
-          total_tokens: chartResult.usage.total_tokens,
-          cost: chartResult.cost.total,
-        };
-      }
+      // if (chartResult.usage) {
+      //   totalActualTokens += chartResult.usage.total_tokens;
+      //   totalActualCost += chartResult.cost.total;
+      //   tokenDetails.chartRecommendation = {
+      //     prompt_tokens: chartResult.usage.prompt_tokens,
+      //     completion_tokens: chartResult.usage.completion_tokens,
+      //     total_tokens: chartResult.usage.total_tokens,
+      //     cost: chartResult.cost.total,
+      //   };
+      // }
 
       // Track usage (approximate tokens - you can get exact from DeepSeek response)
-      const estimatedTokens =
-        (query.length + sqlQuery.length + JSON.stringify(allData).length) / 4;
-      const estimatedCost = (estimatedTokens / 1000000) * 0.28;
+      // const estimatedTokens =
+      //   (query.length + sqlQuery.length + JSON.stringify(allData).length) / 4;
+      // const estimatedCost = (estimatedTokens / 1000000) * 0.28;
 
       // Calculate accuracy percentage
-      const tokenAccuracy =
-        totalActualTokens > 0
-          ? (
-              (1 -
-                Math.abs(totalActualTokens - estimatedTokens) /
-                  totalActualTokens) *
-              100
-            ).toFixed(1)
-          : 0;
+      // const tokenAccuracy =
+      //   totalActualTokens > 0
+      //     ? (
+      //         (1 -
+      //           Math.abs(totalActualTokens - estimatedTokens) /
+      //             totalActualTokens) *
+      //         100
+      //       ).toFixed(1)
+      //     : 0;
 
+      // Calculate totals with proper cache pricing
+      let totalActualTokens = 0;
+      let totalActualCost = 0;
+      let tokenDetails = {
+        prompt_cache_hit_tokens: 0,
+        prompt_cache_miss_tokens: 0,
+        input_cost_cache_hit: 0,
+        input_cost_cache_miss: 0,
+        output_cost: 0,
+      };
+
+      // Aggregate from all three calls
+      for (const result of [sqlResult, insightResult, chartResult]) {
+        if (result.usage) {
+          totalActualTokens += result.usage.total_tokens;
+          totalActualCost += result.cost.total;
+          tokenDetails.prompt_cache_hit_tokens +=
+            result.usage.prompt_cache_hit_tokens || 0;
+          tokenDetails.prompt_cache_miss_tokens +=
+            result.usage.prompt_cache_miss_tokens || 0;
+          tokenDetails.input_cost_cache_hit += result.cost.input_cache_hit || 0;
+          tokenDetails.input_cost_cache_miss +=
+            result.cost.input_cache_miss || 0;
+          tokenDetails.output_cost += result.cost.output || 0;
+        }
+      }
+
+      // Track with detailed token info
       await dbRouter.trackUsage(
         customerId,
         companyIdList,
@@ -238,18 +565,29 @@ class MultiCustomerController {
         sqlQuery,
         totalActualTokens,
         totalActualCost,
-        tokenAccuracy,
-        estimatedTokens,
-        estimatedCost,
         processingTime,
+        estimatedTokens,
+        tokenAccuracy,
+        tokenDetails,
       );
 
+      // await dbRouter.trackUsage(
+      //   customerId,
+      //   companyIdList,
+      //   query,
+      //   sqlQuery,
+      //   totalActualTokens,
+      //   totalActualCost,
+      //   tokenAccuracy,
+      //   estimatedTokens,
+      //   estimatedCost,
+      //   processingTime,
+      // );
+
       // Log token comparison for debugging
-      logger.info(`[Customer: ${customerId}] Token Usage - 
-            Actual: ${totalActualTokens}, 
-            Estimated: ${Math.round(estimatedTokens)}, 
-            Accuracy: ${tokenAccuracy}%,
-            Cost: ₹${(totalActualCost * 85).toFixed(2)}`);
+      // logger.info(`[Customer: ${customerId}] Token Usage -
+      //       Actual: ${totalActualTokens},
+      //       Cost: ₹${(totalActualCost * 85).toFixed(2)}`);
 
       res.json({
         success: true,
@@ -262,8 +600,8 @@ class MultiCustomerController {
         chartConfig: chartConfig, // ← Add this
         token_usage: {
           actual: totalActualTokens,
-          estimated: Math.round(estimatedTokens),
-          accuracy: `${tokenAccuracy}%`,
+          estimated: 0, //Math.round(estimatedTokens),
+          accuracy: 0, //`${tokenAccuracy}%`,
           details: tokenDetails,
         },
         cost: {
