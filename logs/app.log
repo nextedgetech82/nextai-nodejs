@@ -3390,3 +3390,235 @@ ORDER BY bm.netamt DESC;
             Estimated: 250, 
             Accuracy: 3.1%,
             Cost: $0.001025 (₹0.09)
+[2026-04-07T07:29:49.235Z] [INFO] Metadata loaded successfully
+[2026-04-07T07:29:49.235Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T07:29:49.238Z] [INFO] Metadata loaded successfully
+[2026-04-07T07:29:49.238Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T07:29:49.247Z] [INFO] Server is running on port 3000
+[2026-04-07T07:29:49.247Z] [INFO] Environment: development
+[2026-04-07T07:29:49.248Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-07T07:29:49.248Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-07T07:30:05.446Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T07:30:05.567Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-07T07:30:05.775Z] [INFO] [Customer: 9327927990] Processing query: top 3 purchase data of laxmikrupa 26-27
+
+[2026-04-07T07:30:06.488Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-07T07:30:09.683Z] [INFO] [Customer: 9327927990] AI detected companies: EQ1234SHREE20262027
+[2026-04-07T07:30:10.064Z] [INFO] [Customer: 9327927990] Target companies: EQ1234SHREE20262027
+[2026-04-07T07:30:15.825Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 3
+    bm.serial AS [Bill Number],
+    bm.srchr AS [Bill Series],
+    bm.date AS [Bill Date],
+    pm.account AS [Vendor],
+    pm.city AS [City],
+    pm.state AS [State],
+    bm.netamt AS [Purchase Amount],
+    FORMAT(bm.date, 'MMM-yy') AS [Month-Year]
+FROM billmast bm
+JOIN partymst pm ON bm.party = pm.account
+WHERE bm.code = 'P'
+    AND bm.opening <> 'Y'
+    AND bm.date >= '2026-04-01'
+    AND bm.date <= '2027-03-31'
+    AND pm.acctype = 'purchase party'
+ORDER BY bm.netamt DESC;
+[2026-04-07T07:30:16.815Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-07T07:30:18.136Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 3 rows
+[2026-04-07T07:30:18.137Z] [INFO] [Customer: 9327927990] Total rows: 3 from 1 companies in 12690ms
+[2026-04-07T07:30:39.161Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 8675, 
+            Estimated: 355, 
+            Accuracy: 4.1%,
+            Cost: $0.001177 (₹0.10)
+[2026-04-07T09:07:45.789Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T09:07:46.020Z] [INFO] [Customer: 9327927990] Processing query: Monthly Sales Of Laxmikrupa in Amount From 01-04-2025 To 31-03-2026
+[2026-04-07T09:07:49.372Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-07T09:07:49.859Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-07T09:07:53.674Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 100
+    FORMAT(b.date, 'MMM-yy') AS [Month],
+    SUM(b.netamt) AS [Sales Amount]
+FROM billmast b
+WHERE b.code = 'S'
+    AND b.opening <> 'Y'
+    AND b.date >= '2025-04-01'
+    AND b.date <= '2026-03-31'
+GROUP BY FORMAT(b.date, 'MMM-yy')
+ORDER BY MIN(b.date);
+[2026-04-07T09:07:54.949Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-07T09:07:57.123Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 12 rows
+[2026-04-07T09:07:58.792Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 0 rows
+[2026-04-07T09:07:58.793Z] [INFO] [Customer: 9327927990] Total rows: 12 from 2 companies in 13003ms
+[2026-04-07T09:08:23.968Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 9400, 
+            Estimated: 538, 
+            Accuracy: 5.7%,
+            Cost: $0.001399 (₹0.12)
+[2026-04-07T09:09:50.610Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T09:09:50.809Z] [INFO] [Customer: 9327927990] Processing query: show last 5 Order of Laxmikrupa  with orderno, date, party, itemname, pcs only 
+[2026-04-07T09:09:54.504Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-07T09:09:54.976Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-07T09:09:59.082Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 5 
+    ordermast.serial AS OrderNo,
+    ordermast.date AS OrderDate,
+    ordermast.party AS Party,
+    orderdet.itemname AS ItemName,
+    orderdet.pcs AS Pcs
+FROM ordermast
+JOIN orderdet ON ordermast.id = orderdet.ControlId
+WHERE ordermast.mode = 'S'
+ORDER BY ordermast.date DESC, ordermast.serial DESC;
+[2026-04-07T09:10:00.797Z] [ERROR] Error for 9327927990/company EQSHREE20252026: Invalid object name 'ordermast'.
+[2026-04-07T09:10:02.593Z] [ERROR] Error for 9327927990/company EQ1234SHREE20262027: Invalid object name 'ordermast'.
+[2026-04-07T09:10:02.594Z] [INFO] [Customer: 9327927990] Total rows: 0 from 0 companies in 11982ms
+[2026-04-07T09:10:21.832Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 7607, 
+            Estimated: 99, 
+            Accuracy: 1.3%,
+            Cost: $0.000856 (₹0.07)
+[2026-04-07T09:11:26.078Z] [INFO] Metadata loaded successfully
+[2026-04-07T09:11:26.079Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T09:11:26.081Z] [INFO] Metadata loaded successfully
+[2026-04-07T09:11:26.081Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T09:11:26.088Z] [INFO] Server is running on port 3000
+[2026-04-07T09:11:26.088Z] [INFO] Environment: development
+[2026-04-07T09:11:26.088Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-07T09:11:26.088Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-07T09:15:02.976Z] [INFO] Metadata loaded successfully
+[2026-04-07T09:15:02.977Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T09:15:02.979Z] [INFO] Metadata loaded successfully
+[2026-04-07T09:15:02.979Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T09:15:02.986Z] [INFO] Server is running on port 3000
+[2026-04-07T09:15:02.987Z] [INFO] Environment: development
+[2026-04-07T09:15:02.987Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-07T09:15:02.987Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-07T09:15:15.480Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T09:15:15.586Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-07T09:15:15.767Z] [INFO] [Customer: 9327927990] Processing query: show last 5 Order of Laxmikrupa with orderno, date, party, itemname, pcs, meters only
+[2026-04-07T09:15:16.754Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-07T09:15:20.137Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-07T09:15:20.748Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-07T09:15:24.950Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 5 
+    ordermst.serial AS [Order No],
+    FORMAT(ordermst.date, 'dd-MMM-yy') AS [Date],
+    ordermst.party AS [Party],
+    orderdet.itemname AS [Item Name],
+    orderdet.pcs AS [Pcs],
+    orderdet.meters AS [Meters]
+FROM ordermst
+JOIN orderdet ON ordermst.id = orderdet.ControlId
+WHERE ordermst.mode = 'S'
+ORDER BY ordermst.date DESC, ordermst.serial DESC;
+[2026-04-07T09:15:26.302Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-07T09:15:28.059Z] [ERROR] Error for 9327927990/company EQSHREE20252026: Invalid column name 'serial'.
+[2026-04-07T09:15:29.841Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-07T09:15:31.855Z] [ERROR] Error for 9327927990/company EQ1234SHREE20262027: Invalid column name 'serial'.
+[2026-04-07T09:15:31.857Z] [INFO] [Customer: 9327927990] Total rows: 0 from 0 companies in 16376ms
+[2026-04-07T09:15:53.707Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 7932, 
+            Estimated: 114, 
+            Accuracy: 1.4%,
+            Cost: $0.002034 (₹0.17)
+[2026-04-07T09:22:25.299Z] [INFO] Metadata loaded successfully
+[2026-04-07T09:22:25.300Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T09:22:25.302Z] [INFO] Metadata loaded successfully
+[2026-04-07T09:22:25.302Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T09:22:25.310Z] [INFO] Server is running on port 3000
+[2026-04-07T09:22:25.310Z] [INFO] Environment: development
+[2026-04-07T09:22:25.310Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-07T09:22:25.310Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-07T09:22:37.560Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T09:22:37.663Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-07T09:22:37.853Z] [INFO] [Customer: 9327927990] Processing query: show last 5 Order of Laxmikrupa with orderno, date, party, itemname, pcs, cut, meters only
+[2026-04-07T09:22:38.699Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-07T09:22:41.812Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-07T09:22:42.190Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-07T09:22:46.418Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 5 
+    o.orderno AS OrderNo,
+    o.orderchr AS Series,
+    o.date AS OrderDate,
+    o.party AS Party,
+    d.itemname AS ItemName,
+    d.pcs AS Pcs,
+    d.cut AS Cut,
+    d.meters AS Meters
+FROM ordermst o
+JOIN orderdet d ON o.id = d.ControlId
+WHERE o.mode = 'S'
+ORDER BY o.date DESC, o.orderno DESC;
+[2026-04-07T09:22:47.409Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-07T09:22:48.895Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 5 rows
+[2026-04-07T09:22:49.879Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-07T09:22:51.118Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 5 rows
+[2026-04-07T09:22:51.119Z] [INFO] [Customer: 9327927990] Total rows: 10 from 2 companies in 13558ms
+[2026-04-07T09:23:16.609Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 11109, 
+            Estimated: 762, 
+            Accuracy: 6.9%,
+            Cost: $0.003161 (₹0.27)
+[2026-04-07T09:29:37.960Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-07T09:30:23.698Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T09:30:23.923Z] [INFO] [Customer: 9327927990] Processing query: Find the Items which sold in highest rate in laxmikrupa 01-04-2025 to 31-03-2026
+[2026-04-07T09:30:26.809Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026
+[2026-04-07T09:30:27.195Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026
+[2026-04-07T09:30:32.561Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 100
+    bd.itemname AS ItemName,
+    MAX(bd.rate) AS HighestRate,
+    SUM(bd.pcs) AS TotalPcs,
+    SUM(bd.meters) AS TotalMeters,
+    SUM(bd.weight) AS TotalWeight,
+    SUM(bd.amount) AS TotalAmount
+FROM billmast bm
+JOIN billdata bd ON bm.id = bd.ControlId
+WHERE bm.code = 'S'
+    AND bm.opening <> 'Y'
+    AND bm.date BETWEEN '2025-04-01' AND '2026-03-31'
+GROUP BY bd.itemname
+ORDER BY HighestRate DESC;
+[2026-04-07T09:30:34.495Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 100 rows
+[2026-04-07T09:30:34.496Z] [INFO] [Customer: 9327927990] Total rows: 100 from 1 companies in 10797ms
+[2026-04-07T09:31:00.580Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 12630, 
+            Estimated: 5684, 
+            Accuracy: 45.0%,
+            Cost: $0.003618 (₹0.31)
+[2026-04-07T09:37:20.277Z] [INFO] Metadata loaded successfully
+[2026-04-07T09:37:20.277Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T09:37:20.279Z] [INFO] Metadata loaded successfully
+[2026-04-07T09:37:20.279Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-07T09:37:20.286Z] [INFO] Server is running on port 3000
+[2026-04-07T09:37:20.286Z] [INFO] Environment: development
+[2026-04-07T09:37:20.287Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-07T09:37:20.287Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-07T09:37:36.134Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-07T09:37:36.248Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-07T09:37:36.437Z] [INFO] [Customer: 9327927990] Processing query: kal ka total sales kitna tha pcs ka
+[2026-04-07T09:37:37.137Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-07T09:37:39.927Z] [INFO] [Customer: 9327927990] AI detected companies: all
+[2026-04-07T09:37:40.332Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQLAKSHYA20252026, EQ1234SHREE20262027, EQLAKSHYA20262027
+[2026-04-07T09:37:44.757Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 100
+    SUM(bd.pcs) AS TotalPcsSold,
+    SUM(bd.amount) AS TotalSalesAmount
+FROM billmast bm
+JOIN billdata bd ON bm.id = bd.ControlId
+WHERE bm.code = 'S'
+    AND bm.opening <> 'Y'
+    AND bm.date = DATEADD(day, -1, CAST(GETDATE() AS DATE))
+[2026-04-07T09:37:45.766Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-07T09:37:47.865Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 1 rows
+[2026-04-07T09:37:48.806Z] [INFO] Connected to company DB: EQLAKSHYA20252026 (9327927990/EQLAKSHYA20252026)
+[2026-04-07T09:37:50.090Z] [INFO] Query executed for 9327927990/company EQLAKSHYA20252026: 1 rows
+[2026-04-07T09:37:51.103Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-07T09:37:52.390Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 1 rows
+[2026-04-07T09:37:53.467Z] [INFO] Connected to company DB: EQLAKSHYA20262027 (9327927990/EQLAKSHYA20262027)
+[2026-04-07T09:37:54.888Z] [INFO] Query executed for 9327927990/company EQLAKSHYA20262027: 1 rows
+[2026-04-07T09:37:54.889Z] [INFO] [Customer: 9327927990] Total rows: 4 from 4 companies in 18754ms
+[2026-04-07T09:38:22.635Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 9391, 
+            Estimated: 218, 
+            Accuracy: 2.3%,
+            Cost: $0.002694 (₹0.23)
+[2026-04-07T09:41:37.214Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-07T09:41:40.074Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-07T09:41:40.984Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-07T09:41:41.881Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-07T09:41:42.701Z] [INFO] GET /api/multi-customer/usage/stats

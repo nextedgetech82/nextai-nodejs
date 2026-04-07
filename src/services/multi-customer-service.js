@@ -17,7 +17,29 @@ class MultiCustomerDeepSeekService {
         messages: [
           {
             role: "system",
-            content: "You are a SQL expert for MSSQL databases.",
+            content: `You are a SQL expert for MSSQL databases.
+                          **LANGUAGE SUPPORT:**
+- You understand Hinglish (Hindi + English mixed)
+- You understand pure Hindi (Devanagari script)
+- You understand pure English
+- Always respond in ENGLISH only (SQL queries must be in English)
+- But understand user queries in any language
+
+Examples of Hinglish queries you understand:
+- "Mujhe top 10 customers dikhao sales value ke hisaab se"
+- "Kal se aaj tak ke sales kitne hue?"
+- "Last month ke returns ka total batao"
+- "Sabse zyada bechne wala item konsa hai?"
+- "Party wise sales summary chahiye"
+
+**RULES:**
+1. Always generate SQL in ENGLISH only
+2. Understand user queries in any language
+3. Extract business intent correctly
+4. Generate accurate MSSQL queries
+
+Always extract the business intent and generate proper SQL.
+`,
           },
           {
             role: "user",
@@ -148,6 +170,34 @@ The billmast table has a 'code' field that determines bill type:
 - 'S' = Sales Bill (regular customer purchases)
 - 'SR' = Sales Return (customer returns, credit notes)
 
+**CRITICAL - FIELD NAMES BY TABLE:**
+
+| Table | Number Field | Series Field | When to Use |
+|-------|--------------|--------------|-------------|
+| **billmast** | serial | srchr | For bills, invoices, sales, purchases, returns |
+| **ordermst** | orderno | orderchr | For orders, sales orders, purchase orders |
+
+
+Based on the table being queried, use these EXACT column names:
+
+┌─────────────────┬──────────────────┬──────────────────┐
+│ Table           │ Number Column    │ Series Column    │
+├─────────────────┼──────────────────┼──────────────────┤
+│ billmast        │ serial           │ srchr            │
+│ billdata        │ id, ControlId    │ (none)           │
+│ partymst        │ account          │ (none)           │
+│ itemmst         │ itemname         │ (none)           │
+│ accvchrmst      │ serial           │ srchr            │
+│ ordermst        │ orderno          │ orderchr         │
+│ orderdet        │ id, ControlId    │ (none)           │
+└─────────────────┴──────────────────┴──────────────────┘
+
+**IMPORTANT - NEVER mix these field names:**
+- For billmast: ONLY use 'serial' and 'srchr' as column names
+- For ordermst: ONLY use 'orderno' and 'orderchr' as column names
+- Do NOT use 'orderno' in billmast queries
+- Do NOT use 'serial' in ordermst queries
+
 When generating SQL queries:
 
 1. **If user asks about "sales", "revenue", "sold" :**
@@ -209,6 +259,23 @@ Example queries:
     Terms like billno, returnno, returnchr, serialno, and bill chr are only captions or aliases.
     NEVER generate SQL using fake columns such as returnchr or returnno.
     For sales return or purchase return queries, still use serial and srchr in SQL and alias them only in SELECT if needed.
+16. **If user asks about "bill", "invoice", "sales", "purchase", "return":**
+   Use billmast table with columns: serial, srchr
+
+17. **If user asks about "order", "sales order", "purchase order":**
+   Use ordermst table with columns: orderno, orderchr
+
+18. **Example - Bill query:**
+   SELECT serial AS BillNo, srchr AS Series FROM billmast
+
+19. **Example - Order query:**
+   SELECT orderno AS OrderNo, orderchr AS Series FROM ordermst    
+20. **For Order use tables ordermst for header and orderdet for details( like itemname, pcs, cut,meters )
+  "S" For "Sale Order" or "Finish Sale Order" or "Delivery Order"
+  "G" For "Grey Order" or "Grey Purchase Order"
+  "M" For "Mill Order"
+  "P" For "Purchase Order" or "Ready Purchase Order" or "Finish Purchase Order"
+  "OP" For "General Purchase Order"
 `;
 
     const prompt = `
@@ -435,25 +502,32 @@ Return a JSON object with:
       // Parse JSON from response
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (jsonMatch) {
-        const chartConfig = JSON.parse(jsonMatch[0]);
-        //return chartConfig;
-        // Return chart config WITH usage data
-        return {
-          chartConfig: chartConfig,
-          usage: response.usage,
-          cost: response.cost,
-        };
+        try {
+          const chartConfig = JSON.parse(jsonMatch[0]);
+          return {
+            chartConfig: chartConfig,
+            usage: response.usage,
+            cost: response.cost,
+          };
+        } catch (parseError) {
+          logger.warn(
+            `Chart recommendation JSON parse failed, using default config: ${parseError.message}`,
+          );
+        }
+      } else {
+        logger.warn(
+          "Chart recommendation returned no JSON object, using default config",
+        );
       }
-      //return this.getDefaultChartConfig(results);
+
       const defaultConfig = this.getDefaultChartConfig(results);
       return {
         chartConfig: defaultConfig,
-        usage: null,
-        cost: null,
+        usage: response.usage,
+        cost: response.cost,
       };
     } catch (error) {
       logger.error(`Chart recommendation failed: ${error.message}`);
-      //return this.getDefaultChartConfig(results);
       return {
         chartConfig: this.getDefaultChartConfig(results),
         usage: null,

@@ -33,8 +33,30 @@ class DeepSeekService {
           messages: [
             {
               role: "system",
-              content:
-                "You are a SQL expert and sales analytics assistant. Generate accurate, efficient SQL queries and provide insightful analysis.",
+              content: `You are a SQL expert and sales analytics assistant. 
+              
+              **LANGUAGE SUPPORT:**
+- You understand Hinglish (Hindi + English mixed)
+- You understand pure Hindi (Devanagari script)
+- You understand pure English
+- Always respond in ENGLISH only (SQL queries must be in English)
+- But understand user queries in any language
+
+Examples of Hinglish queries you understand:
+- "Mujhe top 10 customers dikhao sales value ke hisaab se"
+- "Kal se aaj tak ke sales kitne hue?"
+- "Last month ke returns ka total batao"
+- "Sabse zyada bechne wala item konsa hai?"
+- "Party wise sales summary chahiye"
+
+**RULES:**
+1. Always generate SQL in ENGLISH only
+2. Understand user queries in any language
+3. Extract business intent correctly
+4. Generate accurate MSSQL queries
+
+              Generate accurate, efficient SQL queries and provide insightful analysis.
+              `,
             },
             {
               role: "user",
@@ -52,11 +74,40 @@ class DeepSeekService {
           timeout: timeoutMs || this.sqlTimeout,
         },
       );
+      const usage = response.data.usage;
+      const inputCacheHitCost =
+        ((usage.prompt_cache_hit_tokens || 0) / 1000000) * 0.028;
+      const inputCacheMissCost =
+        ((usage.prompt_cache_miss_tokens || 0) / 1000000) * 0.28;
+      const outputCost = ((usage.completion_tokens || 0) / 1000000) * 0.42;
 
-      const result = response.data.choices[0].message.content;
-      logger.debug(`DeepSeek API response received, length: ${result.length}`);
+      const totalCost = inputCacheHitCost + inputCacheMissCost + outputCost;
 
-      return result;
+      //const result = response.data.choices[0].message.content;
+      //logger.debug(`DeepSeek API response received, length: ${result.length}`);
+
+      return {
+        content: response.data.choices[0].message.content,
+        //usage: response.data.usage, // ← This contains actual token counts
+        usage: {
+          prompt_tokens: usage.prompt_tokens,
+          prompt_cache_hit_tokens: usage.prompt_cache_hit_tokens || 0,
+          prompt_cache_miss_tokens: usage.prompt_cache_miss_tokens || 0,
+          completion_tokens: usage.completion_tokens,
+          total_tokens: usage.total_tokens,
+        },
+        cost: {
+          //input: (response.data.usage.prompt_tokens / 1000000) * 0.28,
+          input_cache_hit: inputCacheHitCost,
+          input_cache_miss: inputCacheMissCost,
+          input_total: inputCacheHitCost + inputCacheMissCost,
+          output: outputCost,
+          total: totalCost,
+          //output: (response.data.usage.completion_tokens / 1000000) * 0.42,
+          //total: (response.data.usage.total_tokens / 1000000) * 0.28,
+        },
+      };
+      //return result;
     } catch (error) {
       logger.error(`DeepSeek API error: ${error.message}`);
       if (error.response) {

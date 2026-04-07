@@ -57,12 +57,14 @@ class MultiCustomerController {
 
       // Company detection (if needed)
       let targetCompanyIds = company_ids;
+      let targetCompanyIdResutl = null;
       if (!targetCompanyIds) {
-        targetCompanyIds = await this.extractCompanyReferencesWithAI(
+        targetCompanyIdResutl = await this.extractCompanyReferencesWithAI(
           customerId,
           query,
           apiKey,
         );
+        targetCompanyIds = targetCompanyIdResutl?.companyids || null;
         logger.info(
           `[Customer: ${customerId}] AI detected companies: ${targetCompanyIds ? targetCompanyIds.join(", ") : "all"}`,
         );
@@ -149,6 +151,7 @@ class MultiCustomerController {
       totalActualTokens = 0;
       totalActualCost = 0;
       tokenDetails = {
+        company_detection: null,
         sql_generation: null,
         insights_generation: null,
         chart_recommendation: null,
@@ -161,6 +164,30 @@ class MultiCustomerController {
         },
       };
 
+      if (targetCompanyIdResutl?.usage) {
+        totalActualTokens += targetCompanyIdResutl.usage.total_tokens;
+        totalActualCost += targetCompanyIdResutl.cost.total;
+        tokenDetails.company_detection = {
+          prompt_tokens: targetCompanyIdResutl.usage.prompt_tokens,
+          prompt_cache_hit_tokens:
+            targetCompanyIdResutl.usage.prompt_cache_hit_tokens || 0,
+          prompt_cache_miss_tokens:
+            targetCompanyIdResutl.usage.prompt_cache_miss_tokens || 0,
+          completion_tokens: targetCompanyIdResutl.usage.completion_tokens,
+          total_tokens: targetCompanyIdResutl.usage.total_tokens,
+          cost: targetCompanyIdResutl.cost,
+        };
+        tokenDetails.totals.prompt_cache_hit_tokens +=
+          targetCompanyIdResutl.usage.prompt_cache_hit_tokens || 0;
+        tokenDetails.totals.prompt_cache_miss_tokens +=
+          targetCompanyIdResutl.usage.prompt_cache_miss_tokens || 0;
+        tokenDetails.totals.input_cost_cache_hit +=
+          targetCompanyIdResutl.cost.input_cache_hit || 0;
+        tokenDetails.totals.input_cost_cache_miss +=
+          targetCompanyIdResutl.cost.input_cache_miss || 0;
+        tokenDetails.totals.output_cost +=
+          targetCompanyIdResutl.cost.output || 0;
+      }
       // Aggregate from SQL generation
       if (sqlResult.usage) {
         totalActualTokens += sqlResult.usage.total_tokens;
@@ -825,8 +852,21 @@ Now respond with JSON only:
     try {
       const deepseek = new DeepSeekService(apiKey);
       const response = await deepseek.callDeepSeek(prompt, 0.1, 100);
-      const result = JSON.parse(response);
-      return result.company_ids;
+      let companyIds = null;
+      try {
+        const result = JSON.parse(response.content);
+        companyIds = result.company_ids;
+      } catch (parseError) {
+        logger.warn(
+          `AI company detection JSON parse failed, falling back to all companies: ${parseError.message}`,
+        );
+      }
+
+      return {
+        companyids: companyIds,
+        usage: response.usage,
+        cost: response.cost,
+      };
     } catch (error) {
       logger.error(`AI company detection failed: ${error.message}`);
       return null; // Fallback to all companies
