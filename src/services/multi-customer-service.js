@@ -115,6 +115,27 @@ Always extract the business intent and generate proper SQL.
     return rows[0].api_key;
   }
 
+  async getDeepSeekUsage(customerId, startDate, endDate) {
+    const apiKey = await this.getCustomerApiKey(customerId);
+    console.log(`${this.apiUrl.replace(/\/chat\/completions$/, "")}/usage`);
+    const response = await axios.get(
+      `${this.apiUrl.replace(/\/chat\/completions$/, "")}/usage`,
+      {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+          "Content-Type": "application/json",
+        },
+        params: {
+          start_date: startDate,
+          end_date: endDate,
+        },
+        timeout: 30000,
+      },
+    );
+
+    return response.data;
+  }
+
   async generateSQL(customerId, userQuery, metadata) {
     const apiKey = await this.getCustomerApiKey(customerId);
 

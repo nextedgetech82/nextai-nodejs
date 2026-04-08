@@ -123,6 +123,10 @@ app.get(
   "/api/multi-customer/usage/stats",
   MultiCustomerController.getTokenUsageStats,
 );
+app.get(
+  "/api/multi-customer/deepseek/usage",
+  MultiCustomerController.getDeepSeekUsage,
+);
 app.post(
   "/api/multi-customer/usage/reset",
   MultiCustomerController.resetMonthlyUsage,
@@ -130,6 +134,10 @@ app.post(
 //Purchase
 // Token Management Routes
 app.get("/api/multi-customer/balance", MultiCustomerController.getTokenBalance);
+app.get(
+  "/api/multi-customer/purchase/history",
+  MultiCustomerController.getPurchaseHistory,
+);
 app.post(
   "/api/multi-customer/purchase",
   MultiCustomerController.purchaseTokens,

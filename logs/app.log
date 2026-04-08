@@ -3622,3 +3622,279 @@ WHERE bm.code = 'S'
 [2026-04-07T09:41:40.984Z] [INFO] GET /api/multi-customer/usage/stats
 [2026-04-07T09:41:41.881Z] [INFO] GET /api/multi-customer/usage/stats
 [2026-04-07T09:41:42.701Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T04:28:08.448Z] [INFO] Metadata loaded successfully
+[2026-04-08T04:28:08.449Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T04:28:08.451Z] [INFO] Metadata loaded successfully
+[2026-04-08T04:28:08.451Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T04:28:08.459Z] [INFO] Server is running on port 3000
+[2026-04-08T04:28:08.459Z] [INFO] Environment: development
+[2026-04-08T04:28:08.459Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-08T04:28:08.459Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-08T04:31:39.397Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-08T04:31:39.524Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-08T04:31:39.711Z] [INFO] [Customer: 9327927990] Processing query: top 5 agent based on sales on pcs in laxmikrupa
+[2026-04-08T04:31:40.427Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-08T04:31:43.355Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-08T04:31:43.733Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-08T04:31:47.759Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 5 
+    b.agent AS Agent,
+    SUM(d.pcs) AS TotalPcsSold
+FROM billmast b
+JOIN billdata d ON b.id = d.ControlId
+WHERE b.code = 'S' 
+    AND b.opening <> 'Y'
+GROUP BY b.agent
+ORDER BY TotalPcsSold DESC;
+[2026-04-08T04:31:48.740Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-08T04:31:51.015Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 5 rows
+[2026-04-08T04:31:51.972Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-08T04:31:53.333Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 5 rows
+[2026-04-08T04:31:53.334Z] [INFO] [Customer: 9327927990] Total rows: 10 from 2 companies in 13936ms
+[2026-04-08T04:32:17.070Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 10266, 
+            Estimated: 452, 
+            Accuracy: 4.4%,
+            Cost: $0.002963 (₹0.25)
+[2026-04-08T04:45:47.832Z] [INFO] Metadata loaded successfully
+[2026-04-08T04:45:47.833Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T04:45:47.835Z] [INFO] Metadata loaded successfully
+[2026-04-08T04:45:47.835Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T04:45:47.844Z] [INFO] Server is running on port 3000
+[2026-04-08T04:45:47.844Z] [INFO] Environment: development
+[2026-04-08T04:45:47.844Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-08T04:45:47.844Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-08T04:48:40.032Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T04:48:40.104Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-08T04:51:37.985Z] [INFO] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08
+[2026-04-08T04:51:38.633Z] [ERROR] Error in getDeepSeekUsage: Request failed with status code 404
+[2026-04-08T04:51:38.635Z] [ERROR] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08 - Request failed with status code 404
+[2026-04-08T04:51:38.637Z] [ERROR] AxiosError: Request failed with status code 404
+    at settle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:1931:12)
+    at IncomingMessage.handleStreamEnd (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:3176:11)
+    at IncomingMessage.emit (node:events:531:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:4236:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MultiCustomerDeepSeekService.getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:120:22)
+    at async getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:713:21)
+[2026-04-08T04:52:24.908Z] [INFO] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08
+[2026-04-08T04:52:25.164Z] [ERROR] Error in getDeepSeekUsage: Request failed with status code 404
+[2026-04-08T04:52:25.165Z] [ERROR] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08 - Request failed with status code 404
+[2026-04-08T04:52:25.166Z] [ERROR] AxiosError: Request failed with status code 404
+    at settle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:1931:12)
+    at IncomingMessage.handleStreamEnd (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:3176:11)
+    at IncomingMessage.emit (node:events:531:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:4236:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MultiCustomerDeepSeekService.getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:120:22)
+    at async getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:713:21)
+[2026-04-08T04:52:26.509Z] [INFO] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08
+[2026-04-08T04:52:26.653Z] [ERROR] Error in getDeepSeekUsage: Request failed with status code 404
+[2026-04-08T04:52:26.654Z] [ERROR] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08 - Request failed with status code 404
+[2026-04-08T04:52:26.655Z] [ERROR] AxiosError: Request failed with status code 404
+    at settle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:1931:12)
+    at IncomingMessage.handleStreamEnd (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:3176:11)
+    at IncomingMessage.emit (node:events:531:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:4236:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MultiCustomerDeepSeekService.getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:120:22)
+    at async getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:713:21)
+[2026-04-08T04:54:39.417Z] [INFO] Metadata loaded successfully
+[2026-04-08T04:54:39.417Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T04:54:39.420Z] [INFO] Metadata loaded successfully
+[2026-04-08T04:54:39.420Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T04:54:39.428Z] [INFO] Server is running on port 3000
+[2026-04-08T04:54:39.428Z] [INFO] Environment: development
+[2026-04-08T04:54:39.428Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-08T04:54:39.429Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-08T04:56:08.803Z] [INFO] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08
+[2026-04-08T04:56:08.874Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-08T04:56:09.174Z] [ERROR] Error in getDeepSeekUsage: Request failed with status code 404
+[2026-04-08T04:56:09.176Z] [ERROR] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08 - Request failed with status code 404
+[2026-04-08T04:56:09.177Z] [ERROR] AxiosError: Request failed with status code 404
+    at settle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:1931:12)
+    at IncomingMessage.handleStreamEnd (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:3176:11)
+    at IncomingMessage.emit (node:events:531:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:4236:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MultiCustomerDeepSeekService.getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:120:22)
+    at async getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:713:21)
+[2026-04-08T04:56:35.063Z] [INFO] Metadata loaded successfully
+[2026-04-08T04:56:35.064Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T04:56:35.066Z] [INFO] Metadata loaded successfully
+[2026-04-08T04:56:35.066Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T04:56:35.075Z] [INFO] Server is running on port 3000
+[2026-04-08T04:56:35.075Z] [INFO] Environment: development
+[2026-04-08T04:56:35.075Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-08T04:56:35.075Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-08T04:56:42.263Z] [INFO] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08
+[2026-04-08T04:56:42.343Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-08T04:56:42.634Z] [ERROR] Error in getDeepSeekUsage: Request failed with status code 404
+[2026-04-08T04:56:42.636Z] [ERROR] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08 - Request failed with status code 404
+[2026-04-08T04:56:42.637Z] [ERROR] AxiosError: Request failed with status code 404
+    at settle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:1931:12)
+    at IncomingMessage.handleStreamEnd (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:3176:11)
+    at IncomingMessage.emit (node:events:531:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:4236:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MultiCustomerDeepSeekService.getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:120:22)
+    at async getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:713:21)
+[2026-04-08T05:00:02.534Z] [INFO] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08
+[2026-04-08T05:01:44.323Z] [INFO] Metadata loaded successfully
+[2026-04-08T05:01:44.323Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T05:01:44.328Z] [INFO] Metadata loaded successfully
+[2026-04-08T05:01:44.329Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T05:01:44.336Z] [INFO] Server is running on port 3000
+[2026-04-08T05:01:44.336Z] [INFO] Environment: development
+[2026-04-08T05:01:44.336Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-08T05:01:44.336Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-08T05:01:48.084Z] [INFO] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08
+[2026-04-08T05:01:48.197Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-08T05:06:53.498Z] [ERROR] Error in getDeepSeekUsage: Request failed with status code 404
+[2026-04-08T05:06:53.501Z] [ERROR] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08 - Request failed with status code 404
+[2026-04-08T05:06:53.502Z] [ERROR] AxiosError: Request failed with status code 404
+    at settle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:1931:12)
+    at IncomingMessage.handleStreamEnd (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:3176:11)
+    at IncomingMessage.emit (node:events:531:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:4236:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MultiCustomerDeepSeekService.getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:121:22)
+    at async getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:713:21)
+[2026-04-08T05:10:56.681Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-08T05:10:56.809Z] [INFO] [Customer: 9327927990] Processing query: top 7 customer by sale pcs in laxmikrupa 25-26
+[2026-04-08T05:10:57.514Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-08T05:11:00.544Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026
+[2026-04-08T05:11:00.915Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026
+[2026-04-08T05:11:04.811Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 7
+    p.account AS Customer,
+    SUM(bd.pcs) AS TotalPcsSold
+FROM billmast bm
+JOIN billdata bd ON bm.id = bd.ControlId
+JOIN partymst p ON bm.party = p.account
+WHERE bm.code = 'S'
+    AND bm.opening <> 'Y'
+    AND p.acctype = 'sale party'
+GROUP BY p.account
+ORDER BY TotalPcsSold DESC;
+[2026-04-08T05:11:05.895Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-08T05:11:08.043Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 7 rows
+[2026-04-08T05:11:08.044Z] [INFO] [Customer: 9327927990] Total rows: 7 from 1 companies in 11361ms
+[2026-04-08T05:11:34.077Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 9960, 
+            Estimated: 373, 
+            Accuracy: 3.7%,
+            Cost: $0.001380 (₹0.12)
+[2026-04-08T05:59:21.511Z] [INFO] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08
+[2026-04-08T05:59:25.240Z] [ERROR] Error in getDeepSeekUsage: Request failed with status code 404
+[2026-04-08T05:59:25.241Z] [ERROR] GET /api/multi-customer/deepseek/usage?start_date=2026-04-01&end_date=2026-04-08 - Request failed with status code 404
+[2026-04-08T05:59:25.242Z] [ERROR] AxiosError: Request failed with status code 404
+    at settle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:1931:12)
+    at IncomingMessage.handleStreamEnd (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:3176:11)
+    at IncomingMessage.emit (node:events:531:35)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+    at Axios.request (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/axios/dist/node/axios.cjs:4236:41)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async MultiCustomerDeepSeekService.getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:121:22)
+    at async getDeepSeekUsage (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:713:21)
+[2026-04-08T06:10:21.235Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T06:16:48.774Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T06:18:41.756Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T06:20:08.438Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T07:08:09.402Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T07:19:57.359Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T07:24:25.696Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T07:29:07.502Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:04:46.582Z] [INFO] Metadata loaded successfully
+[2026-04-08T09:04:46.582Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T09:04:46.589Z] [INFO] Metadata loaded successfully
+[2026-04-08T09:04:46.590Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T09:04:46.600Z] [INFO] Server is running on port 3000
+[2026-04-08T09:04:46.600Z] [INFO] Environment: development
+[2026-04-08T09:04:46.600Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-08T09:04:46.601Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-08T09:05:03.532Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:05:03.661Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-08T09:05:03.937Z] [ERROR] Error in getTokenUsageStats: needsReset is not defined
+[2026-04-08T09:05:03.939Z] [ERROR] GET /api/multi-customer/usage/stats - needsReset is not defined
+[2026-04-08T09:05:03.940Z] [ERROR] ReferenceError: needsReset is not defined
+    at getTokenUsageStats (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:1044:22)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+[2026-04-08T09:06:23.205Z] [INFO] Metadata loaded successfully
+[2026-04-08T09:06:23.206Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T09:06:23.211Z] [INFO] Metadata loaded successfully
+[2026-04-08T09:06:23.211Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T09:06:23.219Z] [INFO] Server is running on port 3000
+[2026-04-08T09:06:23.219Z] [INFO] Environment: development
+[2026-04-08T09:06:23.219Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-08T09:06:23.219Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-08T09:06:26.502Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:06:26.846Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-08T09:07:38.293Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:09:49.904Z] [INFO] GET /api/analytics/suggestions
+[2026-04-08T09:10:15.966Z] [INFO] GET /
+[2026-04-08T09:10:16.067Z] [INFO] GET /favicon.ico
+[2026-04-08T09:10:18.306Z] [INFO] GET /admin/customers
+[2026-04-08T09:10:21.126Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-08T09:10:46.417Z] [INFO] POST /admin/customers/9327927990/tokens
+[2026-04-08T09:10:46.527Z] [INFO] GET /admin/customers/9327927990/tokens?toast=Token%20batch%20added%20successfully.&toastType=success
+[2026-04-08T09:10:54.254Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:10:56.086Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:11:15.193Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:12:51.889Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:13:47.043Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:16:25.720Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:21:04.485Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:21:21.383Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:23:25.232Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:27:29.558Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:39:39.017Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:39:39.030Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-08T09:40:11.109Z] [INFO] Metadata loaded successfully
+[2026-04-08T09:40:11.112Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T09:40:11.118Z] [INFO] Metadata loaded successfully
+[2026-04-08T09:40:11.118Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T09:40:11.126Z] [INFO] Server is running on port 3000
+[2026-04-08T09:40:11.126Z] [INFO] Environment: development
+[2026-04-08T09:40:11.127Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-08T09:40:11.127Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-08T09:40:12.952Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T09:40:12.956Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-08T09:40:13.062Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-08T09:44:14.600Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-08T09:44:14.603Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T10:07:30.081Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T10:07:30.088Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-08T10:18:54.057Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T10:18:54.059Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-08T10:19:07.224Z] [INFO] Metadata loaded successfully
+[2026-04-08T10:19:07.224Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T10:19:07.231Z] [INFO] Metadata loaded successfully
+[2026-04-08T10:19:07.231Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-08T10:19:07.240Z] [INFO] Server is running on port 3000
+[2026-04-08T10:19:07.240Z] [INFO] Environment: development
+[2026-04-08T10:19:07.240Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-08T10:19:07.240Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-08T10:20:38.871Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T10:20:38.884Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-08T10:20:38.984Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-08T10:20:38.986Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-08T10:32:50.165Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T10:32:50.171Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-08T10:50:03.270Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T10:50:03.275Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-08T10:56:28.534Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T10:56:28.567Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-08T11:07:37.328Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-08T11:07:37.332Z] [INFO] GET /api/multi-customer/purchase/history

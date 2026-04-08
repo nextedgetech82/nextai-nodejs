@@ -681,6 +681,54 @@ class MultiCustomerController {
     }
   };
 
+  getDeepSeekUsage = async (req, res, next) => {
+    try {
+      const apiKey = req.headers["authorization"]?.replace("Bearer ", "");
+      if (!apiKey) {
+        return res.status(401).json({
+          success: false,
+          error: "API key required. Use Authorization: Bearer <your_api_key>",
+        });
+      }
+
+      const { start_date: startDate, end_date: endDate } = req.query;
+      if (!startDate || !endDate) {
+        return res.status(400).json({
+          success: false,
+          error: "start_date and end_date are required in YYYY-MM-DD format",
+        });
+      }
+
+      const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+      if (!datePattern.test(startDate) || !datePattern.test(endDate)) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid date format. Use YYYY-MM-DD",
+        });
+      }
+
+      const keyInfo = await dbRouter.validateApiKey(apiKey);
+      const customerId = keyInfo.customer_id;
+
+      const usage = await this.deepseekService.getDeepSeekUsage(
+        customerId,
+        startDate,
+        endDate,
+      );
+
+      res.json({
+        success: true,
+        customer_id: customerId,
+        start_date: startDate,
+        end_date: endDate,
+        usage,
+      });
+    } catch (error) {
+      logger.error(`Error in getDeepSeekUsage: ${error.message}`);
+      next(error);
+    }
+  };
+
   /**
    * Get customer's companies (from THEIR MainDB)
    */
@@ -893,31 +941,21 @@ Now respond with JSON only:
 
       const registry = await dbRouter.connectRegistry();
 
-      // Get customer's API key info (monthly limit)
-      const keyResult = await registry
+      // Get total purchased tokens from token_batches
+      const purchaseResult = await registry
         .request()
         .input("customerId", sql.VarChar, customerId).query(`SELECT
-                  id,
-                  customer_id,
-                  monthly_limit,
-                  used_this_month,
-                  used_this_month_actual,
-                  last_reset_date,
-                  is_active
-                FROM customer_api_keys
-                WHERE customer_id = @customerId AND is_active = 0`);
-      const keyRows = keyResult.recordset;
+                  ISNULL(SUM(tokens_allocated), 0) as total_tokens_purchased,
+                  ISNULL(SUM(tokens_remaining), 0) as total_tokens_remaining_in_batches,
+                  ISNULL(SUM(purchase_amount), 0) as total_purchase_amount,
+                  COUNT(*) as total_batches,
+                  MIN(purchase_date) as first_purchase_date,
+                  MAX(purchase_date) as last_purchase_date
+                FROM token_batches
+                WHERE customer_id = @customerId`);
+      const purchaseData = purchaseResult.recordset[0] || {};
 
-      if (keyRows.length === 0) {
-        return res.status(404).json({
-          success: false,
-          error: "API key configuration not found",
-        });
-      }
-
-      const keyInfo_data = keyRows[0];
-
-      // Get usage statistics from customer_usage table
+      // Get usage statistics from customer_usage table (all time)
       const usageResult = await registry
         .request()
         .input("customerId", sql.VarChar, customerId).query(`SELECT
@@ -931,8 +969,7 @@ Now respond with JSON only:
                   MIN(query_timestamp) as first_query_date,
                   MAX(query_timestamp) as last_query_date
                 FROM customer_usage
-                WHERE customer_id = @customerId
-                  AND query_timestamp >= DATEADD(DAY, -30, GETDATE())`);
+                WHERE customer_id = @customerId`);
       const usageRows = usageResult.recordset;
 
       // Get daily usage for chart
@@ -966,40 +1003,27 @@ Now respond with JSON only:
                 ORDER BY query_timestamp DESC`);
       const recentRows = recentResult.recordset;
 
-      // Calculate balance
-      const monthlyLimit = keyInfo_data.monthly_limit || 100000;
-      const usedTokens =
-        keyInfo_data.used_this_month_actual ||
-        keyInfo_data.used_this_month ||
-        0;
-      const balanceTokens = monthlyLimit - usedTokens;
-      const usagePercent = (usedTokens / monthlyLimit) * 100;
-
-      // Check if reset needed
-      const lastReset = keyInfo_data.last_reset_date;
-      const now = new Date();
-      let needsReset = false;
-
-      if (lastReset) {
-        const lastResetDate = new Date(lastReset);
-        if (
-          lastResetDate.getMonth() !== now.getMonth() ||
-          lastResetDate.getFullYear() !== now.getFullYear()
-        ) {
-          needsReset = true;
-        }
-      }
+      // Calculate balance based on purchase - usage
+      const totalPurchased = purchaseData.total_tokens_purchased || 0;
+      const totalUsed = usageRows[0].total_tokens_actual || 0;
+      const remainingBalance = Math.max(totalPurchased - totalUsed, 0);
+      const usagePercent =
+        totalPurchased > 0 ? (totalUsed / totalPurchased) * 100 : 0;
 
       res.json({
         success: true,
         customer_id: customerId,
-        token_limits: {
-          monthly_limit: monthlyLimit,
-          used_this_month: usedTokens,
-          balance_tokens: balanceTokens,
+        token_balance: {
+          total_tokens_purchased: totalPurchased,
+          total_tokens_used: totalUsed,
+          remaining_balance: remainingBalance,
           usage_percentage: Math.round(usagePercent),
-          needs_reset: needsReset,
-          last_reset_date: keyInfo_data.last_reset_date,
+          total_purchase_amount: purchaseData.total_purchase_amount || 0,
+          total_batches: purchaseData.total_batches || 0,
+          first_purchase_date: purchaseData.first_purchase_date,
+          last_purchase_date: purchaseData.last_purchase_date,
+          tokens_remaining_in_batches:
+            purchaseData.total_tokens_remaining_in_batches || 0,
         },
         statistics: {
           total_queries: usageRows[0].total_queries || 0,
@@ -1016,10 +1040,6 @@ Now respond with JSON only:
         },
         daily_usage: dailyRows,
         recent_queries: recentRows,
-        reset_action: {
-          can_reset: needsReset,
-          reset_endpoint: "/api/multi-customer/usage/reset",
-        },
       });
     } catch (error) {
       logger.error(`Error in getTokenUsageStats: ${error.message}`);
@@ -1062,6 +1082,52 @@ Now respond with JSON only:
       });
     } catch (error) {
       logger.error(`Error in resetMonthlyUsage: ${error.message}`);
+      next(error);
+    }
+  };
+
+  /**
+   * Purchase tokens endpoint
+   */
+  getPurchaseHistory = async (req, res, next) => {
+    try {
+      const apiKey = req.headers["authorization"]?.replace("Bearer ", "");
+      if (!apiKey) {
+        return res.status(401).json({
+          success: false,
+          error: "API key required",
+        });
+      }
+
+      const keyInfo = await dbRouter.validateApiKey(apiKey);
+      const customerId = keyInfo.customer_id;
+      const registry = await dbRouter.connectRegistry();
+
+      const historyResult = await registry
+        .request()
+        .input("customerId", sql.VarChar, customerId).query(`SELECT
+                  id,
+                  customer_id,
+                  batch_id,
+                  tokens_allocated,
+                  tokens_remaining,
+                  purchase_amount,
+                  purchase_date,
+                  expiry_date,
+                  status
+                FROM token_batches
+                WHERE customer_id = @customerId
+                ORDER BY purchase_date DESC, id DESC`);
+      const historyRows = historyResult.recordset;
+
+      res.json({
+        success: true,
+        customer_id: customerId,
+        total_batches: historyRows.length,
+        purchase_history: historyRows,
+      });
+    } catch (error) {
+      logger.error(`Error in getPurchaseHistory: ${error.message}`);
       next(error);
     }
   };
