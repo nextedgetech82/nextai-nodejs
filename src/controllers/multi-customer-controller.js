@@ -2,6 +2,7 @@
 const sql = require("mssql");
 const dbRouter = require("../config/database-router");
 const MultiCustomerDeepSeekService = require("../services/multi-customer-service");
+const CacheService = require("../services/cacheService");
 const chatService = require("../services/chatService");
 const MetadataService = require("../services/metadataService");
 const logger = require("../utils/logger");
@@ -11,6 +12,8 @@ class MultiCustomerController {
   constructor() {
     this.deepseekService = new MultiCustomerDeepSeekService();
     this.metadataService = new MetadataService();
+    this.cacheService = CacheService;
+    this.cacheService.initialize();
   }
 
   async authenticateCustomer(req) {
@@ -51,7 +54,13 @@ class MultiCustomerController {
         });
       }
 
-      const { query, company_ids = null } = req.body;
+      const {
+        query,
+        company_ids = null,
+        skipCache = false,
+        insights: insightsRequested = true,
+        chart: chartRequested = true,
+      } = req.body;
 
       if (!query) {
         return res.status(400).json({
@@ -103,6 +112,80 @@ class MultiCustomerController {
         });
       }
 
+      const shouldGenerateInsights =
+        insightsRequested === true ||
+        insightsRequested === "true" ||
+        insightsRequested === 1;
+      const shouldGenerateChart =
+        chartRequested === true ||
+        chartRequested === "true" ||
+        chartRequested === 1;
+      const cacheKey = this.cacheService.generateKey(query, {
+        customerId,
+        companyIds: [...companyIdList].sort(),
+        insights: shouldGenerateInsights,
+        chart: shouldGenerateChart,
+        timestamp: this.getTimeBucket(query),
+      });
+
+      if (!skipCache && process.env.REDIS_ENABLED !== "false") {
+        const cachedResponse = await this.cacheService.get(cacheKey);
+        if (cachedResponse) {
+          const processingTime = Date.now() - startTime;
+          let sessionId = req.headers["x-session-id"];
+
+          if (!sessionId) {
+            const title =
+              query.length > 80 ? `${query.slice(0, 80).trim()}...` : query;
+            const newSession = await chatService.createSession(customerId, title);
+            sessionId = newSession.session_id;
+          }
+
+          await dbRouter.trackUsage(
+            customerId,
+            companyIdList,
+            query,
+            cachedResponse.sqlQuery,
+            0,
+            0,
+            processingTime,
+            0,
+            0,
+            {
+              prompt_cache_hit_tokens: 0,
+              prompt_cache_miss_tokens: 0,
+              input_cost_cache_hit: 0,
+              input_cost_cache_miss: 0,
+              output_cost: 0,
+            },
+          );
+
+          await chatService.saveMessage(sessionId, customerId, "user", query);
+          await chatService.saveMessage(
+            sessionId,
+            customerId,
+            "bot",
+            cachedResponse.insights || "Response loaded from cache.",
+            {
+              sqlQuery: cachedResponse.sqlQuery,
+              dataJson: (cachedResponse.data || []).slice(0, 100),
+              insights: cachedResponse.insights,
+              chartConfig: cachedResponse.chartConfig,
+              tokensUsed: 0,
+              processingTime,
+            },
+          );
+
+          return res.json({
+            ...cachedResponse,
+            session_id: sessionId,
+            cached: true,
+            processing_time_ms: processingTime,
+            timestamp: new Date().toISOString(),
+          });
+        }
+      }
+
       // Get metadata
       const metadata = this.metadataService.getFullSchemaForAI();
 
@@ -136,22 +219,30 @@ class MultiCustomerController {
       );
 
       // ============ 3. Generate Insights ============
-      const insightResult = await this.deepseekService.generateInsights(
-        customerId,
-        query,
-        sqlQuery,
-        allData,
-      );
-      const insights = insightResult.insights;
+      let insightResult = { insights: null, usage: null, cost: null };
+      let insights = null;
+      if (shouldGenerateInsights) {
+        insightResult = await this.deepseekService.generateInsights(
+          customerId,
+          query,
+          sqlQuery,
+          allData,
+        );
+        insights = insightResult.insights;
+      }
 
       // ============ 4. Generate Chart Recommendation ============
-      const chartResult = await this.deepseekService.recommendChartType(
-        customerId,
-        query,
-        sqlQuery,
-        allData,
-      );
-      const chartConfig = chartResult.chartConfig;
+      let chartResult = { chartConfig: null, usage: null, cost: null };
+      let chartConfig = null;
+      if (shouldGenerateChart) {
+        chartResult = await this.deepseekService.recommendChartType(
+          customerId,
+          query,
+          sqlQuery,
+          allData,
+        );
+        chartConfig = chartResult.chartConfig;
+      }
 
       // ============ 5. Calculate Token Usage (Actual from API) ============
       // Reset counters
@@ -299,6 +390,53 @@ class MultiCustomerController {
         tokenDetails.totals, // Detailed cache breakdown
       );
 
+      const response = {
+        success: true,
+        customer_id: customerId,
+        customer_name: customerInfo.customer_name,
+        query: query,
+        sqlQuery: sqlQuery,
+        data: allData,
+        insights: insights,
+        chartConfig: chartConfig,
+        token_usage: {
+          actual: totalActualTokens,
+          estimated: estimatedTokens,
+          accuracy: `${tokenAccuracy}%`,
+          breakdown: tokenDetails,
+        },
+        cost: {
+          actual_usd: totalActualCost,
+          estimated_usd: (estimatedTokens / 1000000) * 0.28,
+          inr: `₹${(totalActualCost * 85).toFixed(2)}`,
+        },
+        companies: {
+          total: companyIdList.length,
+          successful: multiCompanyResult.results.filter((r) => r.success)
+            .length,
+          failed: multiCompanyResult.errors.length,
+          details: multiCompanyResult.results.map((r) => ({
+            company_id: r.company_id,
+            company_name: r.company_name,
+            row_count: r.rowCount,
+            success: r.success,
+          })),
+        },
+        rowCount: allData.length,
+        processing_time_ms: processingTime,
+        timestamp: new Date().toISOString(),
+        cached: false,
+        insightsRequested: shouldGenerateInsights,
+        insightsAvailable: shouldGenerateInsights && Boolean(insights),
+        chartRequested: shouldGenerateChart,
+        chartAvailable: shouldGenerateChart && Boolean(chartConfig),
+      };
+
+      const queryType = this.detectQueryType(query);
+      if (process.env.REDIS_ENABLED !== "false") {
+        await this.cacheService.smartSet(cacheKey, response, queryType);
+      }
+
       // ============ 7. Save Chat History ============
       let sessionId = req.headers["x-session-id"];
       let createdNewSession = false;
@@ -345,47 +483,51 @@ class MultiCustomerController {
 
       // ============ 8. Return Response ============
       res.json({
-        success: true,
-        customer_id: customerId,
+        ...response,
         session_id: sessionId,
-        customer_name: customerInfo.customer_name,
-        query: query,
-        sqlQuery: sqlQuery,
-        data: allData,
-        insights: insights,
-        chartConfig: chartConfig,
-        token_usage: {
-          actual: totalActualTokens,
-          estimated: estimatedTokens,
-          accuracy: `${tokenAccuracy}%`,
-          breakdown: tokenDetails,
-        },
-        cost: {
-          actual_usd: totalActualCost,
-          estimated_usd: (estimatedTokens / 1000000) * 0.28,
-          inr: `₹${(totalActualCost * 85).toFixed(2)}`,
-        },
-        companies: {
-          total: companyIdList.length,
-          successful: multiCompanyResult.results.filter((r) => r.success)
-            .length,
-          failed: multiCompanyResult.errors.length,
-          details: multiCompanyResult.results.map((r) => ({
-            company_id: r.company_id,
-            company_name: r.company_name,
-            row_count: r.rowCount,
-            success: r.success,
-          })),
-        },
-        rowCount: allData.length,
-        processing_time_ms: processingTime,
-        timestamp: new Date().toISOString(),
       });
     } catch (error) {
       logger.error(`Error in processQuery: ${error.message}`);
       next(error);
     }
   };
+
+  detectQueryType(query) {
+    const lowerQuery = query.toLowerCase();
+
+    if (
+      lowerQuery.includes("trend") ||
+      lowerQuery.includes("monthly") ||
+      lowerQuery.includes("over time")
+    ) {
+      return "trend";
+    }
+    if (lowerQuery.includes("top") || lowerQuery.includes("best")) {
+      return "static";
+    }
+    if (lowerQuery.includes("realtime") || lowerQuery.includes("current")) {
+      return "real-time";
+    }
+    if (lowerQuery.includes("summary") || lowerQuery.includes("total")) {
+      return "summary";
+    }
+    return "general";
+  }
+
+  getTimeBucket(query) {
+    const lowerQuery = query.toLowerCase();
+    const now = new Date();
+
+    if (lowerQuery.includes("trend") || lowerQuery.includes("monthly")) {
+      return `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+    }
+
+    if (lowerQuery.includes("realtime")) {
+      return `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}-${Math.floor(now.getMinutes() / 5)}`;
+    }
+
+    return `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}-${now.getHours()}`;
+  }
   processQuery2 = async (req, res, next) => {
     const startTime = Date.now();
     let totalActualTokens = 0;

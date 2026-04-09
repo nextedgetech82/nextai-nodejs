@@ -4435,3 +4435,211 @@ ORDER BY SUM(bd.pcs) DESC;
             Cost: $0.002776 (₹0.24)
 [2026-04-09T06:15:28.963Z] [INFO] GET /api/v3/chat/sessions
 [2026-04-09T06:15:29.040Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T07:15:12.366Z] [INFO] Metadata loaded successfully
+[2026-04-09T07:15:12.366Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T07:15:12.369Z] [INFO] Metadata loaded successfully
+[2026-04-09T07:15:12.369Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T07:15:12.377Z] [INFO] Server is running on port 3000
+[2026-04-09T07:15:12.377Z] [INFO] Environment: development
+[2026-04-09T07:15:12.377Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T07:15:12.377Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T07:15:19.501Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T07:15:19.845Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T07:15:20.063Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T07:15:37.671Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T07:15:37.806Z] [INFO] [Customer: 9327927990] Processing query: last 7 days sales return item of laxmikrupa
+[2026-04-09T07:15:38.445Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-09T07:15:41.930Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-09T07:15:42.315Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-09T07:15:49.505Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 100
+    bm.serial AS [Return No],
+    bm.srchr AS [Return Series],
+    bm.date AS [Return Date],
+    pm.account AS [Customer],
+    bd.itemname AS [Item Name],
+    bd.design AS [Design],
+    bd.pcs AS [Return Pcs],
+    bd.meters AS [Return Meters],
+    bd.weight AS [Return Weight],
+    bd.rate AS [Rate],
+    bd.amount AS [Return Amount],
+    bd.per AS [Unit]
+FROM billmast bm
+JOIN billdata bd ON bm.id = bd.ControlId
+JOIN partymst pm ON bm.party = pm.account
+WHERE bm.code = 'SR'
+    AND bm.opening <> 'Y'
+    AND bm.date >= DATEADD(DAY, -7, CAST(GETDATE() AS DATE))
+ORDER BY bm.date DESC, bm.serial DESC;
+[2026-04-09T07:15:50.465Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-09T07:15:52.311Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 0 rows
+[2026-04-09T07:15:53.909Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-09T07:15:55.944Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 100 rows
+[2026-04-09T07:15:55.944Z] [INFO] [Customer: 9327927990] Total rows: 100 from 2 companies in 18272ms
+[2026-04-09T07:16:26.028Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 15682, 
+            Estimated: 9016, 
+            Accuracy: 57.5%,
+            Cost: $0.002985 (₹0.25)
+[2026-04-09T07:16:26.055Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T07:16:26.117Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T07:17:57.771Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T07:17:58.019Z] [INFO] [Customer: 9327927990] Processing query: last 7 days sales return item of laxmikrupa
+[2026-04-09T07:18:01.578Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-09T07:18:02.172Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-09T07:18:09.048Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 100
+    bm.serial AS [Return No],
+    bm.srchr AS [Return Series],
+    bm.date AS [Return Date],
+    pm.account AS [Customer],
+    bd.itemname AS [Item Name],
+    bd.design AS [Design],
+    bd.pcs AS [Returned Pcs],
+    bd.meters AS [Returned Meters],
+    bd.weight AS [Returned Weight],
+    bd.rate AS [Rate],
+    bd.amount AS [Return Amount],
+    bd.per AS [Unit]
+FROM billmast bm
+JOIN billdata bd ON bm.id = bd.ControlId
+JOIN partymst pm ON bm.party = pm.account
+WHERE bm.code = 'SR'
+    AND bm.date >= DATEADD(DAY, -7, CAST(GETDATE() AS DATE))
+    AND bm.opening <> 'Y'
+ORDER BY bm.date DESC, bm.serial DESC;
+[2026-04-09T07:18:11.501Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 0 rows
+[2026-04-09T07:18:13.157Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 100 rows
+[2026-04-09T07:18:13.158Z] [INFO] [Customer: 9327927990] Total rows: 100 from 2 companies in 15386ms
+[2026-04-09T07:18:45.239Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 15883, 
+            Estimated: 9167, 
+            Accuracy: 57.7%,
+            Cost: $0.002858 (₹0.24)
+[2026-04-09T07:18:45.263Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T07:18:45.329Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T07:39:03.078Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T07:39:03.629Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T07:41:13.904Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T07:41:14.078Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T07:47:55.312Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T07:47:55.562Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T07:52:41.382Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T07:52:41.556Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T07:52:50.588Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T07:52:50.651Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T07:53:08.513Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T07:53:08.575Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T08:04:40.386Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T08:04:40.593Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T08:17:00.462Z] [INFO] Metadata loaded successfully
+[2026-04-09T08:17:00.463Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T08:17:00.467Z] [INFO] Metadata loaded successfully
+[2026-04-09T08:17:00.467Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T08:17:00.476Z] [INFO] Server is running on port 3000
+[2026-04-09T08:17:00.476Z] [INFO] Environment: development
+[2026-04-09T08:17:00.476Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T08:17:00.476Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T08:17:52.201Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T08:17:52.294Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T08:18:44.889Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T08:19:24.225Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T08:19:46.455Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T08:19:46.558Z] [INFO] [Customer: 9327927990] Processing query: last 7 days sales return item of laxmikrupa
+[2026-04-09T08:19:47.262Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-09T08:19:49.932Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-09T08:19:50.274Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-09T08:19:50.278Z] [INFO] ❌ Cache miss for key: analytics:b4beb546d2079b26588337ca7a2cb4fd
+[2026-04-09T08:19:58.822Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 100
+    bm.serial AS [Return No],
+    bm.srchr AS [Return Series],
+    bm.date AS [Return Date],
+    bd.itemname AS [Item Name],
+    bd.design AS [Design],
+    bd.pcs AS [Returned Pcs],
+    bd.meters AS [Returned Meters],
+    bd.weight AS [Returned Weight],
+    bd.rate AS [Rate],
+    bd.amount AS [Amount],
+    bd.per AS [Unit],
+    pm.account AS [Customer Name],
+    pm.city AS [City],
+    pm.state AS [State]
+FROM billmast bm
+JOIN billdata bd ON bm.id = bd.ControlId
+JOIN partymst pm ON bm.party = pm.account
+WHERE bm.code = 'SR'
+    AND bm.opening <> 'Y'
+    AND bm.date >= DATEADD(DAY, -7, CAST(GETDATE() AS DATE))
+    AND bm.date <= CAST(GETDATE() AS DATE)
+ORDER BY bm.date DESC, bm.serial DESC;
+[2026-04-09T08:19:59.720Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-09T08:20:01.022Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 0 rows
+[2026-04-09T08:20:01.935Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-09T08:20:03.117Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 100 rows
+[2026-04-09T08:20:03.118Z] [INFO] [Customer: 9327927990] Total rows: 100 from 2 companies in 16663ms
+[2026-04-09T08:20:34.292Z] [INFO] 💾 Cached data for key: analytics:b4beb546d2079b26588337ca7a2cb4fd (TTL: 3600s)
+[2026-04-09T08:20:34.574Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 16820, 
+            Estimated: 10151, 
+            Accuracy: 60.4%,
+            Cost: $0.003121 (₹0.27)
+[2026-04-09T08:20:34.605Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T08:20:34.669Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T08:21:16.445Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T08:21:16.593Z] [INFO] [Customer: 9327927990] Processing query: last 7 days sales return item of laxmikrupa
+[2026-04-09T08:21:19.427Z] [INFO] [Customer: 9327927990] AI detected companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-09T08:21:19.794Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQ1234SHREE20262027
+[2026-04-09T08:21:19.795Z] [INFO] ✅ Cache hit for key: analytics:b4beb546d2079b26588337ca7a2cb4fd
+[2026-04-09T08:21:20.056Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T08:21:20.119Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T08:39:21.124Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T08:39:21.338Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T09:06:06.314Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T09:06:06.680Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T09:09:13.131Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T09:09:13.758Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T09:18:45.970Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T09:18:46.402Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T09:25:06.519Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T09:25:07.220Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T09:27:41.011Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T09:27:41.400Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T09:35:28.105Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T09:35:28.341Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T10:09:31.625Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T10:09:31.910Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T10:09:31.980Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T10:09:40.376Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T10:09:40.519Z] [INFO] [Customer: 9327927990] Processing query: Show Todays Sales in Pcs 
+[2026-04-09T10:09:43.089Z] [INFO] [Customer: 9327927990] AI detected companies: all
+[2026-04-09T10:09:43.504Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQLAKSHYA20252026, EQ1234SHREE20262027, EQLAKSHYA20262027
+[2026-04-09T10:09:43.510Z] [INFO] ❌ Cache miss for key: analytics:c0d04b6e1c5811be85b2695090ddf688
+[2026-04-09T10:09:48.065Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 100
+    b.serial AS [Bill No],
+    b.srchr AS [Series],
+    b.date AS [Bill Date],
+    p.account AS [Customer],
+    SUM(bd.pcs) AS [Total Pcs Sold]
+FROM billmast b
+JOIN billdata bd ON b.id = bd.ControlId
+JOIN partymst p ON b.party = p.account
+WHERE b.code = 'S'
+    AND b.opening <> 'Y'
+    AND b.date = CAST(GETDATE() AS DATE)
+GROUP BY b.serial, b.srchr, b.date, p.account
+ORDER BY b.date DESC, b.serial DESC;
+[2026-04-09T10:09:49.944Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 0 rows
+[2026-04-09T10:09:50.989Z] [INFO] Connected to company DB: EQLAKSHYA20252026 (9327927990/EQLAKSHYA20252026)
+[2026-04-09T10:09:52.537Z] [INFO] Query executed for 9327927990/company EQLAKSHYA20252026: 0 rows
+[2026-04-09T10:09:53.813Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 19 rows
+[2026-04-09T10:09:54.777Z] [INFO] Connected to company DB: EQLAKSHYA20262027 (9327927990/EQLAKSHYA20262027)
+[2026-04-09T10:09:56.123Z] [INFO] Query executed for 9327927990/company EQLAKSHYA20262027: 5 rows
+[2026-04-09T10:09:56.125Z] [INFO] [Customer: 9327927990] Total rows: 24 from 4 companies in 15748ms
+[2026-04-09T10:10:21.128Z] [INFO] 💾 Cached data for key: analytics:c0d04b6e1c5811be85b2695090ddf688 (TTL: 3600s)
+[2026-04-09T10:10:21.450Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 13205, 
+            Estimated: 1463, 
+            Accuracy: 11.1%,
+            Cost: $0.003778 (₹0.32)
+[2026-04-09T10:10:21.479Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T10:10:21.558Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
