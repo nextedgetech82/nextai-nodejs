@@ -123,6 +123,19 @@ app.get(
   "/api/multi-customer/usage/stats",
   MultiCustomerController.getTokenUsageStats,
 );
+app.get("/api/v3/chat/sessions", MultiCustomerController.getChatSessions);
+app.get(
+  "/api/v3/chat/sessions/:sessionId",
+  MultiCustomerController.getChatSession,
+);
+app.post("/api/v3/chat/sessions", MultiCustomerController.createChatSession);
+app.delete(
+  "/api/v3/chat/sessions/:sessionId",
+  MultiCustomerController.deleteChatSession,
+);
+app.delete("/api/v3/chat/sessions", MultiCustomerController.clearAllChatSessions);
+app.get("/api/v3/chat/search", MultiCustomerController.searchChatMessages);
+app.get("/api/v3/chat/stats", MultiCustomerController.getChatStats);
 app.get(
   "/api/multi-customer/deepseek/usage",
   MultiCustomerController.getDeepSeekUsage,

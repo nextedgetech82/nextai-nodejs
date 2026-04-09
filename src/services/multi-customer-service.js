@@ -98,17 +98,24 @@ Always extract the business intent and generate proper SQL.
   }
 
   async getCustomerApiKey(customerId) {
+    const customerInfo = await dbRouter.getCustomerInfo(customerId);
+    const effectiveCustomerId =
+      String(customerInfo.subscription_plan || "").toLowerCase() === "demo"
+        ? "9999999999"
+        : customerId;
+
     const registry = await dbRouter.connectRegistry();
     const result = await registry
       .request()
-      .input("customerId", sql.VarChar, customerId).query(`SELECT api_key
+      .input("customerId", sql.VarChar, effectiveCustomerId)
+      .query(`SELECT api_key
               FROM customer_api_keys
-              WHERE customer_id = @customerId AND is_active = 0`);
+              WHERE customer_id = @customerId`);
     const rows = result.recordset;
 
     if (rows.length === 0) {
       throw new Error(
-        `No customer-specific API key configured for ${customerId}`,
+        `No customer-specific API key configured for ${effectiveCustomerId}`,
       );
     }
 

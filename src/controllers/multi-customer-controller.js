@@ -2,6 +2,7 @@
 const sql = require("mssql");
 const dbRouter = require("../config/database-router");
 const MultiCustomerDeepSeekService = require("../services/multi-customer-service");
+const chatService = require("../services/chatService");
 const MetadataService = require("../services/metadataService");
 const logger = require("../utils/logger");
 const DeepSeekService = require("../services/deepseekService");
@@ -10,6 +11,23 @@ class MultiCustomerController {
   constructor() {
     this.deepseekService = new MultiCustomerDeepSeekService();
     this.metadataService = new MetadataService();
+  }
+
+  async authenticateCustomer(req) {
+    const apiKey = req.headers["authorization"]?.replace("Bearer ", "");
+    if (!apiKey) {
+      const error = new Error(
+        "API key required. Use Authorization: Bearer <your_api_key>",
+      );
+      error.statusCode = 401;
+      throw error;
+    }
+
+    const keyInfo = await dbRouter.validateApiKey(apiKey);
+    return {
+      apiKey,
+      customerId: keyInfo.customer_id,
+    };
   }
 
   /**
@@ -22,18 +40,7 @@ class MultiCustomerController {
     let tokenDetails = {};
 
     try {
-      // Authenticate via API key
-      const apiKey = req.headers["authorization"]?.replace("Bearer ", "");
-      if (!apiKey) {
-        return res.status(401).json({
-          success: false,
-          error: "API key required. Use Authorization: Bearer <your_api_key>",
-        });
-      }
-
-      // Validate API key and get customer
-      const keyInfo = await dbRouter.validateApiKey(apiKey);
-      const customerId = keyInfo.customer_id;
+      const { apiKey, customerId } = await this.authenticateCustomer(req);
 
       // Check monthly limit
       const withinLimit = await dbRouter.checkCustomerLimit(customerId);
@@ -292,6 +299,43 @@ class MultiCustomerController {
         tokenDetails.totals, // Detailed cache breakdown
       );
 
+      // ============ 7. Save Chat History ============
+      let sessionId = req.headers["x-session-id"];
+      let createdNewSession = false;
+      if (!sessionId) {
+        const title =
+          query.length > 80 ? `${query.slice(0, 80).trim()}...` : query;
+        const newSession = await chatService.createSession(customerId, title);
+        sessionId = newSession.session_id;
+        createdNewSession = true;
+      }
+
+      await chatService.saveMessage(sessionId, customerId, "user", query);
+      await chatService.saveMessage(sessionId, customerId, "bot", insights, {
+        sqlQuery,
+        dataJson: allData.slice(0, 100),
+        insights,
+        chartConfig,
+        tokensUsed: totalActualTokens,
+        processingTime,
+      });
+
+      if (!createdNewSession) {
+        const sessionTitle =
+          query.length > 80 ? `${query.slice(0, 80).trim()}...` : query;
+        const existingSession = await chatService.getSession(
+          sessionId,
+          customerId,
+        );
+        if (existingSession && existingSession.messages.length === 2) {
+          await chatService.updateSessionTitle(
+            sessionId,
+            customerId,
+            sessionTitle,
+          );
+        }
+      }
+
       // Log token usage for debugging
       logger.info(`[Customer: ${customerId}] Token Usage - 
             Actual: ${totalActualTokens}, 
@@ -299,10 +343,11 @@ class MultiCustomerController {
             Accuracy: ${tokenAccuracy}%,
             Cost: $${totalActualCost.toFixed(6)} (₹${(totalActualCost * 85).toFixed(2)})`);
 
-      // ============ 7. Return Response ============
+      // ============ 8. Return Response ============
       res.json({
         success: true,
         customer_id: customerId,
+        session_id: sessionId,
         customer_name: customerInfo.customer_name,
         query: query,
         sqlQuery: sqlQuery,
@@ -726,6 +771,132 @@ class MultiCustomerController {
     } catch (error) {
       logger.error(`Error in getDeepSeekUsage: ${error.message}`);
       next(error);
+    }
+  };
+
+  getChatSessions = async (req, res, next) => {
+    try {
+      const { customerId } = await this.authenticateCustomer(req);
+      const limit = Number.parseInt(req.query.limit, 10) || 50;
+      const offset = Number.parseInt(req.query.offset, 10) || 0;
+      const sessions = await chatService.getSessions(customerId, limit, offset);
+
+      res.json({
+        success: true,
+        sessions,
+      });
+    } catch (error) {
+      logger.error(`Error in getChatSessions: ${error.message}`);
+      next(error.statusCode ? Object.assign(error, { status: error.statusCode }) : error);
+    }
+  };
+
+  getChatSession = async (req, res, next) => {
+    try {
+      const { customerId } = await this.authenticateCustomer(req);
+      const { sessionId } = req.params;
+      const session = await chatService.getSession(sessionId, customerId);
+
+      if (!session) {
+        return res.status(404).json({
+          success: false,
+          error: "Session not found",
+        });
+      }
+
+      res.json({
+        success: true,
+        session: session.session,
+        messages: session.messages,
+      });
+    } catch (error) {
+      logger.error(`Error in getChatSession: ${error.message}`);
+      next(error.statusCode ? Object.assign(error, { status: error.statusCode }) : error);
+    }
+  };
+
+  createChatSession = async (req, res, next) => {
+    try {
+      const { customerId } = await this.authenticateCustomer(req);
+      const session = await chatService.createSession(customerId, req.body.title);
+
+      res.json({
+        success: true,
+        session,
+      });
+    } catch (error) {
+      logger.error(`Error in createChatSession: ${error.message}`);
+      next(error.statusCode ? Object.assign(error, { status: error.statusCode }) : error);
+    }
+  };
+
+  deleteChatSession = async (req, res, next) => {
+    try {
+      const { customerId } = await this.authenticateCustomer(req);
+      await chatService.deleteSession(req.params.sessionId, customerId);
+
+      res.json({
+        success: true,
+        message: "Session deleted successfully",
+      });
+    } catch (error) {
+      logger.error(`Error in deleteChatSession: ${error.message}`);
+      next(error.statusCode ? Object.assign(error, { status: error.statusCode }) : error);
+    }
+  };
+
+  clearAllChatSessions = async (req, res, next) => {
+    try {
+      const { customerId } = await this.authenticateCustomer(req);
+      await chatService.clearAllSessions(customerId);
+
+      res.json({
+        success: true,
+        message: "All sessions cleared successfully",
+      });
+    } catch (error) {
+      logger.error(`Error in clearAllChatSessions: ${error.message}`);
+      next(error.statusCode ? Object.assign(error, { status: error.statusCode }) : error);
+    }
+  };
+
+  searchChatMessages = async (req, res, next) => {
+    try {
+      const { customerId } = await this.authenticateCustomer(req);
+      const { q } = req.query;
+      const limit = Number.parseInt(req.query.limit, 10) || 50;
+
+      if (!q) {
+        return res.status(400).json({
+          success: false,
+          error: "Search query required",
+        });
+      }
+
+      const results = await chatService.searchMessages(customerId, q, limit);
+      res.json({
+        success: true,
+        query: q,
+        results,
+      });
+    } catch (error) {
+      logger.error(`Error in searchChatMessages: ${error.message}`);
+      next(error.statusCode ? Object.assign(error, { status: error.statusCode }) : error);
+    }
+  };
+
+  getChatStats = async (req, res, next) => {
+    try {
+      const { customerId } = await this.authenticateCustomer(req);
+      const stats = await chatService.getChatStats(customerId);
+
+      res.json({
+        success: true,
+        stats,
+      });
+    } catch (error) {
+      logger.error(`Error in getChatStats: ${error.message}`);
+      next(error.statusCode ? Object.assign(error, { status: error.statusCode }) : error);
     }
   };
 

@@ -281,6 +281,7 @@ class AdminController {
         .input("api_key", sql.VarChar(500), payload.api_key)
         .input("api_provider", sql.VarChar(50), payload.api_provider)
         .input("monthly_limit", sql.Int, payload.monthly_limit)
+        .input("daily_limit", sql.Int, payload.daily_limit)
         .input("is_active", sql.Bit, payload.is_active)
         .query(`IF EXISTS (SELECT 1 FROM customer_api_keys WHERE customer_id = @customerId)
                 BEGIN
@@ -288,6 +289,7 @@ class AdminController {
                   SET api_key = @api_key,
                       api_provider = @api_provider,
                       monthly_limit = @monthly_limit,
+                      daily_limit = @daily_limit,
                       is_active = @is_active
                   WHERE customer_id = @customerId
                 END
@@ -298,7 +300,9 @@ class AdminController {
                     api_key,
                     api_provider,
                     monthly_limit,
+                    daily_limit,
                     used_this_month,
+                    used_daily,
                     is_active,
                     used_this_month_actual,
                     allocated_tokens,
@@ -312,6 +316,8 @@ class AdminController {
                     @api_key,
                     @api_provider,
                     @monthly_limit,
+                    @daily_limit,
+                    0,
                     0,
                     @is_active,
                     0,
@@ -480,7 +486,9 @@ class AdminController {
       api_key: "",
       api_provider: "deepseek",
       monthly_limit: 100000,
+      daily_limit: 0,
       is_active: true,
+      used_daily: 0,
       used_this_month: 0,
       used_this_month_actual: 0,
       allocated_tokens: 0,
@@ -499,6 +507,7 @@ class AdminController {
       api_key: apiKey || this.generateApiKey(),
       api_provider: this.nullableTrim(body.api_provider) || "deepseek",
       monthly_limit: Number.parseInt(body.monthly_limit, 10) || 100000,
+      daily_limit: Number.parseInt(body.daily_limit, 10) || 0,
       is_active:
         body.is_active === "on" ||
         body.is_active === "true" ||
@@ -576,7 +585,9 @@ class AdminController {
                   api_key,
                   api_provider,
                   monthly_limit,
+                  daily_limit,
                   used_this_month,
+                  used_daily,
                   is_active,
                   used_this_month_actual,
                   allocated_tokens,
@@ -590,6 +601,8 @@ class AdminController {
                   @api_key,
                   'deepseek',
                   100000,
+                  0,
+                  0,
                   0,
                   1,
                   0,

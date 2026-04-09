@@ -342,7 +342,8 @@ class DatabaseRouter {
       .input("customerId", sql.VarChar(100), customerId)
       .query(`UPDATE customer_api_keys 
          SET used_this_month = used_this_month + @actualTokens,
-             used_this_month_actual = used_this_month_actual + @actualTokens
+             used_this_month_actual = used_this_month_actual + @actualTokens,
+             used_daily = ISNULL(used_daily, 0) + 1
          WHERE customer_id = @customerId`);
   }
   async trackUsage_old(
@@ -408,37 +409,58 @@ class DatabaseRouter {
     const usageResult = await registry
       .request()
       .input("customerId", sql.VarChar, customerId)
-      .query(`SELECT monthly_limit, used_this_month
+      .query(`SELECT monthly_limit, daily_limit, used_this_month, used_daily, last_reset_date
               FROM customer_api_keys
               WHERE customer_id = @customerId AND is_active = 0`);
     const rows = usageResult.recordset;
 
     if (rows.length === 0) return true;
 
-    const { monthly_limit, used_this_month } = rows[0];
-
-    // Check if need to reset monthly counter
-    const resetResult = await registry
-      .request()
-      .input("customerId", sql.VarChar, customerId)
-      .query(
-        "SELECT last_reset_date FROM customer_api_keys WHERE customer_id = @customerId",
-      );
-    const resetCheck = resetResult.recordset;
-
-    const lastReset = resetCheck[0]?.last_reset_date;
+    let { monthly_limit, daily_limit, used_this_month, used_daily, last_reset_date } = rows[0];
     const now = new Date();
+    const lastReset =
+      last_reset_date ? new Date(last_reset_date) : null;
 
-    if (!lastReset || new Date(lastReset).getMonth() !== now.getMonth()) {
+    if (
+      !lastReset ||
+      lastReset.getMonth() !== now.getMonth() ||
+      lastReset.getFullYear() !== now.getFullYear()
+    ) {
       // Reset monthly usage
       await registry.request().input("customerId", sql.VarChar, customerId)
         .query(`UPDATE customer_api_keys
-                SET used_this_month = 0, last_reset_date = CAST(GETDATE() AS DATE)
+                SET used_this_month = 0,
+                    last_reset_date = CAST(GETDATE() AS DATE)
                 WHERE customer_id = @customerId`);
+      used_this_month = 0;
+    }
+
+    if (monthly_limit > 0 && used_this_month >= monthly_limit) {
+      return false;
+    }
+
+    if (!daily_limit || daily_limit <= 0) {
       return true;
     }
 
-    return used_this_month < monthly_limit;
+    const dailyUsageResult = await registry
+      .request()
+      .input("customerId", sql.VarChar, customerId)
+      .query(`SELECT COUNT(*) as daily_used
+              FROM customer_usage
+              WHERE customer_id = @customerId
+                AND CAST(query_timestamp AS DATE) = CAST(GETDATE() AS DATE)`);
+    used_daily = dailyUsageResult.recordset[0]?.daily_used || 0;
+
+    await registry
+      .request()
+      .input("customerId", sql.VarChar, customerId)
+      .input("usedDaily", sql.Int, used_daily)
+      .query(`UPDATE customer_api_keys
+              SET used_daily = @usedDaily
+              WHERE customer_id = @customerId`);
+
+    return daily_limit - used_daily > 0;
   }
 
   /**

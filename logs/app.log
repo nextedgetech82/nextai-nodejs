@@ -3958,3 +3958,480 @@ ORDER BY TotalPcsSold DESC;
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:672:22)
 [2026-04-09T04:09:59.377Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T04:19:24.996Z] [INFO] Metadata loaded successfully
+[2026-04-09T04:19:24.996Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T04:19:25.003Z] [INFO] Metadata loaded successfully
+[2026-04-09T04:19:25.003Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T04:19:25.011Z] [INFO] Server is running on port 3000
+[2026-04-09T04:19:25.011Z] [INFO] Environment: development
+[2026-04-09T04:19:25.012Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T04:19:25.012Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T04:22:19.867Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T04:22:19.869Z] [ERROR] Error in getChatSessions: API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:22:19.871Z] [ERROR] GET /api/v3/chat/sessions - API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:22:19.871Z] [ERROR] Error: API key required. Use Authorization: Bearer <your_api_key>
+    at MultiCustomerController.authenticateCustomer (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:19:21)
+    at getChatSessions (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:779:41)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:295:15
+    at processParams (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:582:12)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:291:5)
+[2026-04-09T04:22:49.835Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T04:22:49.836Z] [ERROR] Error in getChatSessions: API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:22:49.837Z] [ERROR] GET /api/v3/chat/sessions - API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:22:49.838Z] [ERROR] Error: API key required. Use Authorization: Bearer <your_api_key>
+    at MultiCustomerController.authenticateCustomer (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:19:21)
+    at getChatSessions (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:779:41)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:295:15
+    at processParams (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:582:12)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:291:5)
+[2026-04-09T04:22:51.273Z] [INFO] DELETE /api/v3/chat/sessions
+[2026-04-09T04:22:51.274Z] [ERROR] Error in clearAllChatSessions: API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:22:51.275Z] [ERROR] DELETE /api/v3/chat/sessions - API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:22:51.276Z] [ERROR] Error: API key required. Use Authorization: Bearer <your_api_key>
+    at MultiCustomerController.authenticateCustomer (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:19:21)
+    at clearAllChatSessions (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:850:41)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:295:15
+    at processParams (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:582:12)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:291:5)
+[2026-04-09T04:22:55.538Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T04:22:55.595Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T04:22:55.686Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T04:22:55.686Z] [ERROR] Error in getChatSessions: API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:22:55.687Z] [ERROR] GET /api/v3/chat/sessions - API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:22:55.687Z] [ERROR] Error: API key required. Use Authorization: Bearer <your_api_key>
+    at MultiCustomerController.authenticateCustomer (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:19:21)
+    at getChatSessions (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:779:41)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:295:15
+    at processParams (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:582:12)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:291:5)
+[2026-04-09T04:22:57.859Z] [INFO] POST /api/v3/chat/sessions
+[2026-04-09T04:22:57.861Z] [ERROR] Error in createChatSession: API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:22:57.861Z] [ERROR] POST /api/v3/chat/sessions - API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:22:57.862Z] [ERROR] Error: API key required. Use Authorization: Bearer <your_api_key>
+    at MultiCustomerController.authenticateCustomer (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:19:21)
+    at createChatSession (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:820:41)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:295:15
+    at processParams (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:582:12)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:291:5)
+[2026-04-09T04:23:12.680Z] [INFO] POST /api/v3/chat/sessions
+[2026-04-09T04:23:12.684Z] [ERROR] Error in createChatSession: API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:23:12.685Z] [ERROR] POST /api/v3/chat/sessions - API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:23:12.685Z] [ERROR] Error: API key required. Use Authorization: Bearer <your_api_key>
+    at MultiCustomerController.authenticateCustomer (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:19:21)
+    at createChatSession (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:820:41)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:295:15
+    at processParams (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:582:12)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:291:5)
+[2026-04-09T04:23:26.133Z] [INFO] POST /api/v3/chat/sessions
+[2026-04-09T04:23:26.134Z] [ERROR] Error in createChatSession: API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:23:26.135Z] [ERROR] POST /api/v3/chat/sessions - API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:23:26.136Z] [ERROR] Error: API key required. Use Authorization: Bearer <your_api_key>
+    at MultiCustomerController.authenticateCustomer (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:19:21)
+    at createChatSession (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:820:41)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:295:15
+    at processParams (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:582:12)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:291:5)
+[2026-04-09T04:24:17.244Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T04:24:17.364Z] [INFO] POST /api/v3/chat/sessions
+[2026-04-09T04:24:17.495Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T04:24:27.500Z] [INFO] DELETE /api/v3/chat/sessions
+[2026-04-09T04:24:27.502Z] [ERROR] Error in clearAllChatSessions: API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:24:27.504Z] [ERROR] DELETE /api/v3/chat/sessions - API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T04:24:27.505Z] [ERROR] Error: API key required. Use Authorization: Bearer <your_api_key>
+    at MultiCustomerController.authenticateCustomer (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:19:21)
+    at clearAllChatSessions (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:850:41)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:295:15
+    at processParams (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:582:12)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:291:5)
+[2026-04-09T04:24:33.200Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T04:24:33.248Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T04:24:33.308Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T04:24:36.807Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T04:24:43.662Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T04:25:03.675Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T04:25:49.772Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T04:34:44.587Z] [INFO] Metadata loaded successfully
+[2026-04-09T04:34:44.589Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T04:34:44.602Z] [INFO] Metadata loaded successfully
+[2026-04-09T04:34:44.602Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T04:34:44.610Z] [INFO] Server is running on port 3000
+[2026-04-09T04:34:44.611Z] [INFO] Environment: development
+[2026-04-09T04:34:44.611Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T04:34:44.611Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T04:34:51.028Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T04:34:56.655Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T04:35:03.667Z] [INFO] [Customer: 9327927990] Processing query: Top 5 customers by sales value
+[2026-04-09T04:35:04.357Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-09T04:35:08.202Z] [ERROR] DeepSeek API error: Request failed with status code 402
+[2026-04-09T04:35:08.203Z] [ERROR] API Response: {"error":{"message":"Insufficient Balance","type":"unknown_error","param":null,"code":"invalid_request_error"}}
+[2026-04-09T04:35:08.204Z] [ERROR] AI company detection failed: Failed to get response from AI: Request failed with status code 402
+[2026-04-09T04:35:08.205Z] [INFO] [Customer: 9327927990] AI detected companies: all
+[2026-04-09T04:35:08.569Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQLAKSHYA20252026, EQ1234SHREE20262027, EQLAKSHYA20262027
+[2026-04-09T04:35:09.209Z] [ERROR] DeepSeek API error for customer 9327927990: Request failed with status code 402
+[2026-04-09T04:35:09.211Z] [ERROR] Error in processQuery: AI service error: Request failed with status code 402
+[2026-04-09T04:35:09.213Z] [ERROR] POST /api/multi-customer/analytics - AI service error: Request failed with status code 402
+[2026-04-09T04:35:09.214Z] [ERROR] Error: AI service error: Request failed with status code 402
+    at MultiCustomerDeepSeekService.generateSQL (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:358:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async processQuery (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:110:25)
+[2026-04-09T04:39:46.011Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T04:39:46.208Z] [INFO] [Customer: 9327927990] Processing query: Top 5 customers by sales value
+[2026-04-09T04:39:47.738Z] [ERROR] DeepSeek API error: Request failed with status code 402
+[2026-04-09T04:39:47.740Z] [ERROR] API Response: {"error":{"message":"Insufficient Balance","type":"unknown_error","param":null,"code":"invalid_request_error"}}
+[2026-04-09T04:39:47.741Z] [ERROR] AI company detection failed: Failed to get response from AI: Request failed with status code 402
+[2026-04-09T04:39:47.742Z] [INFO] [Customer: 9327927990] AI detected companies: all
+[2026-04-09T04:39:48.087Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQLAKSHYA20252026, EQ1234SHREE20262027, EQLAKSHYA20262027
+[2026-04-09T04:40:15.388Z] [ERROR] DeepSeek API error for customer 9327927990: Request failed with status code 402
+[2026-04-09T04:40:15.390Z] [ERROR] Error in processQuery: AI service error: Request failed with status code 402
+[2026-04-09T04:40:15.393Z] [ERROR] POST /api/multi-customer/analytics - AI service error: Request failed with status code 402
+[2026-04-09T04:40:15.394Z] [ERROR] Error: AI service error: Request failed with status code 402
+    at MultiCustomerDeepSeekService.generateSQL (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:358:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async processQuery (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:110:25)
+[2026-04-09T04:40:20.918Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T04:40:21.030Z] [INFO] [Customer: 9327927990] Processing query: Top 5 customers by sales value
+[2026-04-09T04:40:22.501Z] [ERROR] DeepSeek API error: Request failed with status code 402
+[2026-04-09T04:40:22.503Z] [ERROR] API Response: {"error":{"message":"Insufficient Balance","type":"unknown_error","param":null,"code":"invalid_request_error"}}
+[2026-04-09T04:40:22.504Z] [ERROR] AI company detection failed: Failed to get response from AI: Request failed with status code 402
+[2026-04-09T04:40:22.505Z] [INFO] [Customer: 9327927990] AI detected companies: all
+[2026-04-09T04:40:22.864Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQLAKSHYA20252026, EQ1234SHREE20262027, EQLAKSHYA20262027
+[2026-04-09T04:40:45.227Z] [ERROR] DeepSeek API error for customer 9327927990: Request failed with status code 402
+[2026-04-09T04:40:45.229Z] [ERROR] Error in processQuery: AI service error: Request failed with status code 402
+[2026-04-09T04:40:45.231Z] [ERROR] POST /api/multi-customer/analytics - AI service error: Request failed with status code 402
+[2026-04-09T04:40:45.233Z] [ERROR] Error: AI service error: Request failed with status code 402
+    at MultiCustomerDeepSeekService.generateSQL (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:358:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async processQuery (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:110:25)
+[2026-04-09T04:40:48.214Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T04:40:48.324Z] [INFO] [Customer: 9327927990] Processing query: Top 5 customers by sales value
+[2026-04-09T04:40:49.171Z] [ERROR] DeepSeek API error: Request failed with status code 402
+[2026-04-09T04:40:49.173Z] [ERROR] API Response: {"error":{"message":"Insufficient Balance","type":"unknown_error","param":null,"code":"invalid_request_error"}}
+[2026-04-09T04:40:49.174Z] [ERROR] AI company detection failed: Failed to get response from AI: Request failed with status code 402
+[2026-04-09T04:40:49.175Z] [INFO] [Customer: 9327927990] AI detected companies: all
+[2026-04-09T04:40:49.544Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQLAKSHYA20252026, EQ1234SHREE20262027, EQLAKSHYA20262027
+[2026-04-09T04:41:31.556Z] [ERROR] DeepSeek API error for customer 9327927990: Request failed with status code 402
+[2026-04-09T04:47:32.531Z] [ERROR] Error in processQuery: AI service error: Request failed with status code 402
+[2026-04-09T04:47:32.537Z] [ERROR] POST /api/multi-customer/analytics - AI service error: Request failed with status code 402
+[2026-04-09T04:47:32.539Z] [ERROR] Error: AI service error: Request failed with status code 402
+    at MultiCustomerDeepSeekService.generateSQL (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:358:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async processQuery (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:110:25)
+[2026-04-09T04:47:32.556Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T04:47:32.702Z] [INFO] [Customer: 9327927990] Processing query: Top 5 customers by sales value
+[2026-04-09T04:47:34.702Z] [INFO] [Customer: 9327927990] AI detected companies: all
+[2026-04-09T04:47:35.047Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQLAKSHYA20252026, EQ1234SHREE20262027, EQLAKSHYA20262027
+[2026-04-09T04:47:53.751Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 5
+    p.account AS Customer,
+    SUM(b.netamt) AS SalesValue
+FROM billmast b
+JOIN partymst p ON b.party = p.account
+WHERE b.code = 'S'
+    AND b.opening <> 'Y'
+GROUP BY p.account
+ORDER BY SalesValue DESC;
+[2026-04-09T04:47:54.678Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-09T04:47:56.187Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 5 rows
+[2026-04-09T04:47:57.095Z] [INFO] Connected to company DB: EQLAKSHYA20252026 (9327927990/EQLAKSHYA20252026)
+[2026-04-09T04:47:58.461Z] [INFO] Query executed for 9327927990/company EQLAKSHYA20252026: 5 rows
+[2026-04-09T04:47:59.450Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-09T04:48:01.136Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 5 rows
+[2026-04-09T04:48:02.054Z] [INFO] Connected to company DB: EQLAKSHYA20262027 (9327927990/EQLAKSHYA20262027)
+[2026-04-09T04:48:03.391Z] [INFO] Query executed for 9327927990/company EQLAKSHYA20262027: 5 rows
+[2026-04-09T04:48:03.391Z] [INFO] [Customer: 9327927990] Total rows: 20 from 4 companies in 30834ms
+[2026-04-09T04:48:27.103Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 11535, 
+            Estimated: 858, 
+            Accuracy: 7.4%,
+            Cost: $0.003343 (₹0.28)
+[2026-04-09T04:52:28.918Z] [INFO] Metadata loaded successfully
+[2026-04-09T04:52:28.920Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T04:52:28.927Z] [INFO] Metadata loaded successfully
+[2026-04-09T04:52:28.927Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T04:52:28.935Z] [INFO] Server is running on port 3000
+[2026-04-09T04:52:28.935Z] [INFO] Environment: development
+[2026-04-09T04:52:28.936Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T04:52:28.936Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T05:05:07.139Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:05:07.372Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T05:05:08.061Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:07:34.973Z] [INFO] Metadata loaded successfully
+[2026-04-09T05:07:34.973Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T05:07:34.981Z] [INFO] Metadata loaded successfully
+[2026-04-09T05:07:34.982Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T05:07:34.991Z] [INFO] Server is running on port 3000
+[2026-04-09T05:07:34.991Z] [INFO] Environment: development
+[2026-04-09T05:07:34.991Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T05:07:34.991Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T05:10:39.467Z] [INFO] DELETE /api/v3/chat/sessions
+[2026-04-09T05:10:39.470Z] [ERROR] Error in clearAllChatSessions: API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T05:10:39.471Z] [ERROR] DELETE /api/v3/chat/sessions - API key required. Use Authorization: Bearer <your_api_key>
+[2026-04-09T05:10:39.471Z] [ERROR] Error: API key required. Use Authorization: Bearer <your_api_key>
+    at MultiCustomerController.authenticateCustomer (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:19:21)
+    at clearAllChatSessions (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:850:41)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:157:13)
+    at Route.dispatch (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/route.js:117:3)
+    at handle (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:435:11)
+    at Layer.handleRequest (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/lib/layer.js:152:17)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:295:15
+    at processParams (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:582:12)
+    at next (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/router/index.js:291:5)
+[2026-04-09T05:10:42.748Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T05:10:42.867Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T05:10:42.987Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:10:43.061Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:10:46.315Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:12:52.642Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:12:52.795Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:13:05.631Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:13:05.712Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:14:19.554Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:14:21.528Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:14:21.749Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:14:22.599Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:15:09.127Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:15:09.264Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:15:15.794Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:15:15.872Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:16:46.082Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T05:16:46.196Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:16:46.260Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:16:48.574Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:16:52.538Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:17:17.645Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-09T05:17:17.647Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-09T05:17:20.129Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:17:20.202Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:17:27.642Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T05:17:27.690Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:17:27.758Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:18:29.342Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:18:41.206Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:18:41.289Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:20:59.203Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T05:20:59.313Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:20:59.378Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:22:47.993Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:22:48.138Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:24:16.090Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:24:16.226Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:25:16.417Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:25:16.554Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:27:07.087Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:27:07.237Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:42:11.165Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:42:11.297Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:44:12.084Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:44:12.255Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:45:11.007Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:45:11.153Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:47:11.588Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T05:47:11.806Z] [INFO] [Customer: 9327927990] Processing query: show me last 5 yesterdays purchase bill
+[2026-04-09T05:47:12.499Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-09T05:47:16.235Z] [INFO] [Customer: 9327927990] AI detected companies: all
+[2026-04-09T05:47:16.603Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQLAKSHYA20252026, EQ1234SHREE20262027, EQLAKSHYA20262027
+[2026-04-09T05:47:20.858Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 5 
+    bm.serial AS [Bill No],
+    bm.srchr AS [Series],
+    bm.date AS [Bill Date],
+    pm.account AS [Party Name],
+    bm.netamt AS [Bill Amount]
+FROM billmast bm
+JOIN partymst pm ON bm.party = pm.account
+WHERE bm.code = 'P'
+    AND bm.date = DATEADD(DAY, -1, CAST(GETDATE() AS DATE))
+    AND bm.opening <> 'Y'
+ORDER BY bm.date DESC, bm.serial DESC;
+[2026-04-09T05:47:21.790Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-09T05:47:23.185Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 0 rows
+[2026-04-09T05:47:24.196Z] [INFO] Connected to company DB: EQLAKSHYA20252026 (9327927990/EQLAKSHYA20252026)
+[2026-04-09T05:47:25.499Z] [INFO] Query executed for 9327927990/company EQLAKSHYA20252026: 0 rows
+[2026-04-09T05:47:26.422Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-09T05:47:27.641Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 2 rows
+[2026-04-09T05:47:28.617Z] [INFO] Connected to company DB: EQLAKSHYA20262027 (9327927990/EQLAKSHYA20262027)
+[2026-04-09T05:47:29.898Z] [INFO] Query executed for 9327927990/company EQLAKSHYA20262027: 0 rows
+[2026-04-09T05:47:29.899Z] [INFO] [Customer: 9327927990] Total rows: 2 from 4 companies in 18310ms
+[2026-04-09T05:47:49.831Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 9242, 
+            Estimated: 218, 
+            Accuracy: 2.4%,
+            Cost: $0.002682 (₹0.23)
+[2026-04-09T05:47:49.847Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T05:47:49.932Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T05:48:59.791Z] [INFO] GET /
+[2026-04-09T05:48:59.850Z] [INFO] GET /favicon.ico
+[2026-04-09T05:49:02.176Z] [INFO] GET /admin/customers
+[2026-04-09T05:49:06.699Z] [INFO] GET /admin/customers/8866738766/edit
+[2026-04-09T05:49:09.045Z] [INFO] GET /admin/customers
+[2026-04-09T05:49:10.577Z] [INFO] GET /admin/customers/8866738766/edit
+[2026-04-09T05:49:17.616Z] [INFO] GET /admin/customers
+[2026-04-09T05:49:18.749Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-09T05:51:19.258Z] [INFO] Metadata loaded successfully
+[2026-04-09T05:51:19.259Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T05:51:19.263Z] [INFO] Metadata loaded successfully
+[2026-04-09T05:51:19.263Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T05:51:19.270Z] [INFO] Server is running on port 3000
+[2026-04-09T05:51:19.270Z] [INFO] Environment: development
+[2026-04-09T05:51:19.271Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T05:51:19.271Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T05:51:20.315Z] [INFO] GET /admin/customers/8866738766/tokens
+[2026-04-09T05:51:20.398Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T05:51:28.590Z] [INFO] POST /admin/customers/8866738766/api-key
+[2026-04-09T05:51:28.773Z] [INFO] GET /admin/customers/8866738766/tokens?toast=API%20key%20configuration%20saved%20successfully.&toastType=success
+[2026-04-09T05:51:54.881Z] [INFO] GET /
+[2026-04-09T05:51:55.956Z] [INFO] GET /admin/customers
+[2026-04-09T05:51:59.454Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-09T05:52:03.453Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-09T05:54:08.663Z] [INFO] GET /
+[2026-04-09T05:54:10.015Z] [INFO] GET /admin/customers
+[2026-04-09T05:54:12.420Z] [INFO] GET /admin/customers/8866738766/edit
+[2026-04-09T05:54:51.766Z] [INFO] GET /admin/customers/8866738766/edit
+[2026-04-09T05:55:53.444Z] [INFO] GET /admin/customers
+[2026-04-09T05:55:58.348Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-09T06:03:24.564Z] [INFO] Metadata loaded successfully
+[2026-04-09T06:03:24.565Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T06:03:24.569Z] [INFO] Metadata loaded successfully
+[2026-04-09T06:03:24.569Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T06:03:24.577Z] [INFO] Server is running on port 3000
+[2026-04-09T06:03:24.577Z] [INFO] Environment: development
+[2026-04-09T06:03:24.577Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T06:03:24.578Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T06:03:33.993Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-09T06:03:34.082Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T06:03:35.123Z] [INFO] GET /admin/customers/9327927990/tokens
+[2026-04-09T06:03:35.997Z] [INFO] GET /
+[2026-04-09T06:03:37.735Z] [INFO] GET /admin/customers
+[2026-04-09T06:03:39.252Z] [INFO] GET /admin/customers/8866738766/edit
+[2026-04-09T06:03:45.368Z] [INFO] GET /admin/customers
+[2026-04-09T06:03:46.963Z] [INFO] GET /admin/customers/9327927990/edit
+[2026-04-09T06:03:52.032Z] [INFO] POST /admin/customers/9327927990
+[2026-04-09T06:03:52.075Z] [INFO] GET /admin/customers?toast=Customer%20updated%20successfully.&toastType=success
+[2026-04-09T06:04:06.207Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T06:04:06.283Z] [ERROR] POST /api/multi-customer/customer-api-key - No customer-specific API key configured for 9999999999
+[2026-04-09T06:04:06.285Z] [ERROR] Error: No customer-specific API key configured for 9999999999
+    at MultiCustomerDeepSeekService.getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:116:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:717:22)
+[2026-04-09T06:04:25.654Z] [INFO] GET /admin/customers/new
+[2026-04-09T06:05:42.812Z] [INFO] POST /admin/customers
+[2026-04-09T06:05:42.926Z] [INFO] GET /admin/customers?toast=Customer%20saved%20successfully.&toastType=success
+[2026-04-09T06:05:49.294Z] [INFO] GET /admin/customers/9999999999/tokens
+[2026-04-09T06:06:26.931Z] [INFO] POST /admin/customers/9999999999/api-key
+[2026-04-09T06:06:27.183Z] [INFO] GET /admin/customers/9999999999/tokens?toast=API%20key%20configuration%20saved%20successfully.&toastType=success
+[2026-04-09T06:06:56.023Z] [INFO] POST /admin/customers/9999999999/tokens
+[2026-04-09T06:06:56.204Z] [INFO] GET /admin/customers/9999999999/tokens?toast=Token%20batch%20added%20successfully.&toastType=success
+[2026-04-09T06:06:59.169Z] [INFO] GET /
+[2026-04-09T06:07:00.412Z] [INFO] GET /admin/customers
+[2026-04-09T06:07:12.461Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T06:07:12.536Z] [ERROR] POST /api/multi-customer/customer-api-key - No customer-specific API key configured for 9999999999
+[2026-04-09T06:07:12.538Z] [ERROR] Error: No customer-specific API key configured for 9999999999
+    at MultiCustomerDeepSeekService.getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:116:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:717:22)
+[2026-04-09T06:07:18.722Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T06:07:18.794Z] [ERROR] POST /api/multi-customer/customer-api-key - No customer-specific API key configured for 9999999999
+[2026-04-09T06:07:18.795Z] [ERROR] Error: No customer-specific API key configured for 9999999999
+    at MultiCustomerDeepSeekService.getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:116:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:717:22)
+[2026-04-09T06:07:32.148Z] [INFO] Metadata loaded successfully
+[2026-04-09T06:07:32.149Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T06:07:32.153Z] [INFO] Metadata loaded successfully
+[2026-04-09T06:07:32.153Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T06:07:32.163Z] [INFO] Server is running on port 3000
+[2026-04-09T06:07:32.163Z] [INFO] Environment: development
+[2026-04-09T06:07:32.163Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T06:07:32.163Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T06:07:46.067Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T06:07:51.889Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T06:09:42.807Z] [INFO] Metadata loaded successfully
+[2026-04-09T06:09:42.807Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T06:09:42.814Z] [INFO] Metadata loaded successfully
+[2026-04-09T06:09:42.815Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T06:09:42.823Z] [INFO] Server is running on port 3000
+[2026-04-09T06:09:42.823Z] [INFO] Environment: development
+[2026-04-09T06:09:42.823Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T06:09:42.823Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T06:14:21.980Z] [INFO] Metadata loaded successfully
+[2026-04-09T06:14:21.981Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T06:14:21.989Z] [INFO] Metadata loaded successfully
+[2026-04-09T06:14:21.989Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T06:14:22.008Z] [INFO] Server is running on port 3000
+[2026-04-09T06:14:22.008Z] [INFO] Environment: development
+[2026-04-09T06:14:22.008Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T06:14:22.009Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T06:14:24.952Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T06:14:27.583Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T06:14:27.721Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T06:14:27.787Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-09T06:14:46.117Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-09T06:14:46.255Z] [INFO] [Customer: 9327927990] Processing query: show top 3 item of yesterday based on pcs sales
+[2026-04-09T06:14:46.920Z] [INFO] Connected to customer MainDB: 9327927990_DB (9327927990)
+[2026-04-09T06:14:49.083Z] [INFO] [Customer: 9327927990] AI detected companies: all
+[2026-04-09T06:14:49.444Z] [INFO] [Customer: 9327927990] Target companies: EQSHREE20252026, EQLAKSHYA20252026, EQ1234SHREE20262027, EQLAKSHYA20262027
+[2026-04-09T06:14:53.675Z] [INFO] [Customer: 9327927990] Generated SQL: SELECT TOP 3
+    bd.itemname AS ItemName,
+    SUM(bd.pcs) AS TotalPcsSold
+FROM billmast bm
+JOIN billdata bd ON bm.id = bd.ControlId
+WHERE bm.code = 'S'
+    AND bm.opening <> 'Y'
+    AND bm.date = DATEADD(day, -1, CAST(GETDATE() AS DATE))
+GROUP BY bd.itemname
+ORDER BY SUM(bd.pcs) DESC;
+[2026-04-09T06:14:54.625Z] [INFO] Connected to company DB: EQSHREE20252026 (9327927990/EQSHREE20252026)
+[2026-04-09T06:14:56.391Z] [INFO] Query executed for 9327927990/company EQSHREE20252026: 0 rows
+[2026-04-09T06:14:57.322Z] [INFO] Connected to company DB: EQLAKSHYA20252026 (9327927990/EQLAKSHYA20252026)
+[2026-04-09T06:14:58.617Z] [INFO] Query executed for 9327927990/company EQLAKSHYA20252026: 0 rows
+[2026-04-09T06:14:59.517Z] [INFO] Connected to company DB: EQ1234SHREE20262027 (9327927990/EQ1234SHREE20262027)
+[2026-04-09T06:15:00.858Z] [INFO] Query executed for 9327927990/company EQ1234SHREE20262027: 3 rows
+[2026-04-09T06:15:01.790Z] [INFO] Connected to company DB: EQLAKSHYA20262027 (9327927990/EQLAKSHYA20262027)
+[2026-04-09T06:15:03.093Z] [INFO] Query executed for 9327927990/company EQLAKSHYA20262027: 3 rows
+[2026-04-09T06:15:03.094Z] [INFO] [Customer: 9327927990] Total rows: 6 from 4 companies in 16975ms
+[2026-04-09T06:15:28.948Z] [INFO] [Customer: 9327927990] Token Usage - 
+            Actual: 9725, 
+            Estimated: 297, 
+            Accuracy: 3.1%,
+            Cost: $0.002776 (₹0.24)
+[2026-04-09T06:15:28.963Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-09T06:15:29.040Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a

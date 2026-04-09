@@ -86,6 +86,16 @@
                     <label class="form-label">Monthly Limit</label>
                     <input class="form-control premium-input" type="number" name="monthly_limit" value="<%= apiKeyRow.monthly_limit || 100000 %>" />
                   </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Daily Limit</label>
+                    <input class="form-control premium-input" type="number" name="daily_limit" value="<%= apiKeyRow.daily_limit || 0 %>" />
+                    <div class="field-note mt-2">Set to 0 to disable daily hit restriction.</div>
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Used Daily</label>
+                    <input class="form-control premium-input" type="number" value="<%= apiKeyRow.used_daily || 0 %>" readonly />
+                    <div class="field-note mt-2">This is the daily API hit counter.</div>
+                  </div>
                   <div class="col-12">
                     <div class="form-check premium-check">
                       <input class="form-check-input" type="checkbox" name="is_active" id="is_active" <%= apiKeyRow.is_active ? "checked" : "" %> />

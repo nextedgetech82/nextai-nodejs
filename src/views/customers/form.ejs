@@ -44,7 +44,7 @@
               <div class="col-md-6">
                 <label class="form-label">Subscription Plan</label>
                 <select class="form-select premium-input" name="subscription_plan">
-                <% ["basic", "professional", "enterprise"].forEach((plan) => { %>
+                <% ["demo", "basic", "professional", "enterprise"].forEach((plan) => { %>
                   <option value="<%= plan %>" <%= customer.subscription_plan === plan ? "selected" : "" %>><%= plan %></option>
                 <% }) %>
                 </select>
