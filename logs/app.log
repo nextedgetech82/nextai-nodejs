@@ -3898,3 +3898,63 @@ ORDER BY TotalPcsSold DESC;
 [2026-04-08T10:56:28.567Z] [INFO] GET /api/multi-customer/purchase/history
 [2026-04-08T11:07:37.328Z] [INFO] GET /api/multi-customer/usage/stats
 [2026-04-08T11:07:37.332Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-09T03:58:40.977Z] [INFO] Metadata loaded successfully
+[2026-04-09T03:58:40.977Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T03:58:40.983Z] [INFO] Metadata loaded successfully
+[2026-04-09T03:58:40.984Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T03:58:40.993Z] [INFO] Server is running on port 3000
+[2026-04-09T03:58:40.993Z] [INFO] Environment: development
+[2026-04-09T03:58:40.993Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T03:58:40.994Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T04:04:05.668Z] [INFO] Metadata loaded successfully
+[2026-04-09T04:04:05.669Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T04:04:05.676Z] [INFO] Metadata loaded successfully
+[2026-04-09T04:04:05.676Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-09T04:04:05.684Z] [INFO] Server is running on port 3000
+[2026-04-09T04:04:05.684Z] [INFO] Environment: development
+[2026-04-09T04:04:05.685Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-09T04:04:05.685Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-09T04:04:23.414Z] [INFO] GET /favicon.ico
+[2026-04-09T04:04:23.543Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-09T04:04:23.545Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-09T04:04:23.627Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T04:04:23.628Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-09T04:04:35.001Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T04:04:35.039Z] [ERROR] POST /api/multi-customer/customer-api-key - No customer-specific API key configured for 9999999999
+[2026-04-09T04:04:35.040Z] [ERROR] Error: No customer-specific API key configured for 9999999999
+    at MultiCustomerDeepSeekService.getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:110:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:672:22)
+[2026-04-09T04:04:38.632Z] [ERROR] Error in getTokenUsageStats: Failed to connect to 217.217.249.29:22043 in 15000ms
+[2026-04-09T04:04:38.634Z] [ERROR] GET /api/multi-customer/usage/stats - Failed to connect to 217.217.249.29:22043 in 15000ms
+[2026-04-09T04:04:38.635Z] [ERROR] ConnectionError: Failed to connect to 217.217.249.29:22043 in 15000ms
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-09T04:06:27.853Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T04:06:57.902Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T04:06:59.801Z] [INFO] GET /api/multi-customer/usage/stats
+[2026-04-09T04:06:59.804Z] [INFO] GET /api/multi-customer/purchase/history
+[2026-04-09T04:08:06.664Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T04:08:06.792Z] [ERROR] POST /api/multi-customer/customer-api-key - No customer-specific API key configured for 9999999999
+[2026-04-09T04:08:06.793Z] [ERROR] Error: No customer-specific API key configured for 9999999999
+    at MultiCustomerDeepSeekService.getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:110:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:672:22)
+[2026-04-09T04:08:40.289Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T04:08:40.391Z] [ERROR] POST /api/multi-customer/customer-api-key - No customer-specific API key configured for 9999999999
+[2026-04-09T04:08:40.392Z] [ERROR] Error: No customer-specific API key configured for 9999999999
+    at MultiCustomerDeepSeekService.getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:110:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:672:22)
+[2026-04-09T04:09:43.446Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-09T04:09:43.557Z] [ERROR] POST /api/multi-customer/customer-api-key - No customer-specific API key configured for 9999999999
+[2026-04-09T04:09:43.558Z] [ERROR] Error: No customer-specific API key configured for 9999999999
+    at MultiCustomerDeepSeekService.getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/services/multi-customer-service.js:110:13)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async getCustomerApiKey (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/src/controllers/multi-customer-controller.js:672:22)
+[2026-04-09T04:09:59.377Z] [INFO] POST /api/multi-customer/customer-api-key
