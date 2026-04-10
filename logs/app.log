@@ -4643,3 +4643,324 @@ ORDER BY b.date DESC, b.serial DESC;
             Cost: $0.003778 (₹0.32)
 [2026-04-09T10:10:21.479Z] [INFO] GET /api/v3/chat/sessions
 [2026-04-09T10:10:21.558Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T04:26:53.399Z] [INFO] Metadata loaded successfully
+[2026-04-10T04:26:53.399Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-10T04:26:53.403Z] [INFO] Metadata loaded successfully
+[2026-04-10T04:26:53.403Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-10T04:26:53.413Z] [INFO] Server is running on port 3000
+[2026-04-10T04:26:53.413Z] [INFO] Environment: development
+[2026-04-10T04:26:53.414Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-10T04:26:53.414Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-10T04:29:10.501Z] [INFO] POST /checkParentUrl
+[2026-04-10T04:29:27.766Z] [INFO] POST /user
+[2026-04-10T04:30:16.692Z] [INFO] POST /checkParentUrl
+[2026-04-10T04:32:30.426Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-10T04:32:30.546Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-10T04:32:30.696Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T04:32:30.767Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T04:32:33.715Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T04:32:33.780Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T04:36:09.611Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-10T04:36:09.799Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T04:36:09.869Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T04:37:11.562Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T04:37:11.731Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T04:37:18.783Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T04:37:18.857Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T04:37:23.219Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T04:37:23.289Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T04:37:29.518Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T04:37:29.590Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T04:39:16.168Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T04:39:16.707Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T04:58:04.790Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-10T04:58:05.011Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T04:58:05.085Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T05:02:53.161Z] [INFO] Metadata loaded successfully
+[2026-04-10T05:02:53.161Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-10T05:02:53.164Z] [INFO] Metadata loaded successfully
+[2026-04-10T05:02:53.164Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-10T05:02:53.173Z] [INFO] Server is running on port 3000
+[2026-04-10T05:02:53.174Z] [INFO] Environment: development
+[2026-04-10T05:02:53.174Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-10T05:02:53.174Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-10T05:15:17.395Z] [INFO] GET /
+[2026-04-10T05:15:17.548Z] [INFO] GET /favicon.ico
+[2026-04-10T05:15:18.762Z] [INFO] GET /admin/customers
+[2026-04-10T05:15:18.837Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-10T05:58:33.491Z] [INFO] GET /
+[2026-04-10T06:05:25.475Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T06:05:25.745Z] [INFO] GET /api/v3/chat/sessions/ce8c7412-d252-4a0a-95d0-657ac7ed4b0a
+[2026-04-10T06:05:32.603Z] [INFO] POST /api/multi-customer/customer-api-key
+[2026-04-10T06:05:32.691Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T06:05:35.035Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:05:35.133Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:05:35.210Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:05:35.215Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:05:35.216Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:06:19.541Z] [INFO] Metadata loaded successfully
+[2026-04-10T06:06:19.543Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-10T06:06:19.546Z] [INFO] Metadata loaded successfully
+[2026-04-10T06:06:19.546Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-10T06:06:19.555Z] [INFO] Server is running on port 3000
+[2026-04-10T06:06:19.555Z] [INFO] Environment: development
+[2026-04-10T06:06:19.555Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-10T06:06:19.555Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-10T06:06:42.793Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:06:42.866Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-10T06:06:43.002Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:06:43.073Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:06:43.074Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:06:43.075Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:09:01.551Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:09:20.990Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:11:17.539Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:11:17.554Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:11:17.555Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:11:22.561Z] [INFO] Metadata loaded successfully
+[2026-04-10T06:11:22.562Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-10T06:11:22.567Z] [INFO] Metadata loaded successfully
+[2026-04-10T06:11:22.568Z] [INFO] Indexed 10 tables, 44 fields, 130 synonyms
+[2026-04-10T06:11:22.577Z] [INFO] Server is running on port 3000
+[2026-04-10T06:11:22.577Z] [INFO] Environment: development
+[2026-04-10T06:11:22.577Z] [INFO] API URL: http://localhost:3000/api
+[2026-04-10T06:11:22.577Z] [INFO] Admin UI: http://localhost:3000/
+[2026-04-10T06:11:32.786Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:11:36.628Z] [INFO] Connected to AI Agent Registry Database
+[2026-04-10T06:11:36.766Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+
+[2026-04-10T06:11:38.302Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:11:53.911Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:11:53.915Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:14:39.271Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:14:39.410Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+
+[2026-04-10T06:14:39.493Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:14:39.495Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:14:39.496Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:15:52.753Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:15:52.903Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:15:52.986Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:15:52.987Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:15:52.988Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:16:33.163Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:16:33.307Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:16:33.378Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:16:33.380Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:16:33.380Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:17:17.201Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T06:17:21.490Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:17:21.558Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:17:21.629Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:17:21.630Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:17:21.631Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:18:12.532Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:18:12.681Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:18:12.751Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:18:12.753Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:18:12.754Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:19:22.560Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:19:22.694Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+
+[2026-04-10T06:19:22.767Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:19:22.768Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:19:22.769Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:19:41.382Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:19:41.454Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+
+[2026-04-10T06:19:41.534Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:19:41.535Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:19:41.535Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:21:49.844Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T06:22:11.250Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:22:11.321Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:22:11.389Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:22:11.390Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:22:11.391Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:22:15.393Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:22:15.464Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+
+[2026-04-10T06:22:15.539Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:22:15.540Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:22:15.541Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:22:18.706Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:22:18.772Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:22:18.838Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:22:18.839Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:22:18.840Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:34:48.284Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T06:35:31.644Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T06:35:43.917Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:35:43.984Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:35:44.050Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:35:44.051Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:35:44.051Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:36:07.170Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:36:07.236Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+12:05
+[2026-04-10T06:36:07.304Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:36:07.305Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:36:07.306Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:37:41.951Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T06:37:44.837Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:37:44.907Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:37:44.973Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:37:44.974Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:37:44.975Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:37:57.977Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:37:58.045Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:37:58.121Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:37:58.122Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:37:58.123Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:38:48.663Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T06:38:54.486Z] [INFO] GET /api/v3/chat/sessions
+[2026-04-10T06:39:40.792Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:39:40.936Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:39:41.013Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:39:41.014Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:39:41.015Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)
+[2026-04-10T06:56:54.710Z] [INFO] POST /api/multi-customer/analytics
+[2026-04-10T06:56:54.822Z] [INFO] [Customer: 8866738766] Processing query: Show last bill date and bill number
+[2026-04-10T06:56:54.878Z] [ERROR] Error in processQuery: Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:56:54.879Z] [ERROR] POST /api/multi-customer/analytics - Failed to connect to localhost:22043 - Could not connect (sequence)
+[2026-04-10T06:56:54.880Z] [ERROR] ConnectionError: Failed to connect to localhost:22043 - Could not connect (sequence)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/mssql/lib/tedious/connection-pool.js:85:17
+    at Connection.onConnect (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:874:9)
+    at Object.onceWrapper (node:events:634:26)
+    at Connection.emit (node:events:519:28)
+    at Connection.emit (/Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:1013:18)
+    at /Users/krishna/Development/Programming/nodejs/dhruv/nextai/node_modules/tedious/lib/connection.js:892:14
+    at process.processTicksAndRejections (node:internal/process/task_queues:85:11)

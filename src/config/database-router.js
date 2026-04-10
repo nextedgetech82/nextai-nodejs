@@ -16,11 +16,11 @@ class DatabaseRouter {
     if (this.registryPool) return this.registryPool;
 
     const config = {
-      user: process.env.REGISTRY_DB_USER,
-      password: process.env.REGISTRY_DB_PASSWORD,
-      server: process.env.REGISTRY_DB_HOST,
-      database: process.env.REGISTRY_DB_NAME,
-      port: parseInt(process.env.REGISTRY_DB_PORT, 10) || 1433,
+      user: "sa",
+      password: "NextEdge@123",
+      server: "217.217.249.29",
+      database: "AI_Agent_Registry",
+      port: 22043,
       options: {
         encrypt: process.env.REGISTRY_DB_ENCRYPT === "true",
         trustServerCertificate: true,
@@ -67,7 +67,7 @@ class DatabaseRouter {
     const result = await registry.request().input("apiKey", sql.VarChar, apiKey)
       .query(`SELECT customer_id, monthly_limit, used_this_month
               FROM customer_api_keys
-              WHERE api_key = @apiKey AND is_active = 0`);
+              WHERE api_key = @apiKey`);
     const rows = result.recordset;
 
     if (rows.length === 0) {
@@ -316,11 +316,7 @@ class DatabaseRouter {
         sql.Decimal(18, 6),
         tokenDetails?.input_cost_cache_miss || 0,
       )
-      .input(
-        "outputCost",
-        sql.Decimal(18, 6),
-        tokenDetails?.output_cost || 0,
-      )
+      .input("outputCost", sql.Decimal(18, 6), tokenDetails?.output_cost || 0)
       .input("tokenAccuracy", sql.Decimal(5, 2), accuracy)
       .input("processingTimeMs", sql.Int, processingTimeMs)
       .query(`INSERT INTO customer_usage 
@@ -416,10 +412,15 @@ class DatabaseRouter {
 
     if (rows.length === 0) return true;
 
-    let { monthly_limit, daily_limit, used_this_month, used_daily, last_reset_date } = rows[0];
+    let {
+      monthly_limit,
+      daily_limit,
+      used_this_month,
+      used_daily,
+      last_reset_date,
+    } = rows[0];
     const now = new Date();
-    const lastReset =
-      last_reset_date ? new Date(last_reset_date) : null;
+    const lastReset = last_reset_date ? new Date(last_reset_date) : null;
 
     if (
       !lastReset ||
@@ -455,8 +456,7 @@ class DatabaseRouter {
     await registry
       .request()
       .input("customerId", sql.VarChar, customerId)
-      .input("usedDaily", sql.Int, used_daily)
-      .query(`UPDATE customer_api_keys
+      .input("usedDaily", sql.Int, used_daily).query(`UPDATE customer_api_keys
               SET used_daily = @usedDaily
               WHERE customer_id = @customerId`);
 

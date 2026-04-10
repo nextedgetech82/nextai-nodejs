@@ -488,6 +488,9 @@ class MultiCustomerController {
       });
     } catch (error) {
       logger.error(`Error in processQuery: ${error.message}`);
+      if (!error.statusCode && error.response?.status) {
+        error.statusCode = error.response.status;
+      }
       next(error);
     }
   };

@@ -362,7 +362,15 @@ SQL QUERY:
       logger.error(
         `DeepSeek API error for customer ${customerId}: ${error.message}`,
       );
-      throw new Error(`AI service error: ${error.message}`);
+      const wrappedError = new Error(
+        error.response?.data?.error?.message ||
+          error.response?.data?.message ||
+          `AI service error: ${error.message}`,
+      );
+      wrappedError.statusCode = error.response?.status || 500;
+      wrappedError.provider = "deepseek";
+      wrappedError.providerResponse = error.response?.data || null;
+      throw wrappedError;
     }
   }
 

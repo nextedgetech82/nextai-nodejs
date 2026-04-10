@@ -64,22 +64,14 @@ class AdminController {
         .input("customer_id", sql.VarChar(100), customer.customer_id)
         .input("customer_name", sql.VarChar(200), customer.customer_name)
         .input("customer_code", sql.VarChar(50), customer.customer_code)
-        .input(
-          "subscription_plan",
-          sql.VarChar(10),
-          customer.subscription_plan,
-        )
+        .input("subscription_plan", sql.VarChar(10), customer.subscription_plan)
         .input("status", sql.VarChar(10), customer.status)
         .input("main_db_type", sql.VarChar(10), customer.main_db_type)
         .input("main_db_host", sql.VarChar(200), customer.main_db_host)
         .input("main_db_port", sql.Int, customer.main_db_port)
         .input("main_db_name", sql.VarChar(200), customer.main_db_name)
         .input("main_db_user", sql.VarChar(100), customer.main_db_user)
-        .input(
-          "main_db_password",
-          sql.VarChar(200),
-          customer.main_db_password,
-        )
+        .input("main_db_password", sql.VarChar(200), customer.main_db_password)
         .input("main_db_encrypt", sql.Bit, customer.main_db_encrypt)
         .query(`INSERT INTO customers (
             customer_id,
@@ -158,22 +150,14 @@ class AdminController {
         .input("customerId", sql.VarChar(100), customerId)
         .input("customer_name", sql.VarChar(200), customer.customer_name)
         .input("customer_code", sql.VarChar(50), customer.customer_code)
-        .input(
-          "subscription_plan",
-          sql.VarChar(10),
-          customer.subscription_plan,
-        )
+        .input("subscription_plan", sql.VarChar(10), customer.subscription_plan)
         .input("status", sql.VarChar(10), customer.status)
         .input("main_db_type", sql.VarChar(10), customer.main_db_type)
         .input("main_db_host", sql.VarChar(200), customer.main_db_host)
         .input("main_db_port", sql.Int, customer.main_db_port)
         .input("main_db_name", sql.VarChar(200), customer.main_db_name)
         .input("main_db_user", sql.VarChar(100), customer.main_db_user)
-        .input(
-          "main_db_password",
-          sql.VarChar(200),
-          customer.main_db_password,
-        )
+        .input("main_db_password", sql.VarChar(200), customer.main_db_password)
         .input("main_db_encrypt", sql.Bit, customer.main_db_encrypt)
         .query(`UPDATE customers SET
             customer_name = @customer_name,
@@ -230,9 +214,7 @@ class AdminController {
           .query(
             "SELECT TOP 1 * FROM customer_api_keys WHERE customer_id = @customerId ORDER BY id DESC",
           ),
-        registry
-          .request()
-          .input("customerId", sql.VarChar(100), customerId)
+        registry.request().input("customerId", sql.VarChar(100), customerId)
           .query(`SELECT
               id,
               customer_id,
@@ -424,7 +406,9 @@ class AdminController {
         .request()
         .input("id", sql.Int, Number.parseInt(req.params.batchId, 10))
         .input("customerId", sql.VarChar(100), customerId)
-        .query("DELETE FROM token_batches WHERE id = @id AND customer_id = @customerId");
+        .query(
+          "DELETE FROM token_batches WHERE id = @id AND customer_id = @customerId",
+        );
 
       await this.syncCustomerTokenSummary(customerId, registry);
       res.redirect(
@@ -542,8 +526,7 @@ class AdminController {
   async syncCustomerTokenSummary(customerId, registry) {
     const aggregateResult = await registry
       .request()
-      .input("customerId", sql.VarChar(100), customerId)
-      .query(`SELECT
+      .input("customerId", sql.VarChar(100), customerId).query(`SELECT
                 ISNULL(SUM(tokens_allocated), 0) as total_allocated,
                 ISNULL(SUM(tokens_remaining), 0) as total_remaining,
                 ISNULL(SUM(purchase_amount), 0) as total_paid,
@@ -555,7 +538,10 @@ class AdminController {
     const totalAllocated = aggregate.total_allocated || 0;
     const totalRemaining = aggregate.total_remaining || 0;
     const expiredTokens = aggregate.expired_tokens || 0;
-    const totalUsed = Math.max(totalAllocated - totalRemaining - expiredTokens, 0);
+    const totalUsed = Math.max(
+      totalAllocated - totalRemaining - expiredTokens,
+      0,
+    );
 
     await registry
       .request()

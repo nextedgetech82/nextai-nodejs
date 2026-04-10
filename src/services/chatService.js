@@ -42,8 +42,7 @@ class ChatService {
       .request()
       .input("sessionId", sql.VarChar(100), sessionId)
       .input("customerId", sql.VarChar(100), customerId)
-      .input("sessionTitle", sql.NVarChar(500), sessionTitle)
-      .query(`
+      .input("sessionTitle", sql.NVarChar(500), sessionTitle).query(`
         INSERT INTO chat_sessions (
           session_id,
           customer_id,
@@ -75,8 +74,7 @@ class ChatService {
       .request()
       .input("customerId", sql.VarChar(100), customerId)
       .input("offset", sql.Int, Math.max(0, offset))
-      .input("limit", sql.Int, Math.max(1, limit))
-      .query(`
+      .input("limit", sql.Int, Math.max(1, limit)).query(`
         SELECT
           session_id,
           session_title,
@@ -87,7 +85,6 @@ class ChatService {
           total_tokens_used
         FROM chat_sessions
         WHERE customer_id = @customerId
-          AND is_active = 1
         ORDER BY updated_at DESC
         OFFSET @offset ROWS FETCH NEXT @limit ROWS ONLY
       `);
@@ -101,8 +98,7 @@ class ChatService {
     const sessionResult = await pool
       .request()
       .input("sessionId", sql.VarChar(100), sessionId)
-      .input("customerId", sql.VarChar(100), customerId)
-      .query(`
+      .input("customerId", sql.VarChar(100), customerId).query(`
         SELECT
           session_id,
           session_title,
@@ -113,7 +109,6 @@ class ChatService {
         FROM chat_sessions
         WHERE session_id = @sessionId
           AND customer_id = @customerId
-          AND is_active = 1
       `);
 
     if (sessionResult.recordset.length === 0) {
@@ -123,8 +118,7 @@ class ChatService {
     const messagesResult = await pool
       .request()
       .input("sessionId", sql.VarChar(100), sessionId)
-      .input("customerId", sql.VarChar(100), customerId)
-      .query(`
+      .input("customerId", sql.VarChar(100), customerId).query(`
         SELECT
           id,
           session_id,
@@ -151,7 +145,13 @@ class ChatService {
     };
   }
 
-  async saveMessage(sessionId, customerId, messageType, content, metadata = {}) {
+  async saveMessage(
+    sessionId,
+    customerId,
+    messageType,
+    content,
+    metadata = {},
+  ) {
     const pool = await this.getPool();
 
     await pool
@@ -177,9 +177,10 @@ class ChatService {
       .input(
         "parentMessageId",
         sql.Int,
-        metadata.parentMessageId ? Number.parseInt(metadata.parentMessageId, 10) : null,
-      )
-      .query(`
+        metadata.parentMessageId
+          ? Number.parseInt(metadata.parentMessageId, 10)
+          : null,
+      ).query(`
         INSERT INTO chat_messages (
           session_id,
           customer_id,
@@ -214,8 +215,7 @@ class ChatService {
       .request()
       .input("sessionId", sql.VarChar(100), sessionId)
       .input("customerId", sql.VarChar(100), customerId)
-      .input("tokensUsed", sql.Int, metadata.tokensUsed || 0)
-      .query(`
+      .input("tokensUsed", sql.Int, metadata.tokensUsed || 0).query(`
         UPDATE chat_sessions
         SET
           updated_at = GETDATE(),
@@ -232,8 +232,7 @@ class ChatService {
       .request()
       .input("sessionId", sql.VarChar(100), sessionId)
       .input("customerId", sql.VarChar(100), customerId)
-      .input("title", sql.NVarChar(500), this.buildSessionTitle(title))
-      .query(`
+      .input("title", sql.NVarChar(500), this.buildSessionTitle(title)).query(`
         UPDATE chat_sessions
         SET
           session_title = @title,
@@ -248,8 +247,7 @@ class ChatService {
     await pool
       .request()
       .input("sessionId", sql.VarChar(100), sessionId)
-      .input("customerId", sql.VarChar(100), customerId)
-      .query(`
+      .input("customerId", sql.VarChar(100), customerId).query(`
         UPDATE chat_sessions
         SET
           is_active = 0,
@@ -261,9 +259,7 @@ class ChatService {
 
   async clearAllSessions(customerId) {
     const pool = await this.getPool();
-    await pool
-      .request()
-      .input("customerId", sql.VarChar(100), customerId)
+    await pool.request().input("customerId", sql.VarChar(100), customerId)
       .query(`
         UPDATE chat_sessions
         SET
@@ -279,8 +275,7 @@ class ChatService {
       .request()
       .input("customerId", sql.VarChar(100), customerId)
       .input("searchTerm", sql.NVarChar(500), `%${searchTerm}%`)
-      .input("limit", sql.Int, Math.max(1, limit))
-      .query(`
+      .input("limit", sql.Int, Math.max(1, limit)).query(`
         SELECT
           cm.session_id,
           cs.session_title,
@@ -294,7 +289,6 @@ class ChatService {
          AND cm.customer_id = cs.customer_id
         WHERE cm.customer_id = @customerId
           AND cm.content LIKE @searchTerm
-          AND cs.is_active = 1
         ORDER BY cm.created_at DESC
         OFFSET 0 ROWS FETCH NEXT @limit ROWS ONLY
       `);
@@ -306,8 +300,7 @@ class ChatService {
     const pool = await this.getPool();
     const result = await pool
       .request()
-      .input("customerId", sql.VarChar(100), customerId)
-      .query(`
+      .input("customerId", sql.VarChar(100), customerId).query(`
         SELECT
           COUNT(DISTINCT session_id) as total_sessions,
           ISNULL(SUM(total_messages), 0) as total_messages,
@@ -316,7 +309,6 @@ class ChatService {
           MAX(updated_at) as last_chat_date
         FROM chat_sessions
         WHERE customer_id = @customerId
-          AND is_active = 1
       `);
 
     return result.recordset[0];
